@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_wizard_is_acompte_form" model="ir.ui.view">
+        <field name="name">wizard.is.acompte.form</field>
+        <field name="model">wizard.is.acompte</field>
+        <field name="arch" type="xml">
+            <form string="Saisir un acompte IS">
+                <group>
+                    <field name="declaration_id"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="trimester"/>
+                    <field name="amount"/>
+                    <field name="payment_date"/>
+                    <field name="payment_ref"/>
+                </group>
+                <footer>
+                    <button name="action_register_acompte" string="Enregistrer"
+                            type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

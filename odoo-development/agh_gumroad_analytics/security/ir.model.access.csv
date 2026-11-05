@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agh_gumroad_product_user,agh.gumroad.product.user,model_agh_gumroad_product,base.group_user,1,1,1,1
+access_agh_gumroad_sale_user,agh.gumroad.sale.user,model_agh_gumroad_sale,base.group_user,1,1,1,1
+access_agh_gumroad_metric_user,agh.gumroad.metric.user,model_agh_gumroad_metric,base.group_user,1,1,1,1
+access_agh_gumroad_report_user,agh.gumroad.report.user,model_agh_gumroad_report,base.group_user,1,1,1,1
+access_agh_gumroad_sync_wizard_user,agh.gumroad.sync.wizard.user,model_agh_gumroad_sync_wizard,base.group_user,1,1,1,1

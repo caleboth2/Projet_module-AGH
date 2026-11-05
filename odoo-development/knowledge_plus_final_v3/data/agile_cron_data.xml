@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Cron quotidien : sync Agile ↔ Knowledge + snapshot burndown -->
+  <record id="ir_cron_agile_knowledge_sync" model="ir.cron">
+    <field name="name">Knowledge Plus Agile – Sync quotidienne &amp; burndown</field>
+    <field name="model_id" ref="model_agh_agile_knowledge_cron"/>
+    <field name="state">code</field>
+    <field name="code">model.run_daily_sync()</field>
+    <field name="interval_number">1</field>
+    <field name="interval_type">days</field>
+    <field name="active">True</field>
+    <field name="nextcall" eval="(DateTime.now().replace(hour=1, minute=0, second=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+  </record>
+
+</odoo>

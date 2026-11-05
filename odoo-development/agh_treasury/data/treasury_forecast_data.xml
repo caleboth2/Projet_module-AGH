@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_treasury_alert" model="mail.template">
+            <field name="name">Alerte de Tresorerie</field>
+            <field name="model_id" ref="model_account_treasury_forecast"/>
+            <field name="subject">Alerte: Solde de tresorerie faible</field>
+            <field name="email_from">{{ object.company_id.email or user.email }}</field>
+            <field name="email_to">{{ object.company_id.agh_treasury_alert_email or '' }}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif;">
+                    <h3 style="color: #dc3545;">Alerte Tresorerie</h3>
+                    <p>Bonjour,</p>
+                    <p>Le solde de tresorerie previsionnel est inferieur au seuil d'alerte.</p>
+                    <p>Cordialement,<br/>Systeme AGH Treasury</p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

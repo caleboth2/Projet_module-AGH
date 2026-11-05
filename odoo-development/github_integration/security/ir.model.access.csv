@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agh_github_connector_admin,agh.github.connector.admin,model_agh_github_connector,base.group_system,1,1,1,1
+access_agh_github_repository_admin,agh.github.repository.admin,model_agh_github_repository,base.group_system,1,1,1,1
+access_agh_github_commit_admin,agh.github.commit.admin,model_agh_github_commit,base.group_system,1,1,1,1
+access_agh_github_issue_admin,agh.github.issue.admin,model_agh_github_issue,base.group_system,1,1,1,1
+access_agh_github_pull_request_admin,agh.github.pull_request.admin,model_agh_github_pull_request,base.group_system,1,1,1,1
+access_agh_github_comment_admin,agh.github.comment.admin,model_agh_github_comment,base.group_system,1,1,1,1
+access_agh_github_connector_user,agh.github.connector.user,model_agh_github_connector,base.group_user,1,0,0,0
+access_agh_github_repository_user,agh.github.repository.user,model_agh_github_repository,base.group_user,1,0,0,0
+access_agh_github_commit_user,agh.github.commit.user,model_agh_github_commit,base.group_user,1,0,0,0
+access_agh_github_issue_user,agh.github.issue.user,model_agh_github_issue,base.group_user,1,0,0,0
+access_agh_github_pull_request_user,agh.github.pull_request.user,model_agh_github_pull_request,base.group_user,1,0,0,0
+access_agh_github_comment_user,agh.github.comment.user,model_agh_github_comment,base.group_user,1,0,0,0

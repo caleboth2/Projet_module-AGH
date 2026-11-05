@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ══════════════════════════════════════════════════════════
+       Extension fiche PROJET : smart buttons Agile
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_project_form_agile_knowledge" model="ir.ui.view">
+    <field name="name">project.project.form.agh.agile.knowledge</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.edit_project"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+
+        <!-- Sprints -->
+        <button name="action_view_sprints" type="object"
+                class="oe_stat_button" icon="fa-rocket">
+          <div class="o_stat_info">
+            <field name="sprint_count" class="o_stat_value"/>
+            <span class="o_stat_text">Sprints</span>
+          </div>
+        </button>
+
+        <!-- Epics -->
+        <button name="action_view_epics" type="object"
+                class="oe_stat_button" icon="fa-map">
+          <div class="o_stat_info">
+            <field name="epic_count" class="o_stat_value"/>
+            <span class="o_stat_text">Epics</span>
+          </div>
+        </button>
+
+        <!-- Sprint actif + avancement -->
+        <button name="action_agile_dashboard" type="object"
+                class="oe_stat_button" icon="fa-tachometer"
+                invisible="not active_sprint_id">
+          <div class="o_stat_info">
+            <field name="active_sprint_progress" class="o_stat_value"
+                   widget="float" options="{'digits': [3,0]}"/>
+            <span class="o_stat_text">% sprint actif</span>
+          </div>
+        </button>
+
+        <!-- Vélocité moyenne -->
+        <button name="action_view_sprints" type="object"
+                class="oe_stat_button" icon="fa-bolt"
+                invisible="global_velocity == 0">
+          <div class="o_stat_info">
+            <field name="global_velocity" class="o_stat_value"
+                   widget="float" options="{'digits': [3,1]}"/>
+            <span class="o_stat_text">SP/sprint moy.</span>
+          </div>
+        </button>
+
+      </xpath>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════
+       Extension fiche TÂCHE : champs Agile + Knowledge bidirectionnel
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_task_form_agile_knowledge" model="ir.ui.view">
+    <field name="name">project.task.form.agh.agile.knowledge</field>
+    <field name="model">project.task</field>
+    <field name="inherit_id" ref="project.view_task_form2"/>
+    <field name="arch" type="xml">
+
+      <!-- Smart button Sprint -->
+      <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+        <button name="action_view_sprints" type="object"
+                class="oe_stat_button" icon="fa-rocket"
+                invisible="not sprint_ids">
+          <div class="o_stat_info">
+            <span class="o_stat_value"><field name="current_sprint_id"/></span>
+            <span class="o_stat_text">Sprint actif</span>
+          </div>
+        </button>
+      </xpath>
+
+      <!-- Champs Agile dans l'en-tête de la tâche -->
+      <xpath expr="//field[@name='date_deadline']" position="before">
+        <field name="story_points" string="SP" class="o_field_integer"/>
+        <field name="task_type"/>
+        <field name="moscow"/>
+      </xpath>
+
+      <!-- Onglet Agile complet -->
+      <xpath expr="//notebook" position="inside">
+        <page string="Agile" name="agile_page">
+          <group>
+            <group string="Classification">
+              <field name="task_type"/>
+              <field name="story_points"/>
+              <field name="moscow"/>
+              <field name="epic_id" domain="[('project_id', '=', project_id)]"/>
+            </group>
+            <group string="Sprint">
+              <field name="sprint_ids" widget="many2many_tags"
+                     domain="[('project_id', '=', project_id)]"/>
+              <field name="current_sprint_id" readonly="1"/>
+              <field name="sprint_doc_coverage" readonly="1" widget="badge"
+                     decoration-success="sprint_doc_coverage == 'full'"
+                     decoration-warning="sprint_doc_coverage == 'partial'"
+                     decoration-danger="sprint_doc_coverage == 'none'"/>
+            </group>
+          </group>
+          <separator string="Critères d'acceptation"/>
+          <field name="acceptance_criteria"
+                 placeholder="Given… When… Then…"/>
+          <separator string="Actions rapides"/>
+          <button name="action_add_to_active_sprint"
+                  string="➕ Ajouter au sprint actif"
+                  type="object" class="btn-secondary"/>
+        </page>
+      </xpath>
+
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════
+       Extension vue LISTE tâches : colonnes Agile
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_task_list_agile_knowledge" model="ir.ui.view">
+    <field name="name">project.task.list.agh.agile.knowledge</field>
+    <field name="model">project.task</field>
+    <field name="inherit_id" ref="project.view_task_tree2"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='date_deadline']" position="before">
+        <field name="story_points" string="SP" optional="show"/>
+        <field name="task_type" optional="show"/>
+        <field name="moscow" optional="show"/>
+        <field name="epic_id" optional="show"/>
+        <field name="current_sprint_id" optional="show"/>
+        <field name="sprint_doc_coverage" optional="show" widget="badge"
+               decoration-success="sprint_doc_coverage == 'full'"
+               decoration-warning="sprint_doc_coverage == 'partial'"
+               decoration-danger="sprint_doc_coverage == 'none'"/>
+      </xpath>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════
+       Extension article KNOWLEDGE : contexte Agile
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_knowledge_article_agile" model="ir.ui.view">
+    <field name="name">agh.knowledge.article.form.agile</field>
+    <field name="model">agh.knowledge.article</field>
+    <field name="inherit_id" ref="knowledge_plus_final_v3.view_knowledge_article_form"/>
+    <field name="arch" type="xml">
+
+      <!-- Smart buttons Agile sur l'article -->
+      <xpath expr="//div[@name='button_box']" position="inside">
+        <button name="action_view_sprints" type="object"
+                class="oe_stat_button" icon="fa-rocket"
+                invisible="sprint_count == 0">
+          <div class="o_stat_info">
+            <field name="sprint_count" class="o_stat_value"/>
+            <span class="o_stat_text">Sprints</span>
+          </div>
+        </button>
+        <button name="action_view_epics" type="object"
+                class="oe_stat_button" icon="fa-map"
+                invisible="epic_count == 0">
+          <div class="o_stat_info">
+            <field name="epic_count" class="o_stat_value"/>
+            <span class="o_stat_text">Epics</span>
+          </div>
+        </button>
+      </xpath>
+
+      <!-- Informations de suivi Agile insérées directement sous Suivi & Documents -->
+      <xpath expr="//group[@name='tracking_group']" position="inside">
+          <field name="agile_doc_type"/>
+          <field name="active_sprint_id" readonly="1"/>
+          <field name="sprint_ids" widget="many2many_tags" placeholder="Sprints liés..."/>
+          <field name="epic_ids" widget="many2many_tags" placeholder="Epics liés..."/>
+          <button name="action_link_to_active_sprint"
+                  string="Lier au sprint actif"
+                  type="object" class="btn-secondary mt-2"/>
+      </xpath>
+
+    </field>
+  </record>
+
+</odoo>

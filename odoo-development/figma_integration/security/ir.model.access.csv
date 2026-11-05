@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agh_figma_design_admin,agh.figma.design.admin,model_agh_figma_design,base.group_system,1,1,1,1
+access_agh_figma_design_user,agh.figma.design.user,model_agh_figma_design,base.group_user,1,1,1,1
+access_agh_figma_team_user,agh.figma.team.user,model_agh_figma_team,base.group_user,1,1,1,1
+access_agh_figma_project_user,agh.figma.project.user,model_agh_figma_project,base.group_user,1,1,1,1

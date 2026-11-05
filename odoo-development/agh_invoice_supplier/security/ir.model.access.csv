@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_ras_maroc_user,access_account_ras_maroc_user,model_account_ras_maroc,account.group_account_invoice,1,1,1,1
+access_account_ras_declaration_user,access_account_ras_declaration_user,model_account_ras_declaration,account.group_account_invoice,1,1,1,1
+access_wizard_3way_match,access_wizard_3way_match,model_wizard_3way_match,account.group_account_invoice,1,1,1,1
+access_wizard_ras_declaration,access_wizard_ras_declaration,model_wizard_ras_declaration,account.group_account_invoice,1,1,1,1
+access_ocr_invoice_parser,access_ocr_invoice_parser,model_ocr_invoice_parser,base.group_user,1,0,0,0

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Template envoi facture -->
+        <record id="email_template_invoice_maroc" model="mail.template">
+            <field name="name">Envoi Facture Maroc</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="subject">{{ object.company_id.name }} - Facture {{ object.agh_sequence_maroc or object.name }}</field>
+            <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif;">
+                    <p>Bonjour <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>Veuillez trouver ci-joint votre facture
+                        <strong t-out="object.agh_sequence_maroc or object.name or ''"/>.
+                    </p>
+                    <p><strong>Recapitulatif:</strong></p>
+                    <ul>
+                        <li>Date d'emission: <t t-out="object.invoice_date or ''"/></li>
+                        <li>Date d'echeance: <t t-out="object.invoice_date_due or ''"/></li>
+                        <li>Montant TTC: <t t-out="object.amount_total"/> <t t-out="object.currency_id.symbol or ''"/></li>
+                    </ul>
+                    <p>Cordialement,</p>
+                    <p><strong t-out="object.company_id.name or ''"/></p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Template premiere relance -->
+        <record id="email_template_relance_1_maroc" model="mail.template">
+            <field name="name">Premiere relance impaye Maroc</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="subject">Relance - Facture {{ object.agh_sequence_maroc or object.name }}</field>
+            <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Bonjour,</p>
+                    <p>Nous vous rappelons que votre facture
+                        <strong t-out="object.agh_sequence_maroc or object.name or ''"/>
+                        est echue depuis <strong t-out="object.agh_late_days or 0"/> jours.
+                    </p>
+                    <p>Montant du:
+                        <strong>
+                            <t t-out="object.amount_residual"/>
+                            <t t-out="object.currency_id.symbol or ''"/>
+                        </strong>
+                    </p>
+                    <p>Merci de regulariser votre situation.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Template deuxieme relance -->
+        <record id="email_template_relance_2_maroc" model="mail.template">
+            <field name="name">Deuxieme relance impaye Maroc</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="subject">URGENT - Facture {{ object.agh_sequence_maroc or object.name }}</field>
+            <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Bonjour,</p>
+                    <p>Malgre notre premiere relance, la facture
+                        <strong t-out="object.agh_sequence_maroc or object.name or ''"/>
+                        reste impayee depuis <strong t-out="object.agh_late_days or 0"/> jours.
+                    </p>
+                    <p>Nous vous demandons de bien vouloir proceder au reglement sous 48h.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
+</odoo>

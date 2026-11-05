@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action rapport pour hr.employee : Attestation Premium -->
+    <record id="action_report_employee_attestation" model="ir.actions.report">
+        <field name="name">Attestation Premium</field>
+        <field name="model">hr.employee</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_employee_certificate.employee_attestation_template</field>
+        <field name="report_file">agh_employee_certificate.employee_attestation_template</field>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Attestation - %s' % (object.name)</field>
+    </record>
+
+    <!-- Template QWeb -->
+    <template id="employee_attestation_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.basic_layout">
+
+                    <div class="page" style="font-family:Arial; font-size:15px; padding:40px;">
+
+                        <!-- LOGO -->
+                        <div style="text-align:center; margin-bottom:15px;">
+                            <img t-att-src="'/agh_employee_certificate/static/src/img/logo.png'"
+                                 style="height:85px;"/>
+                        </div>
+
+                        <t t-set="job" t-value="(doc.job_id.name or '').lower()"/>
+                        <t t-set="is_intern" t-value="doc.is_intern or 'trainee' in job or 'stagiaire' in job or 'intern' in job"/>
+
+                        <!-- NUMERO -->
+                        <div t-if="doc.attestation_number" style="text-align:right; margin-bottom:15px;">
+                            <strong>N° : <t t-esc="doc.attestation_number"/></strong>
+                        </div>
+
+                        <!-- TITRE -->
+                        <div style="text-align:center; margin-bottom:35px;">
+                            <h2>
+                                <t t-if="is_intern">Attestation de Stage</t>
+                                <t t-else="">Attestation de Travail</t>
+                            </h2>
+                        </div>
+
+                        <!-- TEXTE -->
+                        <p style="text-align:justify;">
+                            Je soussigné(e),
+                            <strong>Amine El Ghobari</strong>,
+                            <strong>Chief Executive Officer</strong>
+                            de la société
+                            <strong>AGH DATA AGENCY HOLDING SA</strong>,
+                            certifie par la présente que :
+                        </p>
+
+                        <t t-if="is_intern">
+                            <p style="text-align:justify;">
+                                <strong>M./Mme <t t-esc="doc.name"/></strong>
+                                a effectué un stage au sein de notre établissement,
+                                du <strong><t t-esc="doc.first_contract_date"/></strong>
+                                au <strong><t t-esc="doc.contract_id.date_end"/></strong>.
+                            </p>
+                        </t>
+                        <t t-else="">
+                            <p style="text-align:justify;">
+                                <strong>M./Mme <t t-esc="doc.name"/></strong>
+                                est employé(e) au sein de notre société en qualité de
+                                <strong><t t-esc="doc.job_id.name"/></strong>,
+                                depuis le <strong><t t-esc="doc.first_contract_date"/></strong>.
+                            </p>
+                        </t>
+
+                        <p>
+                            Nous délivrons la présente attestation
+                            pour servir et valoir ce que de droit.
+                        </p>
+
+                        <p>
+                            Fait à <strong>Méknès</strong>,
+                            le <strong t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>.
+                        </p>
+
+                        <!-- SIGNATURE -->
+                        <div style="text-align:right; margin-top:20px;">
+                            <p style="margin-bottom:8px;">Signature et cachet</p>
+                            <img t-att-src="'/agh_employee_certificate/static/src/img/signature.png'"
+                                 style="height:85px;"/>
+                            <br/>
+                            <strong>Amine El Ghobari</strong>
+                        </div>
+
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

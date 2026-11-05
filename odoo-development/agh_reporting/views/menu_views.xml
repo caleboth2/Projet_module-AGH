@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ===== ACTIONS (déclarées avant les menus) ===== -->
+
+    <record id="action_financial_report_bilan" model="ir.actions.act_window">
+        <field name="name">Bilan PCM</field>
+        <field name="res_model">account.financial.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'bilan'}</field>
+        <field name="view_id" ref="view_financial_report_form"/>
+    </record>
+
+    <record id="action_financial_report_cpc" model="ir.actions.act_window">
+        <field name="name">CPC</field>
+        <field name="res_model">account.financial.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'cpc'}</field>
+        <field name="view_id" ref="view_financial_report_form"/>
+    </record>
+
+    <record id="action_financial_report_flux" model="ir.actions.act_window">
+        <field name="name">Tableau de flux de trésorerie</field>
+        <field name="res_model">account.financial.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'flux'}</field>
+        <field name="view_id" ref="view_financial_report_form"/>
+    </record>
+
+    <record id="action_balance_agee_client" model="ir.actions.act_window">
+        <field name="name">Balance âgée clients</field>
+        <field name="res_model">account.balance.aged</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_partner_type': 'customer'}</field>
+        <field name="view_id" ref="view_balance_aged_form"/>
+    </record>
+
+    <record id="action_balance_agee_fournisseur" model="ir.actions.act_window">
+        <field name="name">Balance âgée fournisseurs</field>
+        <field name="res_model">account.balance.aged</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_partner_type': 'supplier'}</field>
+        <field name="view_id" ref="view_balance_aged_form"/>
+    </record>
+
+    <record id="action_grand_livre" model="ir.actions.act_window">
+        <field name="name">Grand-livre général</field>
+        <field name="res_model">account.general.ledger</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_general_ledger_form"/>
+    </record>
+
+    <!-- ===== MENUS ===== -->
+
+    <menuitem id="menu_reporting_root"
+              name="Reporting AGH"
+              parent="account.menu_finance"
+              sequence="25"
+              groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_financial_statements"
+              name="États financiers"
+              parent="menu_reporting_root"
+              sequence="10"/>
+
+    <menuitem id="menu_bilan_pcm"
+              name="Bilan PCM"
+              parent="menu_financial_statements"
+              action="action_financial_report_bilan"
+              sequence="10"/>
+
+    <menuitem id="menu_cpc_pcm"
+              name="CPC (Compte de résultats)"
+              parent="menu_financial_statements"
+              action="action_financial_report_cpc"
+              sequence="20"/>
+
+    <menuitem id="menu_flux_tresorerie"
+              name="Tableau de flux de trésorerie"
+              parent="menu_financial_statements"
+              action="action_financial_report_flux"
+              sequence="30"/>
+
+    <menuitem id="menu_balances"
+              name="Balances"
+              parent="menu_reporting_root"
+              sequence="20"/>
+
+    <menuitem id="menu_balance_agee_clients"
+              name="Balance âgée clients"
+              parent="menu_balances"
+              action="action_balance_agee_client"
+              sequence="10"/>
+
+    <menuitem id="menu_balance_agee_fournisseurs"
+              name="Balance âgée fournisseurs"
+              parent="menu_balances"
+              action="action_balance_agee_fournisseur"
+              sequence="20"/>
+
+    <menuitem id="menu_grand_livre"
+              name="Grand-livre général"
+              parent="menu_balances"
+              action="action_grand_livre"
+              sequence="30"/>
+
+    <menuitem id="menu_kpi_dashboard"
+              name="Tableau de bord KPIs"
+              parent="menu_reporting_root"
+              action="action_kpi_dashboard"
+              sequence="30"/>
+
+    <menuitem id="menu_report_scheduler"
+              name="Planification rapports"
+              parent="menu_reporting_root"
+              action="action_report_scheduler"
+              sequence="40"/>
+
+    <menuitem id="menu_kpi_config"
+              name="Configuration KPIs"
+              parent="menu_reporting_root"
+              action="action_account_kpi"
+              sequence="50"
+              groups="account.group_account_manager"/>
+</odoo>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_liasse_fiscale" model="ir.actions.report">
+        <field name="name">Liasse Fiscale IS</field>
+        <field name="model">account.is.declaration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_fiscal_maroc.report_liasse_fiscale_template</field>
+        <field name="report_file">agh_fiscal_maroc.report_liasse_fiscale_template</field>
+        <field name="binding_model_id" ref="model_account_is_declaration"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_liasse_fiscale_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Liasse Fiscale IS — <span t-field="doc.fiscal_year"/></h2>
+                        <h4>
+                            Société : <span t-field="doc.company_id.name"/>
+                            (Référence : <span t-field="doc.name"/>)
+                        </h4>
+
+                        <h3>Résultat fiscal</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Résultat comptable</td>
+                                <td class="text-end">
+                                    <span t-field="doc.accounting_result"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Réintégrations fiscales</td>
+                                <td class="text-end">
+                                    <span t-field="doc.fiscal_reintegration"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Déductions fiscales</td>
+                                <td class="text-end">
+                                    <span t-field="doc.fiscal_deduction"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr class="fw-bold">
+                                <td>Résultat fiscal</td>
+                                <td class="text-end">
+                                    <span t-field="doc.fiscal_result"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h3>Impôt sur les Sociétés</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Taux IS</td>
+                                <td class="text-end"><span t-field="doc.is_rate"/> %</td>
+                            </tr>
+                            <tr>
+                                <td>Montant IS</td>
+                                <td class="text-end">
+                                    <span t-field="doc.is_amount"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Cotisation Minimale</td>
+                                <td class="text-end">
+                                    <span t-field="doc.cm_amount"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr class="fw-bold">
+                                <td>Impôt retenu (max IS / CM)</td>
+                                <td class="text-end">
+                                    <span t-field="doc.amount_to_pay"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h3>Acomptes provisionnels</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Acompte T1 (Mars)</td>
+                                <td class="text-end">
+                                    <span t-field="doc.acompte_t1"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Acompte T2 (Juin)</td>
+                                <td class="text-end">
+                                    <span t-field="doc.acompte_t2"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Acompte T3 (Septembre)</td>
+                                <td class="text-end">
+                                    <span t-field="doc.acompte_t3"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Acompte T4 (Décembre)</td>
+                                <td class="text-end">
+                                    <span t-field="doc.acompte_t4"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr class="fw-bold">
+                                <td>Total acomptes</td>
+                                <td class="text-end">
+                                    <span t-field="doc.total_acomptes"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h3>Solde</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Solde IS à payer</td>
+                                <td class="text-end">
+                                    <span t-field="doc.solde_is"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Crédit IS</td>
+                                <td class="text-end">
+                                    <span t-field="doc.credit_is"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pénalités</td>
+                                <td class="text-end">
+                                    <span t-field="doc.penalties"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                            <tr class="fw-bold">
+                                <td>Total à payer</td>
+                                <td class="text-end">
+                                    <span t-field="doc.total_a_payer"
+                                          t-options="{'widget':'monetary','display_currency':doc.currency_id}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

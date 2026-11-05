@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agh_alert_rule_user,agh.alert.rule.user,model_agh_alert_rule,base.group_user,1,1,1,1
+access_agh_workflow_log_user,agh.workflow.log.user,model_agh_workflow_log,base.group_user,1,0,0,0
+access_agh_workflow_log_manager,agh.workflow.log.manager,model_agh_workflow_log,base.group_system,1,1,1,1
+access_agh_scheduled_action_user,agh.scheduled.action.user,model_agh_scheduled_action,base.group_user,1,0,0,0
+access_agh_automation_config_user,agh.automation.config.user,model_agh_automation_config,base.group_user,1,1,1,1

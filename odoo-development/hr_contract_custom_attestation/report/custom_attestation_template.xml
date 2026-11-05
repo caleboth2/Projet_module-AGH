@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="custom_attestation_template">
+
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="doc">
+
+                <t t-call="web.external_layout">
+
+                    <div class="page">
+
+                        <div style="text-align:center; margin-top:30px;">
+                            <h2>
+                                <strong>ATTESTATION DE TRAVAIL</strong>
+                            </h2>
+                        </div>
+
+                        <br/>
+                        <br/>
+
+                        <p style="font-size:16px; line-height:2;">
+
+                            Je soussigné,
+
+                            <strong>
+                                Amine ELGHOBARI
+                            </strong>,
+
+                            agissant en qualité de
+
+                            <strong>
+                                Chief Executive Officer
+                            </strong>
+
+                            de la société
+
+                            <strong>
+                                AGH DATA AGENCY HOLDING SA
+                            </strong>,
+
+                            atteste et certifie que
+
+                            <strong>
+                                <span t-field="doc.employee_id.name"/>
+                            </strong>
+
+                            a travaillé au sein de notre société en qualité de
+
+                            <strong>
+                                <span t-field="doc.job_id.name"/>
+                            </strong>
+
+                            depuis le
+
+                            <strong>
+                                <span t-field="doc.date_start"/>
+                            </strong>
+
+                            <t t-if="doc.is_reference_period_active">
+
+                                à ce jour.
+
+                            </t>
+
+                            <t t-if="not doc.is_reference_period_active">
+
+                                jusqu'au
+
+                                <strong>
+                                    <span t-field="doc.date_end"/>
+                                </strong>.
+
+                            </t>
+
+                        </p>
+
+                        <br/>
+
+                        <p style="font-size:16px;">
+
+                            Cette attestation est délivrée à la demande de
+                            l'intéressé pour servir et valoir ce que de droit.
+
+                        </p>
+
+                        <br/>
+                        <br/>
+                        <br/>
+
+                        <div style="text-align:right;">
+
+                            Fait à Meknès, le
+
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>
+
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+        </t>
+
+    </template>
+
+</odoo>

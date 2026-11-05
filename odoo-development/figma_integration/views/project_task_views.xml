@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="project_task_form_figma" model="ir.ui.view">
+        <field name="name">project.task.form.figma</field>
+        <field name="model">project.task</field>
+
+        <field name="inherit_id" ref="project.view_task_form2"/>
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="inside">
+
+                <group string="Figma">
+
+                    <field name="figma_design_count" readonly="1"/>
+
+                    <button
+                        name="action_open_figma_designs"
+                        type="object"
+                        string="Open Designs"
+                        class="btn-primary"
+                    />
+
+                </group>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_agh_ollama_summary_wizard_form" model="ir.ui.view">
+        <field name="name">agh.ollama.summary.wizard.form</field>
+        <field name="model">agh.ollama.summary.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Générer le résumé IA (Ollama)">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>🤖 Résumé IA via Ollama</strong><br/>
+                        Ollama va analyser l'évaluation et rédiger un résumé professionnel en français.
+                        Le service doit être démarré localement (<code>ollama serve</code>).
+                    </div>
+                    <group string="Évaluation">
+                        <field name="evaluation_id" readonly="1"/>
+                        <field name="employee_name" readonly="1"/>
+                        <field name="score_summary" readonly="1" string="Score global"/>
+                    </group>
+                    <group string="Paramètres Ollama">
+                        <field name="ollama_url"/>
+                        <field name="ollama_model"/>
+                    </group>
+                    <group string="Aperçu du prompt envoyé à Ollama">
+                        <field name="preview_prompt" readonly="1" nolabel="1"
+                               widget="text"
+                               class="o_field_text_monospace"
+                               style="max-height: 250px; overflow-y: auto; font-size: 0.85em;"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate"
+                            string="🤖 Générer le résumé"
+                            type="object"
+                            class="btn btn-primary"/>
+                    <button string="Annuler"
+                            class="btn btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

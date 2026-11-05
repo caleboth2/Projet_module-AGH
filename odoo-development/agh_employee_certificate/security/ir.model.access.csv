@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_certificate_admin,hr.certificate.admin,model_hr_certificate,base.group_system,1,1,1,1
+access_hr_certificate_template_admin,hr.certificate.template.admin,model_hr_certificate_template,base.group_system,1,1,1,1
+access_wizard_generate_certificate_admin,wizard.generate.certificate.admin,model_wizard_generate_certificate,base.group_system,1,1,1,1
+access_intern_profile_admin,intern.profile.admin,model_intern_profile,base.group_system,1,1,1,1

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_tax_form_inherit_maroc" model="ir.ui.view">
+        <field name="name">account.tax.form.inherit.maroc</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount']" position="after">
+                <field name="moroccan_tva_rate"/>
+                <field name="tva_type"/>
+                <field name="is_tva_collecte"/>
+                <field name="is_tva_deductible"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_fiscal_position_form_inherit_maroc" model="ir.ui.view">
+        <field name="name">account.fiscal.position.form.inherit.maroc</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="account.view_account_position_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="is_exoneration"/>
+                <field name="exoneration_reason" invisible="not is_exoneration"/>
+                <field name="tax_clearance_id" invisible="not is_exoneration"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

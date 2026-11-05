@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_knowledge_tag_tree" model="ir.ui.view">
+        <field name="name">agh.knowledge.tag.tree</field>
+        <field name="model">agh.knowledge.tag</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="color" widget="color"/>
+                <field name="article_count"/>
+                <field name="is_smart_tag"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_knowledge_tag_form" model="ir.ui.view">
+        <field name="name">agh.knowledge.tag.form</field>
+        <field name="model">agh.knowledge.tag</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom du tag..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="color" widget="color"/>
+                        <field name="is_smart_tag"/>
+                        <field name="tag_rule"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_knowledge_tag" model="ir.actions.act_window">
+        <field name="name">Tags</field>
+        <field name="res_model">agh.knowledge.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vue formulaire fournisseur — onglet "Informations Maroc / RAS" -->
+    <record id="view_partner_supplier_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.supplier.maroc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Informations Maroc &amp; RAS" name="agh_supplier_maroc">
+                    <group>
+                        <group string="Identifiants Maroc">
+                            <field name="agh_ice"/>
+                            <field name="agh_tax_id"/>
+                            <field name="agh_rc"/>
+                            <field name="agh_cnss"/>
+                            <field name="agh_patente"/>
+                        </group>
+                        <group string="Retenue à la Source">
+                            <field name="agh_ras_subject"/>
+                            <field name="agh_ras_default_type"
+                                   invisible="not agh_ras_subject"/>
+                            <field name="agh_ras_default_rate"
+                                   invisible="not agh_ras_subject"/>
+                            <field name="agh_strategic_supplier"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue liste fournisseurs — colonnes Maroc -->
+    <record id="view_partner_supplier_tree_inherit" model="ir.ui.view">
+        <field name="name">res.partner.list.supplier.maroc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='complete_name']" position="after">
+                <field name="agh_ice" optional="show"/>
+                <field name="agh_tax_id" optional="hide" string="IF"/>
+                <field name="agh_ras_subject" optional="hide" widget="boolean_toggle"/>
+                <field name="agh_strategic_supplier" optional="hide" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue recherche fournisseurs -->
+    <record id="view_partner_supplier_search_inherit" model="ir.ui.view">
+        <field name="name">res.partner.search.supplier.maroc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="filter_ras_subject"
+                        string="Soumis à RAS"
+                        domain="[('agh_ras_subject','=',True)]"/>
+                <filter name="filter_strategic"
+                        string="Fournisseurs stratégiques"
+                        domain="[('agh_strategic_supplier','=',True)]"/>
+                <field name="agh_ice" string="ICE"/>
+                <field name="agh_tax_id" string="IF"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

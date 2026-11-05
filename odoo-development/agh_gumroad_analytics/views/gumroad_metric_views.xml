@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_agh_gumroad_metric_list" model="ir.ui.view">
+        <field name="name">agh.gumroad.metric.list</field>
+        <field name="model">agh.gumroad.metric</field>
+        <field name="arch" type="xml">
+            <list string="Daily Metrics">
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="project_id"/>
+                <field name="sales_count"/>
+                <field name="revenue"/>
+                <field name="avg_basket"/>
+                <field name="conversion_rate"/>
+                <field name="top_referrer"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_agh_gumroad_metric" model="ir.actions.act_window">
+        <field name="name">Daily Metrics</field>
+        <field name="res_model">agh.gumroad.metric</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

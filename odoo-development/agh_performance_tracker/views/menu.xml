@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Menu racine Performance Tracker ── -->
+    <menuitem id="menu_agh_performance_root"
+              name="Performance Tracker (PMS)"
+              sequence="25"
+              web_icon="agh_performance_tracker,static/description/icon.png"
+              groups="base.group_user"/>
+
+    <!-- ── Tableau de bord ── -->
+    <menuitem id="menu_agh_performance_dashboard"
+              name="Tableau de bord"
+              parent="menu_agh_performance_root"
+              sequence="10"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_agh_top_performers"
+              name="Top Performers ⭐"
+              parent="menu_agh_performance_dashboard"
+              action="action_agh_top_performers"
+              sequence="10"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_agh_poor_performers"
+              name="Alertes – Insuffisants ❌"
+              parent="menu_agh_performance_dashboard"
+              action="action_agh_poor_performers"
+              sequence="20"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_agh_my_evaluations"
+              name="Mes évaluations"
+              parent="menu_agh_performance_dashboard"
+              action="action_agh_my_evaluations"
+              sequence="30"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_agh_performance_summary"
+              name="Synthèse globale"
+              parent="menu_agh_performance_dashboard"
+              action="action_agh_performance_summary"
+              sequence="40"
+              groups="base.group_user"/>
+
+    <!-- ── Évaluations ── -->
+    <menuitem id="menu_agh_evaluations"
+              name="Évaluations"
+              parent="menu_agh_performance_root"
+              sequence="20"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_agh_kpi_evaluation"
+              name="Toutes les évaluations"
+              parent="menu_agh_evaluations"
+              action="action_agh_kpi_evaluation"
+              sequence="10"
+              groups="base.group_user"/>
+
+    <!-- ── Configuration ── -->
+    <menuitem id="menu_agh_performance_config"
+              name="Configuration"
+              parent="menu_agh_performance_root"
+              sequence="90"
+              groups="base.group_user"/>
+
+    <menuitem id="menu_agh_kpi_criteria"
+              name="Critères KPI"
+              parent="menu_agh_performance_config"
+              action="action_agh_kpi_criteria"
+              sequence="10"
+              groups="base.group_user"/>
+
+</odoo>

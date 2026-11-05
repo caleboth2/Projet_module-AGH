@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================
+             CALENDRIER FISCAL MAROCAIN — Exercice 2025
+             Basé sur le modèle account.fiscal.calendar
+             Échéances DGI conformes à la réglementation marocaine
+        ============================================================ -->
+
+        <!-- ── TVA Mensuelle 2025 ── -->
+
+        <record id="fiscal_cal_tva_m01_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Janvier 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-02-28</field>
+            <field name="deadline">2025-02-28</field>
+            <field name="period_from">2025-01-01</field>
+            <field name="period_to">2025-01-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m02_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Février 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-03-31</field>
+            <field name="deadline">2025-03-31</field>
+            <field name="period_from">2025-02-01</field>
+            <field name="period_to">2025-02-28</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m03_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Mars 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-04-30</field>
+            <field name="deadline">2025-04-30</field>
+            <field name="period_from">2025-03-01</field>
+            <field name="period_to">2025-03-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m04_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Avril 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-05-31</field>
+            <field name="deadline">2025-05-31</field>
+            <field name="period_from">2025-04-01</field>
+            <field name="period_to">2025-04-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m05_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Mai 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-06-30</field>
+            <field name="deadline">2025-06-30</field>
+            <field name="period_from">2025-05-01</field>
+            <field name="period_to">2025-05-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m06_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Juin 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-07-31</field>
+            <field name="deadline">2025-07-31</field>
+            <field name="period_from">2025-06-01</field>
+            <field name="period_to">2025-06-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m07_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Juillet 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-08-31</field>
+            <field name="deadline">2025-08-31</field>
+            <field name="period_from">2025-07-01</field>
+            <field name="period_to">2025-07-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m08_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Août 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-09-30</field>
+            <field name="deadline">2025-09-30</field>
+            <field name="period_from">2025-08-01</field>
+            <field name="period_to">2025-08-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m09_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Septembre 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-10-31</field>
+            <field name="deadline">2025-10-31</field>
+            <field name="period_from">2025-09-01</field>
+            <field name="period_to">2025-09-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m10_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Octobre 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-11-30</field>
+            <field name="deadline">2025-11-30</field>
+            <field name="period_from">2025-10-01</field>
+            <field name="period_to">2025-10-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m11_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Novembre 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-12-31</field>
+            <field name="deadline">2025-12-31</field>
+            <field name="period_from">2025-11-01</field>
+            <field name="period_to">2025-11-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m12_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Décembre 2025</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2026-01-31</field>
+            <field name="deadline">2026-01-31</field>
+            <field name="period_from">2025-12-01</field>
+            <field name="period_to">2025-12-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <!-- ── TVA Trimestrielle 2025 ── -->
+
+        <record id="fiscal_cal_tva_q1_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T1 2025</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-04-30</field>
+            <field name="deadline">2025-04-30</field>
+            <field name="period_from">2025-01-01</field>
+            <field name="period_to">2025-03-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">Déclaration TVA trimestrielle — Régime trimestriel (CA &lt; 1 000 000 MAD)</field>
+        </record>
+
+        <record id="fiscal_cal_tva_q2_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T2 2025</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-07-31</field>
+            <field name="deadline">2025-07-31</field>
+            <field name="period_from">2025-04-01</field>
+            <field name="period_to">2025-06-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_q3_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T3 2025</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-10-31</field>
+            <field name="deadline">2025-10-31</field>
+            <field name="period_from">2025-07-01</field>
+            <field name="period_to">2025-09-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_q4_2025" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T4 2025</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2026-01-31</field>
+            <field name="deadline">2026-01-31</field>
+            <field name="period_from">2025-10-01</field>
+            <field name="period_to">2025-12-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <!-- ── IS — Acomptes trimestriels 2025 ── -->
+
+        <record id="fiscal_cal_is_t1_2025" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T1 — Mars 2025</field>
+            <field name="declaration_type">is_acompte_t1</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-03-31</field>
+            <field name="deadline">2025-03-31</field>
+            <field name="period_from">2025-01-01</field>
+            <field name="period_to">2025-03-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <record id="fiscal_cal_is_t2_2025" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T2 — Juin 2025</field>
+            <field name="declaration_type">is_acompte_t2</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-06-30</field>
+            <field name="deadline">2025-06-30</field>
+            <field name="period_from">2025-04-01</field>
+            <field name="period_to">2025-06-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <record id="fiscal_cal_is_t3_2025" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T3 — Septembre 2025</field>
+            <field name="declaration_type">is_acompte_t3</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-09-30</field>
+            <field name="deadline">2025-09-30</field>
+            <field name="period_from">2025-07-01</field>
+            <field name="period_to">2025-09-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <record id="fiscal_cal_is_t4_2025" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T4 — Décembre 2025</field>
+            <field name="declaration_type">is_acompte_t4</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-12-31</field>
+            <field name="deadline">2025-12-31</field>
+            <field name="period_from">2025-10-01</field>
+            <field name="period_to">2025-12-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <!-- ── IS Annuel (Liasse fiscale) 2025 — dépôt juillet 2026 ── -->
+
+        <record id="fiscal_cal_is_annual_2025" model="account.fiscal.calendar">
+            <field name="name">IS Annuel — Liasse fiscale 2025</field>
+            <field name="declaration_type">is_annual</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2026-07-31</field>
+            <field name="deadline">2026-07-31</field>
+            <field name="period_from">2025-01-01</field>
+            <field name="period_to">2025-12-31</field>
+            <field name="days_before_notify">30</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">Dépôt liasse fiscale IS dans les 3 mois suivant la clôture (31/12/2025). Art. 150 CGI Maroc.</field>
+        </record>
+
+        <!-- ── Taxe Professionnelle 2025 ── -->
+
+        <record id="fiscal_cal_tp_2025" model="account.fiscal.calendar">
+            <field name="name">Taxe Professionnelle — Exercice 2025</field>
+            <field name="declaration_type">tp_annual</field>
+            <field name="fiscal_year">2025</field>
+            <field name="due_date">2025-04-30</field>
+            <field name="deadline">2025-04-30</field>
+            <field name="period_from">2024-01-01</field>
+            <field name="period_to">2024-12-31</field>
+            <field name="days_before_notify">30</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">Déclaration annuelle TP avant le 30 avril. Art. 504 CGI Maroc. Basée sur la valeur locative des locaux professionnels.</field>
+        </record>
+
+        <!-- ============================================================
+             CALENDRIER FISCAL MAROCAIN — Exercice 2026
+        ============================================================ -->
+
+        <!-- ── TVA Mensuelle 2026 ── -->
+
+        <record id="fiscal_cal_tva_m01_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Janvier 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-02-28</field>
+            <field name="deadline">2026-02-28</field>
+            <field name="period_from">2026-01-01</field>
+            <field name="period_to">2026-01-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m02_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Février 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-03-31</field>
+            <field name="deadline">2026-03-31</field>
+            <field name="period_from">2026-02-01</field>
+            <field name="period_to">2026-02-28</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m03_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Mars 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-04-30</field>
+            <field name="deadline">2026-04-30</field>
+            <field name="period_from">2026-03-01</field>
+            <field name="period_to">2026-03-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m04_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Avril 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-05-31</field>
+            <field name="deadline">2026-05-31</field>
+            <field name="period_from">2026-04-01</field>
+            <field name="period_to">2026-04-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m05_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Mai 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-06-30</field>
+            <field name="deadline">2026-06-30</field>
+            <field name="period_from">2026-05-01</field>
+            <field name="period_to">2026-05-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m06_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Juin 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-07-31</field>
+            <field name="deadline">2026-07-31</field>
+            <field name="period_from">2026-06-01</field>
+            <field name="period_to">2026-06-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m07_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Juillet 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-08-31</field>
+            <field name="deadline">2026-08-31</field>
+            <field name="period_from">2026-07-01</field>
+            <field name="period_to">2026-07-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m08_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Août 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-09-30</field>
+            <field name="deadline">2026-09-30</field>
+            <field name="period_from">2026-08-01</field>
+            <field name="period_to">2026-08-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m09_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Septembre 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-10-31</field>
+            <field name="deadline">2026-10-31</field>
+            <field name="period_from">2026-09-01</field>
+            <field name="period_to">2026-09-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m10_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Octobre 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-11-30</field>
+            <field name="deadline">2026-11-30</field>
+            <field name="period_from">2026-10-01</field>
+            <field name="period_to">2026-10-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m11_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Novembre 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-12-31</field>
+            <field name="deadline">2026-12-31</field>
+            <field name="period_from">2026-11-01</field>
+            <field name="period_to">2026-11-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_m12_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Mensuelle — Décembre 2026</field>
+            <field name="declaration_type">tva_monthly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2027-01-31</field>
+            <field name="deadline">2027-01-31</field>
+            <field name="period_from">2026-12-01</field>
+            <field name="period_to">2026-12-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <!-- ── TVA Trimestrielle 2026 ── -->
+
+        <record id="fiscal_cal_tva_q1_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T1 2026</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-04-30</field>
+            <field name="deadline">2026-04-30</field>
+            <field name="period_from">2026-01-01</field>
+            <field name="period_to">2026-03-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_q2_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T2 2026</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-07-31</field>
+            <field name="deadline">2026-07-31</field>
+            <field name="period_from">2026-04-01</field>
+            <field name="period_to">2026-06-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_q3_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T3 2026</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-10-31</field>
+            <field name="deadline">2026-10-31</field>
+            <field name="period_from">2026-07-01</field>
+            <field name="period_to">2026-09-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <record id="fiscal_cal_tva_q4_2026" model="account.fiscal.calendar">
+            <field name="name">TVA Trimestrielle — T4 2026</field>
+            <field name="declaration_type">tva_quarterly</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2027-01-31</field>
+            <field name="deadline">2027-01-31</field>
+            <field name="period_from">2026-10-01</field>
+            <field name="period_to">2026-12-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+        </record>
+
+        <!-- ── IS — Acomptes trimestriels 2026 ── -->
+
+        <record id="fiscal_cal_is_t1_2026" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T1 — Mars 2026</field>
+            <field name="declaration_type">is_acompte_t1</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-03-31</field>
+            <field name="deadline">2026-03-31</field>
+            <field name="period_from">2026-01-01</field>
+            <field name="period_to">2026-03-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <record id="fiscal_cal_is_t2_2026" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T2 — Juin 2026</field>
+            <field name="declaration_type">is_acompte_t2</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-06-30</field>
+            <field name="deadline">2026-06-30</field>
+            <field name="period_from">2026-04-01</field>
+            <field name="period_to">2026-06-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <record id="fiscal_cal_is_t3_2026" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T3 — Septembre 2026</field>
+            <field name="declaration_type">is_acompte_t3</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-09-30</field>
+            <field name="deadline">2026-09-30</field>
+            <field name="period_from">2026-07-01</field>
+            <field name="period_to">2026-09-30</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <record id="fiscal_cal_is_t4_2026" model="account.fiscal.calendar">
+            <field name="name">IS Acompte T4 — Décembre 2026</field>
+            <field name="declaration_type">is_acompte_t4</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-12-31</field>
+            <field name="deadline">2026-12-31</field>
+            <field name="period_from">2026-10-01</field>
+            <field name="period_to">2026-12-31</field>
+            <field name="days_before_notify">15</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">25% de l'IS de référence (exercice N-1). Art. 170 CGI Maroc.</field>
+        </record>
+
+        <!-- ── IS Annuel 2026 — dépôt juillet 2027 ── -->
+
+        <record id="fiscal_cal_is_annual_2026" model="account.fiscal.calendar">
+            <field name="name">IS Annuel — Liasse fiscale 2026</field>
+            <field name="declaration_type">is_annual</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2027-07-31</field>
+            <field name="deadline">2027-07-31</field>
+            <field name="period_from">2026-01-01</field>
+            <field name="period_to">2026-12-31</field>
+            <field name="days_before_notify">30</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">Dépôt liasse fiscale IS dans les 3 mois suivant la clôture (31/12/2026). Art. 150 CGI Maroc.</field>
+        </record>
+
+        <!-- ── Taxe Professionnelle 2026 ── -->
+
+        <record id="fiscal_cal_tp_2026" model="account.fiscal.calendar">
+            <field name="name">Taxe Professionnelle — Exercice 2026</field>
+            <field name="declaration_type">tp_annual</field>
+            <field name="fiscal_year">2026</field>
+            <field name="due_date">2026-04-30</field>
+            <field name="deadline">2026-04-30</field>
+            <field name="period_from">2025-01-01</field>
+            <field name="period_to">2025-12-31</field>
+            <field name="days_before_notify">30</field>
+            <field name="is_done">False</field>
+            <field name="notification_sent">False</field>
+            <field name="notes">Déclaration annuelle TP avant le 30 avril. Art. 504 CGI Maroc.</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Journal des Ventes (VTE) -->
+        <record id="pcm_journal_sale" model="account.journal">
+            <field name="name">Journal des Ventes (PCM)</field>
+            <field name="code">VTE</field>
+            <field name="type">sale</field>
+            <field name="pcm_journal_type">vente</field>
+            <field name="sequence_prefix_pcm">VTE</field>
+            <field name="show_on_dashboard" eval="True"/>
+        </record>
+
+        <!-- Journal des Achats (ACH) -->
+        <record id="pcm_journal_purchase" model="account.journal">
+            <field name="name">Journal des Achats (PCM)</field>
+            <field name="code">ACH</field>
+            <field name="type">purchase</field>
+            <field name="pcm_journal_type">achat</field>
+            <field name="sequence_prefix_pcm">ACH</field>
+            <field name="show_on_dashboard" eval="True"/>
+        </record>
+
+        <!-- Journal de Banque (BQ) -->
+        <record id="pcm_journal_bank" model="account.journal">
+            <field name="name">Journal de Banque (PCM)</field>
+            <field name="code">BQ</field>
+            <field name="type">bank</field>
+            <field name="pcm_journal_type">banque</field>
+            <field name="sequence_prefix_pcm">BQ</field>
+            <field name="show_on_dashboard" eval="True"/>
+        </record>
+
+        <!-- Journal de Caisse (CAI) -->
+        <record id="pcm_journal_cash" model="account.journal">
+            <field name="name">Journal de Caisse (PCM)</field>
+            <field name="code">CAI</field>
+            <field name="type">cash</field>
+            <field name="pcm_journal_type">caisse</field>
+            <field name="sequence_prefix_pcm">CAI</field>
+            <field name="show_on_dashboard" eval="True"/>
+        </record>
+
+        <!-- Journal des Opérations Diverses (OD) -->
+        <record id="pcm_journal_general" model="account.journal">
+            <field name="name">Opérations Diverses (PCM)</field>
+            <field name="code">OD</field>
+            <field name="type">general</field>
+            <field name="pcm_journal_type">od</field>
+            <field name="sequence_prefix_pcm">OD</field>
+            <field name="show_on_dashboard" eval="True"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_att_stage" model="ir.actions.report">
+        <field name="name">Attestation de Stage</field>
+        <field name="model">hr.certificate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_employee_certificate.report_attestation_stage_document</field>
+        <field name="report_file">attestation_stage</field>
+        <field name="print_report_name">'Attestation_Stage_%s' % (object.employee_id.name)</field>
+    </record>
+
+    <template id="report_attestation_stage_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="data" t-value="doc._get_report_data()"/>
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <h2><strong>ATTESTATION DE STAGE</strong></h2>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <p>
+                                    Nous soussignés, <strong><t t-esc="data['company'].name"/></strong>,
+                                    attestons que <strong><t t-esc="data['employee'].name"/></strong>
+                                    a effectué un stage au sein de notre établissement
+                                    <t t-if="data['contract'] and data['contract'].date_start">
+                                        du <strong><t t-esc="data['contract'].date_start.strftime('%d/%m/%Y')"/></strong>
+                                        <t t-if="data['contract'].date_end">
+                                            au <strong><t t-esc="data['contract'].date_end.strftime('%d/%m/%Y')"/></strong>
+                                        </t>
+                                    </t>.
+                                </p>
+                                <p>Mission effectuée : <strong><t t-esc="data['employee'].job_id.name or 'Générale'"/></strong>.</p>
+                                <p>Encadrant : <strong><t t-esc="data['employee'].parent_id.name or 'Service RH'"/></strong>.</p>
+                                <p>Cette attestation est délivrée à l'intéressé(e) pour servir et valoir ce que de droit.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p>Fait à <t t-esc="data['company'].city or '...'"/>, le <t t-esc="doc.date.strftime('%d/%m/%Y') if doc.date else ''"/></p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p><strong>Le Directeur des Ressources Humaines</strong></p>
+                                <t t-if="data['signature']">
+                                    <img t-attf-src="data:image/png;base64,{{data['signature']}}" style="max-height:60px;"/>
+                                </t>
+                                <p><t t-esc="data['signature_name']"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

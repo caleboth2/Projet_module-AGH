@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_generate_certificate_form" model="ir.ui.view">
+        <field name="name">wizard.generate.certificate.form</field>
+        <field name="model">wizard.generate.certificate</field>
+        <field name="arch" type="xml">
+            <form string="Générer une Attestation">
+                <group>
+                    <group string="Employé">
+                        <field name="employee_id"/>
+                        <field name="certificate_type"/>
+                        <field name="template_id"/>
+                    </group>
+                    <group string="Options">
+                        <field name="language"/>
+                        <field name="send_email"/>
+                        <field name="signature_image" widget="image" options="{'size': [128, 64]}"/>
+                    </group>
+                </group>
+                <group string="Dates de congé" invisible="certificate_type != 'ATT_CONGE'">
+                    <field name="leave_date_start"/>
+                    <field name="leave_date_end"/>
+                </group>
+                <footer>
+                    <button name="action_generate" string="Générer l'attestation" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_generate_certificate" model="ir.actions.act_window">
+        <field name="name">Générer une Attestation</field>
+        <field name="res_model">wizard.generate.certificate</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!-- Menu -->
+    <menuitem id="menu_hr_certificate_root" name="Attestations"
+              parent="hr.menu_hr_root"
+              sequence="20"/>
+    <menuitem id="menu_hr_certificate_list" name="Toutes les attestations"
+              parent="menu_hr_certificate_root"
+              action="action_hr_certificate"
+              sequence="10"/>
+    <menuitem id="menu_hr_certificate_generate" name="Générer une attestation"
+              parent="menu_hr_certificate_root"
+              action="action_wizard_generate_certificate"
+              sequence="20"/>
+</odoo>

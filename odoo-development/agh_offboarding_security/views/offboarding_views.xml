@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- FORM VIEW -->
+
+    <record id="view_agh_offboarding_form"
+            model="ir.ui.view">
+
+        <field name="name">agh.offboarding.form</field>
+
+        <field name="model">agh.offboarding</field>
+
+        <field name="arch" type="xml">
+
+            <form string="Offboarding">
+
+                <header>
+
+                    <button name="action_approve"
+                            type="object"
+                            string="Approve"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <button name="action_execute"
+                            type="object"
+                            string="Execute"
+                            class="btn-danger"
+                            invisible="state != 'approved'"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,approved,executed"/>
+
+                </header>
+
+                <sheet>
+
+                    <group>
+
+                        <group>
+
+                            <field name="name"/>
+
+                            <field name="employee_id"/>
+
+                        </group>
+
+                        <group>
+
+                            <field name="validated_by_manager"/>
+
+                            <field name="validated_by_hr"/>
+
+                        </group>
+
+                    </group>
+
+                    <notebook>
+
+                        <page string="Checklist">
+
+                            <group>
+
+                                <field name="github_revoked"/>
+
+                                <field name="server_revoked"/>
+
+                                <field name="api_revoked"/>
+
+                                <field name="vpn_revoked"/>
+
+                                <field name="email_revoked"/>
+
+                            </group>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+                <chatter/>
+
+            </form>
+
+        </field>
+
+    </record>
+
+
+    <!-- LIST VIEW -->
+
+    <record id="view_agh_offboarding_list"
+            model="ir.ui.view">
+
+        <field name="name">agh.offboarding.list</field>
+
+        <field name="model">agh.offboarding</field>
+
+        <field name="arch" type="xml">
+
+            <list>
+
+                <field name="name"/>
+
+                <field name="employee_id"/>
+
+                <field name="state"/>
+
+                <field name="validated_by_manager"/>
+
+                <field name="validated_by_hr"/>
+
+            </list>
+
+        </field>
+
+    </record>
+
+
+    <!-- ACTION -->
+
+    <record id="action_agh_offboarding"
+            model="ir.actions.act_window">
+
+        <field name="name">Offboarding</field>
+
+        <field name="res_model">agh.offboarding</field>
+
+        <field name="view_mode">list,form</field>
+
+    </record>
+
+
+    <!-- MENU -->
+
+    <menuitem id="menu_agh_offboarding"
+          name="Offboarding"
+          parent="hr.menu_hr_root"
+          action="action_agh_offboarding"
+          sequence="90"/>
+
+</odoo>

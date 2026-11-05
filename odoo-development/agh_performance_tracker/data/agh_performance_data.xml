@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ── Séquence automatique ── -->
+        <record id="seq_agh_kpi_evaluation" model="ir.sequence">
+            <field name="name">Évaluation KPI AGH</field>
+            <field name="code">agh.kpi.evaluation</field>
+            <field name="prefix">KPI/%(year)s/%(month)s/</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <!-- ── Critères KPI par défaut ── -->
+        <record id="criteria_assiduite" model="agh.kpi.criteria">
+            <field name="name">Assiduité</field>
+            <field name="code">ASSIDUITE</field>
+            <field name="sequence">10</field>
+            <field name="team_category">all</field>
+            <field name="description">Présence, ponctualité et respect des horaires de travail.</field>
+        </record>
+
+        <record id="criteria_deadline" model="agh.kpi.criteria">
+            <field name="name">Respect des Deadlines</field>
+            <field name="code">DEADLINE</field>
+            <field name="sequence">20</field>
+            <field name="team_category">all</field>
+            <field name="description">Respect des délais assignés sur les tâches et projets. Score calculé automatiquement.</field>
+        </record>
+
+        <record id="criteria_quantite" model="agh.kpi.criteria">
+            <field name="name">Quantité de travail</field>
+            <field name="code">QUANTITE</field>
+            <field name="sequence">30</field>
+            <field name="team_category">all</field>
+            <field name="description">Volume de tâches, tickets ou livrables complétés sur la période.</field>
+        </record>
+
+        <record id="criteria_qualite" model="agh.kpi.criteria">
+            <field name="name">Qualité du travail</field>
+            <field name="code">QUALITE</field>
+            <field name="sequence">40</field>
+            <field name="team_category">all</field>
+            <field name="description">Niveau de soin, précision, conformité et satisfaction des livrables.</field>
+        </record>
+
+        <!-- ── Paramètres système par défaut ── -->
+        <record id="param_ollama_url" model="ir.config_parameter">
+            <field name="key">agh_performance.ollama_url</field>
+            <field name="value">http://localhost:11434</field>
+        </record>
+
+        <record id="param_ollama_model" model="ir.config_parameter">
+            <field name="key">agh_performance.ollama_model</field>
+            <field name="value">llama3</field>
+        </record>
+
+        <record id="param_ollama_timeout" model="ir.config_parameter">
+            <field name="key">agh_performance.ollama_timeout</field>
+            <field name="value">60</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_onboarding_offboarding" model="ir.ui.view">
+        <field name="name">hr.employee.form.onboarding.offboarding</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_manual_onboarding" string="🚀 Relancer Onboarding GitHub &amp; Odoo" type="object" class="oe_highlight"/>
+                <button name="action_open_offboarding_wizard" string="⚠️ Lancer Offboarding &amp; Révoquer Accès" type="object" class="btn-danger"/>
+            </header>
+            <xpath expr="//field[@name='work_email']" position="after">
+                <field name="github_username" placeholder="ex: octocat"/>
+                <field name="onboarding_status" widget="badge" decoration-success="onboarding_status == 'done'" decoration-warning="onboarding_status == 'pending'"/>
+            </xpath>
+            <xpath expr="//page[@name='public']" position="after">
+                <page string="Sécurité &amp; Intégrations (AGH)" name="agh_security">
+                    <group string="Journal d'Onboarding / Offboarding">
+                        <field name="onboarding_log" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_evaluation_criteria_user,hr.evaluation.criteria.user,model_hr_evaluation_criteria,hr_recruitment.group_hr_recruitment_user,1,0,0,0
+access_hr_evaluation_criteria_manager,hr.evaluation.criteria.manager,model_hr_evaluation_criteria,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_applicant_evaluation_line_user,hr.applicant.evaluation.line.user,model_hr_applicant_evaluation_line,hr_recruitment.group_hr_recruitment_user,1,1,1,0
+access_hr_applicant_evaluation_line_manager,hr.applicant.evaluation.line.manager,model_hr_applicant_evaluation_line,hr_recruitment.group_hr_recruitment_manager,1,1,1,1

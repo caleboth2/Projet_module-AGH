@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Agent d'Exécution par défaut -->
+        <record id="ai_agent_executor_default" model="agh.ai.agent">
+            <field name="name">Assistant App Factory</field>
+            <field name="agent_type">executor</field>
+            <field name="model_name">llama3.2:1b-instruct-q4_K_M</field>
+            <field name="ollama_host">http://host.docker.internal:11434</field>
+            <field name="system_prompt">Tu es l'assistant IA officiel de l'App Factory. Tu as accès aux outils Odoo. Réponds de manière concise en français.
+Lorsque tu utilises l'outil 'search_knowledge' pour répondre à une question, tu dois obligatoirement citer le titre de la source (le nom de l'article de connaissances retourné par l'outil) à la fin de ta réponse sous la forme : 'Source : [Nom de l'article]'.
+Ne génère jamais de balises HTML brutes (comme &lt;p&gt;, &lt;b&gt;, etc.) dans tes réponses, utilise uniquement le Markdown standard.
+Si tu ne sais pas, propose d'utiliser l'outil de recherche de connaissances.</field>
+        </record>
+    </data>
+</odoo>

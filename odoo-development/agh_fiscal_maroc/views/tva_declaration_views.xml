@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Vue Liste -->
+    <record id="view_account_tva_declaration_list" model="ir.ui.view">
+        <field name="name">account.tva.declaration.list</field>
+        <field name="model">account.tva.declaration</field>
+        <field name="arch" type="xml">
+            <list string="Déclarations TVA"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'calculated'"
+                  decoration-success="state == 'paid'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="period_type"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="total_tva_collecte" sum="Total Collectée"/>
+                <field name="total_tva_deductible" sum="Total Déductible"/>
+                <field name="tva_nette" sum="Total TVA Nette"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue Formulaire -->
+    <record id="view_account_tva_declaration_form" model="ir.ui.view">
+        <field name="name">account.tva.declaration.form</field>
+        <field name="model">account.tva.declaration</field>
+        <field name="arch" type="xml">
+            <form string="Déclaration TVA">
+                <header>
+                    <button name="action_calculate_from_invoices"
+                            string="Calculer depuis factures"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_confirm"
+                            string="Confirmer"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'calculated'"/>
+                    <button name="action_submit_dgi"
+                            string="Soumettre à la DGI"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_pay"
+                            string="Marquer payée"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_export_dgi"
+                            string="Exporter (DGI)"
+                            type="object"
+                            invisible="state in ('draft', 'cancelled')"/>
+                    <button name="action_request_credit_refund"
+                            string="Demander remboursement"
+                            type="object"
+                            invisible="credit_tva &lt;= 0"/>
+                    <button name="action_cancel"
+                            string="Annuler"
+                            type="object"
+                            invisible="state in ('cancelled', 'paid')"/>
+                    <button name="action_draft"
+                            string="Réinitialiser"
+                            type="object"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,calculated,confirmed,submitted,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="invoice_count" widget="statinfo" string="Factures"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="period_type"/>
+                            <field name="fiscal_year"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="TVA Collectée" name="tva_collectee">
+                            <group>
+                                <group string="Montants par taux">
+                                    <field name="tva_collecte_20"/>
+                                    <field name="tva_collecte_14"/>
+                                    <field name="tva_collecte_10"/>
+                                    <field name="tva_collecte_7"/>
+                                </group>
+                                <group string="Total">
+                                    <field name="total_tva_collecte" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="TVA Déductible" name="tva_deductible">
+                            <group>
+                                <group string="Montants par taux">
+                                    <field name="tva_deductible_20"/>
+                                    <field name="tva_deductible_14"/>
+                                    <field name="tva_deductible_10"/>
+                                    <field name="tva_deductible_7"/>
+                                </group>
+                                <group string="Total">
+                                    <field name="total_tva_deductible" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Calcul Final" name="calcul_final">
+                            <group>
+                                <group string="TVA">
+                                    <field name="tva_brute"/>
+                                    <field name="credit_anterieur"/>
+                                    <field name="tva_nette"/>
+                                    <field name="credit_tva"/>
+                                </group>
+                                <group string="Pénalités &amp; total">
+                                    <field name="penalties"/>
+                                    <field name="total_a_payer" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Lignes de déclaration" name="lines">
+                            <field name="declaration_lines">
+                                <list editable="bottom">
+                                    <field name="invoice_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="invoice_date"/>
+                                    <field name="tax_type"/>
+                                    <field name="tax_rate"/>
+                                    <field name="base_amount" sum="Total HT"/>
+                                    <field name="tax_amount" sum="Total TVA"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Soumission &amp; paiement" name="submission">
+                            <group>
+                                <group string="Soumission DGI">
+                                    <field name="submitted_date"/>
+                                    <field name="export_filename"/>
+                                    <field name="export_file" filename="export_filename"/>
+                                </group>
+                                <group string="Paiement">
+                                    <field name="payment_date"/>
+                                    <field name="payment_ref"/>
+                                    <field name="bank_ref"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue Search -->
+    <record id="view_account_tva_declaration_search" model="ir.ui.view">
+        <field name="name">account.tva.declaration.search</field>
+        <field name="model">account.tva.declaration</field>
+        <field name="arch" type="xml">
+            <search string="Recherche déclaration TVA">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="fiscal_year"/>
+                <filter string="Brouillon" name="filter_draft" domain="[('state','=','draft')]"/>
+                <filter string="Calculée" name="filter_calculated" domain="[('state','=','calculated')]"/>
+                <filter string="Confirmée" name="filter_confirmed" domain="[('state','=','confirmed')]"/>
+                <filter string="Soumise" name="filter_submitted" domain="[('state','=','submitted')]"/>
+                <filter string="Payée" name="filter_paid" domain="[('state','=','paid')]"/>
+                <separator/>
+                <filter string="Mensuelle" name="filter_monthly" domain="[('period_type','=','monthly')]"/>
+                <filter string="Trimestrielle" name="filter_quarterly" domain="[('period_type','=','quarterly')]"/>
+                <group expand="1" string="Grouper par">
+                    <filter string="Société" name="group_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Statut" name="group_state" context="{'group_by':'state'}"/>
+                    <filter string="Exercice" name="group_year" context="{'group_by':'fiscal_year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_account_tva_declaration" model="ir.actions.act_window">
+        <field name="name">Déclarations TVA</field>
+        <field name="res_model">account.tva.declaration</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_account_tva_declaration_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créez votre première déclaration TVA
+            </p>
+        </field>
+    </record>
+
+    <!-- ============== TVA Credit Request ============== -->
+    <record id="view_tva_credit_request_list" model="ir.ui.view">
+        <field name="name">tva.credit.request.list</field>
+        <field name="model">tva.credit.request</field>
+        <field name="arch" type="xml">
+            <list string="Demandes de remboursement TVA"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'submitted'"
+                  decoration-success="state == 'reimbursed'"
+                  decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="declaration_id"/>
+                <field name="amount" sum="Total demandé"/>
+                <field name="date_request"/>
+                <field name="reimbursement_date"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tva_credit_request_form" model="ir.ui.view">
+        <field name="name">tva.credit.request.form</field>
+        <field name="model">tva.credit.request</field>
+        <field name="arch" type="xml">
+            <form string="Demande de remboursement TVA">
+                <header>
+                    <button name="action_submit" string="Soumettre"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approuver"
+                            type="object" class="btn-primary"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reject" string="Rejeter"
+                            type="object"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reimburse" string="Marquer remboursée"
+                            type="object" class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,approved,reimbursed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="declaration_id"/>
+                            <field name="company_id"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="date_request"/>
+                            <field name="reimbursement_date" invisible="state != 'reimbursed'"/>
+                        </group>
+                    </group>
+                    <group string="Motif du rejet" invisible="state != 'rejected'">
+                        <field name="rejection_reason" nolabel="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tva_credit_request" model="ir.actions.act_window">
+        <field name="name">Demandes de remboursement TVA</field>
+        <field name="res_model">tva.credit.request</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

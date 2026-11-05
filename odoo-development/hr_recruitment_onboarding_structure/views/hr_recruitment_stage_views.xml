@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_recruitment_stage_view_form_inherit_agh" model="ir.ui.view">
+        <field name="name">hr.recruitment.stage.form.inherit.agh</field>
+        <field name="model">hr.recruitment.stage</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">
+                <separator string="Trame d'entretien / Onboarding"/>
+                <field name="agh_stage_structure" widget="html" options="{'collaborative': true, 'resizable': true}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

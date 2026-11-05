@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" fill="#714B67"/>
+  <rect x="20" y="30" width="88" height="68" rx="4" fill="#FFFFFF"/>
+  <rect x="30" y="45" width="35" height="8" rx="2" fill="#714B67"/>
+  <rect x="30" y="58" width="50" height="6" rx="2" fill="#714B67"/>
+  <rect x="30" y="69" width="40" height="6" rx="2" fill="#714B67"/>
+  <rect x="30" y="80" width="55" height="6" rx="2" fill="#714B67"/>
+  <circle cx="90" cy="75" r="20" fill="#714B67"/>
+  <text x="90" y="80" font-family="Arial" font-size="24" font-weight="bold" fill="#FFFFFF" text-anchor="middle">MA</text>
+</svg>

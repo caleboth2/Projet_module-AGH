@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Crash Report Form View -->
+    <record id="view_agh_crash_report_form" model="ir.ui.view">
+        <field name="name">agh.crash.report.form</field>
+        <field name="model">agh.crash.report</field>
+        <field name="arch" type="xml">
+            <form string="Rapport de Crash App">
+                <header>
+                    <button name="action_create_project_task" string="Créer un Ticket / Tâche" type="object" class="btn-primary" invisible="task_id != False"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="ex: NullPointerException in LoginActivity"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="app_name"/>
+                            <field name="package_name"/>
+                            <field name="exception_type"/>
+                            <field name="occurrence_count"/>
+                        </group>
+                        <group>
+                            <field name="severity"/>
+                            <field name="task_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Stack Trace">
+                            <field name="stack_trace" placeholder="Collez ici la stacktrace de l'exception..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Crash Report List View -->
+    <record id="view_agh_crash_report_tree" model="ir.ui.view">
+        <field name="name">agh.crash.report.list</field>
+        <field name="model">agh.crash.report</field>
+        <field name="arch" type="xml">
+            <list string="Rapports de Crash">
+                <field name="name"/>
+                <field name="app_name"/>
+                <field name="exception_type"/>
+                <field name="severity"/>
+                <field name="occurrence_count"/>
+                <field name="state"/>
+                <field name="task_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agh_crash_report" model="ir.actions.act_window">
+        <field name="name">Crash &amp; Bug Analytics</field>
+        <field name="res_model">agh.crash.report</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_agh_crash_analytics_root" name="Crash Analytics" sequence="26"/>
+    <menuitem id="menu_agh_crash_report_app" name="Rapports de Crash" parent="menu_agh_crash_analytics_root" action="action_agh_crash_report"/>
+    <menuitem id="menu_agh_crash_report_project" name="Crash Analytics" parent="project.menu_main_pm" action="action_agh_crash_report" sequence="60"/>
+</odoo>

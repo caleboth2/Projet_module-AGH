@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_apk_license_user,agh.apk.license.user,model_agh_apk_license,base.group_user,1,1,1,0
+access_apk_license_admin,agh.apk.license.admin,model_agh_apk_license,base.group_system,1,1,1,1

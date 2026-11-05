@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_balance_agee" model="ir.actions.report">
+        <field name="name">Balance Âgée</field>
+        <field name="model">account.balance.aged</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_reporting.report_balance_agee</field>
+        <field name="report_file">agh_reporting.report_balance_agee</field>
+        <field name="attachment_use">False</field>
+    </record>
+
+    <template id="report_balance_agee">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="padding: 20px; font-family: Arial, sans-serif;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <t t-if="docs.company_id.logo">
+                            <img t-att-src="'data:image/png;base64,' + (docs.company_id.logo.decode('utf-8') if docs.company_id.logo else '')"
+                                 style="max-height: 80px;" alt="Logo"/>
+                        </t>
+                        <h2>
+                            BALANCE ÂGÉE DES
+                            <t t-if="docs.partner_type == 'customer'">CLIENTS</t>
+                            <t t-else="">FOURNISSEURS</t>
+                        </h2>
+                        <h3>Arrêtée au <t t-out="docs.date_at"/></h3>
+                        <p><strong>Société:</strong> <t t-out="docs.company_id.name"/></p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #f0f0f0;">
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Client/Fournisseur</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Non échu</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">1-30 j</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">31-60 j</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">61-90 j</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">+90 j</th>
+                                <th style="border: 1px solid #ddd; padding: 8px; text-align: right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="parse_data(docs.aged_balance_lines)"/>
+                            <t t-if="lines">
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <td style="border: 1px solid #ddd; padding: 8px;">
+                                            <t t-out="line['partner_name']"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(line.get('current', 0))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(line.get('days_30', 0))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(line.get('days_60', 0))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(line.get('days_90', 0))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(line.get('days_90_plus', 0))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; font-weight: bold;">
+                                            <t t-out="'{:,.2f}'.format(line.get('total', 0))"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tfoot>
+                                    <tr style="background-color: #e8f4fd; font-weight: bold;">
+                                        <td style="border: 1px solid #ddd; padding: 8px;">TOTAUX</td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.get('current', 0) for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.get('days_30', 0) for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.get('days_60', 0) for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.get('days_90', 0) for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.get('days_90_plus', 0) for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.get('total', 0) for l in lines))"/>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </t>
+                            <t t-else="">
+                                <tr>
+                                    <td colspan="7" style="border: 1px solid #ddd; padding: 20px; text-align: center;">
+                                        Aucune donnée trouvée pour cette période
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 20px; font-size: 10px; color: #666;">
+                        <p><strong>Note:</strong> Les montants sont exprimés en <t t-out="docs.company_id.currency_id.name"/>.</p>
+                        <p>Période d'analyse: <t t-out="docs.period_length"/> jours par tranche.</p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

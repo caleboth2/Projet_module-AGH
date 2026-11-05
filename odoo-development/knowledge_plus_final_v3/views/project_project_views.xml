@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_project_form_inherit_knowledge" model="ir.ui.view">
+        <field name="name">project.project.form.inherit.knowledge</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_ba_specs" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                    <field name="ba_spec_count" widget="statinfo" string="CDC / Études"/>
+                </button>
+            </div>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Mémoire App Factory" name="governance_knowledge">
+                    <header>
+                        <button name="action_force_recompute_knowledge" string="Actualiser le Bot" type="object" class="btn-primary" groups="base.group_system"/>
+                    </header>
+                    <group>
+                        <group string="Gouvernance Documentaire">
+                            <field name="doc_completeness_score" widget="gauge" options="{'max_field': '100'}"/>
+                            <field name="doc_missing_list" readonly="1" nolabel="1" class="text-danger"/>
+                        </group>
+                        <group string="Statistiques">
+                            <field name="ba_validated_count" string="CDC Validés"/>
+                            <field name="ba_doc_coverage" string="Couverture CDC (%)" widget="progressbar"/>
+                            <field name="closed_task_count" string="Tâches Clôturées"/>
+                            <field name="task_completion_percentage" widget="progressbar" string="Progression Projet"/>
+                        </group>
+                    </group>
+                    <field name="knowledge_article_ids">
+                        <list create="0">
+                            <field name="name"/>
+                            <field name="ai_template_type"/>
+                            <field name="state" widget="badge" decoration-success="state == 'approved'"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

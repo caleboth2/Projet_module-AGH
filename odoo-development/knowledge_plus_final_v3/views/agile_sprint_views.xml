@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       SPRINT – Vue Liste
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_agile_sprint_list" model="ir.ui.view">
+    <field name="name">agh.agile.sprint.list</field>
+    <field name="model">agh.agile.sprint</field>
+    <field name="arch" type="xml">
+      <list string="Sprints Agile"
+            decoration-success="state == 'done'"
+            decoration-primary="state == 'active'"
+            decoration-warning="state == 'review'"
+            decoration-danger="is_overdue and state == 'active'"
+            decoration-muted="state in ('cancelled','draft')">
+        <field name="name"/>
+        <field name="project_id"/>
+        <field name="state" widget="badge"
+               decoration-primary="state == 'active'"
+               decoration-success="state == 'done'"
+               decoration-warning="state == 'review'"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+        <field name="days_remaining" string="Jours restants" optional="show"/>
+        <field name="task_count" string="Tâches"/>
+        <field name="task_done_count" string="Terminées"/>
+        <field name="story_points_total" string="SP total"/>
+        <field name="story_points_done" string="SP réalisés"/>
+        <field name="progress_pct" string="Avancement" widget="progressbar"/>
+        <field name="article_count" string="Articles Knowledge" optional="show"/>
+        <field name="doc_coverage_pct" string="Couverture doc %" optional="show"/>
+        <field name="is_overdue" widget="boolean" optional="show"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       SPRINT – Vue Formulaire
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_agile_sprint_form" model="ir.ui.view">
+    <field name="name">agh.agile.sprint.form</field>
+    <field name="model">agh.agile.sprint</field>
+    <field name="arch" type="xml">
+      <form string="Sprint Agile">
+        <header>
+          <button name="action_start"  string="🚀 Démarrer"    type="object" class="btn-primary"
+                  invisible="state != 'draft'"/>
+          <button name="action_review" string="🔍 Revue"       type="object" class="btn-secondary"
+                  invisible="state != 'active'"/>
+          <button name="action_close"  string="✅ Clôturer"    type="object" class="btn-success"
+                  invisible="state not in ('active','review')"/>
+          <button name="action_cancel" string="❌ Annuler"     type="object"
+                  invisible="state in ('done','cancelled')"/>
+          <button name="action_reset"  string="↩️ Réinitialiser" type="object"
+                  invisible="state not in ('cancelled','review')"/>
+          <button name="action_sync_bidirectional"
+                  string="🔄 Sync Knowledge ↔ Tâches"
+                  type="object" class="btn-warning"/>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="draft,active,review,done"/>
+        </header>
+
+        <sheet>
+          <!-- Smart buttons -->
+          <div class="oe_button_box" name="button_box">
+            <button name="action_view_tasks" type="object"
+                    class="oe_stat_button" icon="fa-tasks">
+              <div class="o_stat_info">
+                <field name="task_count" class="o_stat_value"/>
+                <span class="o_stat_text">Tâches</span>
+              </div>
+            </button>
+            <button name="action_view_articles" type="object"
+                    class="oe_stat_button" icon="fa-book">
+              <div class="o_stat_info">
+                <field name="article_count" class="o_stat_value"/>
+                <span class="o_stat_text">Knowledge</span>
+              </div>
+            </button>
+            <button name="action_burndown_report" type="object"
+                    class="oe_stat_button" icon="fa-line-chart">
+              <div class="o_stat_info">
+                <span class="o_stat_value">Burndown</span>
+              </div>
+            </button>
+          </div>
+
+          <div class="oe_title">
+            <h1><field name="name" placeholder="Nom du sprint…"/></h1>
+          </div>
+
+          <!-- KPI bar -->
+          <div class="o_row mb-3">
+            <span class="badge bg-primary me-2">
+              <field name="story_points_done"/> / <field name="story_points_total"/> SP
+            </span>
+            <span class="badge bg-info me-2">
+              <field name="task_done_count"/> / <field name="task_count"/> tâches
+            </span>
+            <span class="badge bg-success me-2">
+              Doc : <field name="doc_coverage_pct" widget="float" digits="[4,1]"/>%
+            </span>
+            <span class="badge bg-warning" invisible="not is_overdue">⚠️ En retard</span>
+          </div>
+
+          <field name="progress_pct" widget="progressbar" nolabel="1"/>
+
+          <group>
+            <group string="Planification">
+              <field name="project_id"/>
+              <field name="date_start"/>
+              <field name="date_end"/>
+              <field name="duration_days" readonly="1"/>
+              <field name="days_remaining" readonly="1"/>
+              <field name="velocity"/>
+              <field name="velocity_achieved" readonly="1"/>
+            </group>
+            <group string="Objectif">
+              <field name="goal" nolabel="1" placeholder="Objectif du sprint…"/>
+            </group>
+          </group>
+
+          <notebook>
+            <!-- Tâches du sprint -->
+            <page string="Tâches / User Stories" name="tasks_page">
+              <field name="task_ids"
+                     domain="[('project_id', '=', project_id)]"
+                     context="{'default_project_id': project_id}">
+                <list string="Tâches du sprint"
+                      decoration-success="stage_id.fold"
+                      decoration-muted="not stage_id.fold">
+                  <field name="name"/>
+                  <field name="task_type" optional="show"/>
+                  <field name="epic_id" optional="show"/>
+                  <field name="story_points"/>
+                  <field name="moscow" optional="show"/>
+                  <field name="stage_id"/>
+                  <field name="user_ids" widget="many2many_avatar_user" optional="show"/>
+                  <field name="sprint_doc_coverage" widget="badge"
+                         decoration-success="sprint_doc_coverage == 'full'"
+                         decoration-warning="sprint_doc_coverage == 'partial'"
+                         decoration-danger="sprint_doc_coverage == 'none'"/>
+                  <field name="knowledge_article_count" string="Docs"/>
+                </list>
+              </field>
+            </page>
+
+            <!-- Articles Knowledge -->
+            <page string="Articles Knowledge" name="knowledge_page">
+              <div class="alert alert-info" role="alert">
+                <i class="fa fa-info-circle"/>
+                La liaison est <strong>bidirectionnelle</strong> : les articles liés
+                aux tâches du sprint remontent ici automatiquement.
+                Cliquez sur <strong>🔄 Sync</strong> pour forcer la synchronisation.
+              </div>
+              <field name="article_ids">
+                <list string="Articles Knowledge"
+                      decoration-success="state == 'approved'"
+                      decoration-warning="state == 'pending'"
+                      decoration-muted="state == 'draft'">
+                  <field name="name"/>
+                  <field name="agile_doc_type" optional="show"/>
+                  <field name="category_id" optional="show"/>
+                  <field name="state" widget="badge"
+                         decoration-success="state == 'approved'"
+                         decoration-warning="state == 'pending'"/>
+                  <field name="author_id" optional="show"/>
+                  <field name="version" optional="show"/>
+                  <field name="active_sprint_id" optional="show"/>
+                </list>
+              </field>
+            </page>
+
+            <!-- Burndown -->
+            <page string="Burndown" name="burndown_page">
+              <field name="name" invisible="1"/>
+              <button name="action_burndown_report"
+                      string="Voir l'historique burndown complet"
+                      type="object" class="btn-secondary mb-2" icon="fa-table"/>
+              <field name="project_id" invisible="1"/>
+            </page>
+          </notebook>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       SPRINT – Vue Kanban
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_agile_sprint_kanban" model="ir.ui.view">
+    <field name="name">agh.agile.sprint.kanban</field>
+    <field name="model">agh.agile.sprint</field>
+    <field name="arch" type="xml">
+      <kanban default_group_by="state" class="o_kanban_small_column">
+        <field name="name"/>
+        <field name="project_id"/>
+        <field name="state"/>
+        <field name="date_start"/>
+        <field name="date_end"/>
+        <field name="progress_pct"/>
+        <field name="task_count"/>
+        <field name="task_done_count"/>
+        <field name="story_points_total"/>
+        <field name="story_points_done"/>
+        <field name="article_count"/>
+        <field name="doc_coverage_pct"/>
+        <field name="is_overdue"/>
+        <templates>
+          <t t-name="card">
+            <div class="o_kanban_record_top">
+              <strong><t t-esc="record.name.value"/></strong>
+              <t t-if="record.is_overdue.raw_value">
+                <span class="badge bg-danger ms-1">En retard</span>
+              </t>
+            </div>
+            <div class="o_kanban_record_body">
+              <t t-esc="record.project_id.value"/><br/>
+              📅 <t t-esc="record.date_start.value"/> → <t t-esc="record.date_end.value"/>
+              <br/>
+              ⚡ <t t-esc="record.story_points_done.raw_value"/>/<t t-esc="record.story_points_total.raw_value"/> SP
+              — 📖 <t t-esc="record.article_count.raw_value"/> docs
+            </div>
+            <div class="o_kanban_record_bottom">
+              <div class="oe_kanban_bottom_left">
+                <span class="text-muted" style="font-size:11px">
+                  Avancement : <t t-esc="record.progress_pct.raw_value.toFixed(0)"/>%
+                </span>
+              </div>
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       SPRINT – Recherche
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_agile_sprint_search" model="ir.ui.view">
+    <field name="name">agh.agile.sprint.search</field>
+    <field name="model">agh.agile.sprint</field>
+    <field name="arch" type="xml">
+      <search string="Rechercher sprints">
+        <field name="name"/>
+        <field name="project_id"/>
+        <filter string="En cours"  name="active_sprints" domain="[('state','=','active')]"/>
+        <filter string="Planifiés" name="draft_sprints"  domain="[('state','=','draft')]"/>
+        <filter string="Terminés"  name="done_sprints"   domain="[('state','=','done')]"/>
+        <filter string="En retard" name="overdue"        domain="[('is_overdue','=',True)]"/>
+        <separator/>
+        <group expand="0" string="Regrouper par">
+          <filter string="Projet" name="group_project" context="{'group_by':'project_id'}"/>
+          <filter string="État"   name="group_state"   context="{'group_by':'state'}"/>
+        </group>
+      </search>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       BURNDOWN – Vue Liste
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="view_agile_burndown_list" model="ir.ui.view">
+    <field name="name">agh.agile.sprint.burndown.list</field>
+    <field name="model">agh.agile.sprint.burndown</field>
+    <field name="arch" type="xml">
+      <list string="Burndown – Historique" default_order="snapshot_date desc">
+        <field name="snapshot_date"/>
+        <field name="sprint_id"/>
+        <field name="points_remaining"/>
+        <field name="points_done"/>
+        <field name="tasks_open"/>
+        <field name="tasks_done"/>
+        <field name="articles_approved"/>
+        <field name="note" optional="show"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       ACTIONS
+  ══════════════════════════════════════════════════════════════ -->
+  <record id="action_agile_sprints" model="ir.actions.act_window">
+    <field name="name">Sprints Agile</field>
+    <field name="res_model">agh.agile.sprint</field>
+    <field name="view_mode">list,kanban,form</field>
+    <field name="context">{'search_default_active_sprints': 1}</field>
+  </record>
+
+  <record id="action_agile_burndown" model="ir.actions.act_window">
+    <field name="name">Burndown – Historique</field>
+    <field name="res_model">agh.agile.sprint.burndown</field>
+    <field name="view_mode">list</field>
+  </record>
+
+</odoo>

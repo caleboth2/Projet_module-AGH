@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agh_google_play_app_user,access_agh_google_play_app_user,model_agh_google_play_app,base.group_user,1,1,1,1
+access_agh_google_play_track_user,access_agh_google_play_track_user,model_agh_google_play_track,base.group_user,1,1,1,1

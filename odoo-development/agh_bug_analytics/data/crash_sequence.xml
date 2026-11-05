@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="seq_agh_crash_report"
+            model="ir.sequence">
+
+        <field name="name">
+            Crash Report
+        </field>
+
+        <field name="code">
+            agh.crash.report
+        </field>
+
+        <field name="prefix">
+            CRASH-
+        </field>
+
+        <field name="padding">
+            5
+        </field>
+
+    </record>
+
+</odoo>

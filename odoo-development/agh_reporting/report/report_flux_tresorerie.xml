@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_flux_tresorerie" model="ir.actions.report">
+        <field name="name">Tableau de Flux de Trésorerie</field>
+        <field name="model">account.financial.report.print</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_reporting.report_flux_tresorerie</field>
+        <field name="report_file">agh_reporting.report_flux_tresorerie</field>
+        <field name="attachment_use">False</field>
+    </record>
+
+    <template id="report_flux_tresorerie">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="padding: 20px; font-family: Arial, sans-serif;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <t t-if="docs.company_id.logo">
+                            <img t-att-src="'data:image/png;base64,' + (docs.company_id.logo.decode('utf-8') if docs.company_id.logo else '')"
+                                 style="max-height: 80px;" alt="Logo"/>
+                        </t>
+                        <h2>TABLEAU DE FLUX DE TRÉSORERIE</h2>
+                        <h3>Du <t t-out="docs.date_from"/> au <t t-out="docs.date_to"/></h3>
+                        <p><strong>Société:</strong> <t t-out="docs.company_id.name"/></p>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #f0f0f0;">
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Rubrique</th>
+                                <th style="border: 1px solid #ddd; padding: 10px; text-align: right;">Montant (MAD)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #e8f4fd;">
+                                <td colspan="2" style="border: 1px solid #ddd; padding: 10px; font-weight: bold;">FLUX DE TRÉSORERIE D'EXPLOITATION</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Encaissements clients</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Décaissements fournisseurs</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Décaissements personnel</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Autres décaissements</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0; font-weight: bold;">
+                                <td style="border: 1px solid #ddd; padding: 10px;">Flux net d'exploitation</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+
+                            <tr style="background-color: #e8f4fd;">
+                                <td colspan="2" style="border: 1px solid #ddd; padding: 10px; font-weight: bold;">FLUX DE TRÉSORERIE D'INVESTISSEMENT</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Acquisitions d'immobilisations (21-24)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Cessions d'immobilisations (751)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0; font-weight: bold;">
+                                <td style="border: 1px solid #ddd; padding: 10px;">Flux net d'investissement</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+
+                            <tr style="background-color: #e8f4fd;">
+                                <td colspan="2" style="border: 1px solid #ddd; padding: 10px; font-weight: bold;">FLUX DE TRÉSORERIE DE FINANCEMENT</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Augmentation de capital (111)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Emprunts (16)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 10px; padding-left: 20px;">Dividendes versés (116)</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                            <tr style="background-color: #f0f0f0; font-weight: bold;">
+                                <td style="border: 1px solid #ddd; padding: 10px;">Flux net de financement</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+
+                            <tr style="background-color: #d9edf7; font-weight: bold;">
+                                <td style="border: 1px solid #ddd; padding: 10px;">VARIATION NETTE DE TRÉSORERIE</td>
+                                <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">0,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 20px; text-align: center; font-size: 10px; color: #666;">
+                        Document généré électroniquement - Conforme au Plan Comptable Marocain (PCM)
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

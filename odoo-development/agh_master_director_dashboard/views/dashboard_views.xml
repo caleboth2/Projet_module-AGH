@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_agh_dashboard_form"
+            model="ir.ui.view">
+
+        <field name="name">agh.director.dashboard.form</field>
+        <field name="model">agh.director.dashboard</field>
+
+        <field name="arch" type="xml">
+            <form string="Master Director Dashboard">
+
+                <sheet>
+
+                    <group string="Financial KPIs">
+                        <field name="total_hours" readonly="1"/>
+                        <field name="development_cost_dh" readonly="1"/>
+                    </group>
+
+                    <group string="Project KPIs">
+                        <field name="active_projects" readonly="1"/>
+                        <field name="total_tasks" readonly="1"/>
+                        <field name="completed_tasks" readonly="1"/>
+                        <field name="open_tasks" readonly="1"/>
+                    </group>
+
+                    <group string="Velocity">
+                        <field name="velocity_rate" readonly="1"/>
+                    </group>
+
+                </sheet>
+
+            </form>
+        </field>
+
+    </record>
+
+    <!-- List View -->
+    <record id="view_agh_dashboard_list"
+            model="ir.ui.view">
+
+        <field name="name">agh.director.dashboard.list</field>
+        <field name="model">agh.director.dashboard</field>
+
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="total_hours"/>
+                <field name="development_cost_dh"/>
+                <field name="velocity_rate"/>
+            </list>
+        </field>
+
+    </record>
+
+    <!-- Action -->
+    <record id="action_agh_dashboard"
+            model="ir.actions.act_window">
+
+        <field name="name">Master Director Dashboard</field>
+        <field name="res_model">agh.director.dashboard</field>
+        <field name="view_mode">list,form</field>
+
+    </record>
+
+    <!-- Menu -->
+    <menuitem
+        id="menu_agh_dashboard"
+        name="Master Director Dashboard"
+        parent="project.menu_project_report"
+        action="action_agh_dashboard"
+        sequence="90"/>
+
+</odoo>

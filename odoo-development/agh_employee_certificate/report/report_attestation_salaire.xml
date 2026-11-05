@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_att_salaire" model="ir.actions.report">
+        <field name="name">Attestation de Salaire</field>
+        <field name="model">hr.certificate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_employee_certificate.report_attestation_salaire_document</field>
+        <field name="report_file">attestation_salaire</field>
+        <field name="print_report_name">'Attestation_Salaire_%s' % (object.employee_id.name)</field>
+    </record>
+
+    <template id="report_attestation_salaire_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="data" t-value="doc._get_report_data()"/>
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <h2><strong>ATTESTATION DE SALAIRE</strong></h2>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <p>
+                                    Nous soussignés, <strong><t t-esc="data['company'].name"/></strong>,
+                                    attestons que <strong><t t-esc="data['employee'].name"/></strong>,
+                                    employé(e) en tant que <strong><t t-esc="data['employee'].job_id.name or ''"/></strong>,
+                                    perçoit une rémunération mensuelle brute de :
+                                </p>
+                                <table class="table table-bordered mt-3" style="width:60%;">
+                                    <tr>
+                                        <th>Salaire Brut</th>
+                                        <td>
+                                            <t t-esc="'%.2f' % data['wage']"/>
+                                            <t t-esc="' ' + data['company'].currency_id.symbol if data['company'].currency_id else ''"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p>Cette attestation est délivrée à l'intéressé(e) pour servir et valoir ce que de droit.</p>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p>Fait à <t t-esc="data['company'].city or '...'"/>, le <t t-esc="doc.date.strftime('%d/%m/%Y') if doc.date else ''"/></p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p><strong>Le Directeur des Ressources Humaines</strong></p>
+                                <t t-if="data['signature']">
+                                    <img t-attf-src="data:image/png;base64,{{data['signature']}}" style="max-height:60px;"/>
+                                </t>
+                                <p><t t-esc="data['signature_name']"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

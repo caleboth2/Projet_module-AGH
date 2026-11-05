@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Heritage fiche client avec infos marocaines -->
+    <record id="view_partner_form_inherit_maroc" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.maroc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Informations Marocaines" name="agh_maroc_info">
+                    <group>
+                        <group string="Identification Fiscale">
+                            <field name="agh_ice"/>
+                            <field name="agh_if"/>
+                            <field name="agh_rc"/>
+                            <field name="agh_cnss"/>
+                            <field name="agh_tp"/>
+                        </group>
+                        <group string="Parametres Facturation">
+                            <field name="agh_payment_delay"/>
+                            <field name="agh_credit_limit" widget="monetary"/>
+                            <field name="agh_alert_exceed_limit"/>
+                            <field name="agh_relance_auto"/>
+                            <field name="agh_relance_emails" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group string="Statistiques Recouvrement" name="agh_stats_group">
+                        <group>
+                            <field name="agh_total_due" widget="monetary" readonly="1"/>
+                            <field name="agh_overdue_amount" widget="monetary" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="agh_outstanding_amount" widget="monetary" readonly="1"/>
+                            <field name="agh_avg_payment_days" readonly="1"/>
+                            <field name="agh_dso_average" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Incidents de paiement">
+                        <field name="agh_payment_incidents" nolabel="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue liste clients avec indicateurs -->
+    <record id="view_partner_tree_inherit_maroc" model="ir.ui.view">
+        <field name="name">res.partner.list.inherit.maroc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">agh_overdue_amount &gt; 0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="agh_ice" string="ICE" optional="show"/>
+                <field name="agh_total_due" string="Total du" widget="monetary" optional="show"/>
+                <field name="agh_overdue_amount" string="En retard" widget="monetary" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action Clients -->
+    <record id="action_partner_client_maroc" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('customer_rank','>',0)]</field>
+        <field name="context">{'search_default_customer': 1}</field>
+    </record>
+</odoo>

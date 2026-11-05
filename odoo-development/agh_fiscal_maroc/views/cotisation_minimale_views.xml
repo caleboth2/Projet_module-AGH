@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_cotisation_minimale_list" model="ir.ui.view">
+        <field name="name">account.cotisation.minimale.list</field>
+        <field name="model">account.cotisation.minimale</field>
+        <field name="arch" type="xml">
+            <list string="Cotisation Minimale"
+                  decoration-info="state == 'draft'"
+                  decoration-success="state == 'paid'">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="fiscal_year"/>
+                <field name="total_base" sum="Total Base"/>
+                <field name="cm_amount" sum="Total CM"/>
+                <field name="cm_to_pay" sum="Total à payer"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_cotisation_minimale_form" model="ir.ui.view">
+        <field name="name">account.cotisation.minimale.form</field>
+        <field name="model">account.cotisation.minimale</field>
+        <field name="arch" type="xml">
+            <form string="Cotisation Minimale">
+                <header>
+                    <button name="action_calculate" string="Calculer"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_confirm" string="Confirmer"
+                            type="object" class="btn-primary"
+                            invisible="state != 'calculated'"/>
+                    <button name="action_pay" string="Marquer payée"
+                            type="object" class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" string="Annuler"
+                            type="object"
+                            invisible="state in ('cancelled', 'paid')"/>
+                    <button name="action_draft" string="Réinitialiser"
+                            type="object"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,calculated,confirmed,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="fiscal_year"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Calcul CM" name="calcul">
+                            <group>
+                                <group string="Base">
+                                    <field name="total_revenue_ttc"/>
+                                    <field name="other_products"/>
+                                    <field name="total_base" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group string="CM">
+                                    <field name="cm_rate"/>
+                                    <field name="cm_amount"/>
+                                    <field name="minimum_cm"/>
+                                    <field name="cm_to_pay" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Comparaison IS / CM" name="compare">
+                            <group>
+                                <field name="is_amount"/>
+                                <field name="is_higher_than_cm"/>
+                                <field name="final_tax_amount" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                        <page string="Paiement" name="payment">
+                            <group>
+                                <field name="payment_date"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_cotisation_minimale" model="ir.actions.act_window">
+        <field name="name">Cotisation Minimale</field>
+        <field name="res_model">account.cotisation.minimale</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

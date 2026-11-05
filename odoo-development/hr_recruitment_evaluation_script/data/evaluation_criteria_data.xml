@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="evaluation_criteria_training" model="hr.evaluation.criteria">
+            <field name="name">Formation adaptée</field>
+            <field name="description">La formation du candidat correspond-elle au poste ?</field>
+            <field name="max_score">4</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="evaluation_criteria_experience" model="hr.evaluation.criteria">
+            <field name="name">Expérience technique</field>
+            <field name="description">Le candidat possède-t-il l’expérience technique nécessaire ?</field>
+            <field name="max_score">4</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="evaluation_criteria_communication" model="hr.evaluation.criteria">
+            <field name="name">Communication</field>
+            <field name="description">Le candidat communique-t-il clairement et professionnellement ?</field>
+            <field name="max_score">4</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <record id="evaluation_criteria_motivation" model="hr.evaluation.criteria">
+            <field name="name">Motivation</field>
+            <field name="description">Le candidat démontre-t-il une motivation réelle pour le poste ?</field>
+            <field name="max_score">4</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="evaluation_criteria_availability" model="hr.evaluation.criteria">
+            <field name="name">Disponibilité</field>
+            <field name="description">La disponibilité du candidat correspond-elle aux besoins du poste ?</field>
+            <field name="max_score">4</field>
+            <field name="sequence">50</field>
+        </record>
+
+    </data>
+</odoo>

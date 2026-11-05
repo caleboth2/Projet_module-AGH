@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_job_form_inherit_training_plan" model="ir.ui.view">
+        <field name="name">hr.job.form.inherit.training.plan</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Section basée sur le "Contexte Général des Stages" du Google Doc -->
+            <xpath expr="//group[@name='recruitment']" position="after">
+                <group string="Contexte Général des Stages">
+                    <field name="is_internship"/>
+                    <!-- Ces champs n'apparaissent que si "is_internship" est coché -->
+                    <field name="internship_duration" invisible="is_internship == False"/>
+                    <field name="work_schedule" invisible="is_internship == False"/>
+                    <field name="remuneration_status" invisible="is_internship == False"/>
+                </group>
+            </xpath>
+
+            <!-- Ajout de l'onglet Plan de Formation avec la nouvelle Catégorie -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Plan de formation" name="training_plan">
+                    <field name="training_plan_ids">
+                        <list editable="bottom">
+                            <field name="category"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="duration_hours"/>
+                            <field name="is_mandatory"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

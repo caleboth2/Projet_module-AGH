@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_agh_kpi_evaluation_user,agh.kpi.evaluation (user),model_agh_kpi_evaluation,base.group_user,1,1,1,1
+access_agh_kpi_criteria_user,agh.kpi.criteria (user),model_agh_kpi_criteria,base.group_user,1,1,1,1
+access_agh_performance_summary_user,agh.performance.summary (user),model_agh_performance_summary,base.group_user,1,1,1,1
+access_agh_ollama_wizard_user,agh.ollama.summary.wizard (user),model_agh_ollama_summary_wizard,base.group_user,1,1,1,1

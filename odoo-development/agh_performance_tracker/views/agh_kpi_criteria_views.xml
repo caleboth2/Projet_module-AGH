@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Critères KPI ── -->
+    <record id="view_agh_kpi_criteria_list" model="ir.ui.view">
+        <field name="name">agh.kpi.criteria.list</field>
+        <field name="model">agh.kpi.criteria</field>
+        <field name="arch" type="xml">
+            <list string="Critères KPI" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="team_category"/>
+                <field name="description"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_agh_kpi_criteria_form" model="ir.ui.view">
+        <field name="name">agh.kpi.criteria.form</field>
+        <field name="model">agh.kpi.criteria</field>
+        <field name="arch" type="xml">
+            <form string="Critère KPI">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="team_category"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_agh_kpi_criteria" model="ir.actions.act_window">
+        <field name="name">Critères KPI</field>
+        <field name="res_model">agh.kpi.criteria</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ── Synthèse des performances ── -->
+    <record id="view_agh_performance_summary_list" model="ir.ui.view">
+        <field name="name">agh.performance.summary.list</field>
+        <field name="model">agh.performance.summary</field>
+        <field name="arch" type="xml">
+            <list string="Synthèse des performances"
+                  decoration-success="avg_percent >= 80"
+                  decoration-warning="avg_percent &lt; 60 and avg_percent >= 40"
+                  decoration-danger="avg_percent &lt; 40">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="team_category"/>
+                <field name="evaluation_count"/>
+                <field name="avg_score" string="Score moyen/20"/>
+                <field name="avg_percent" string="Moyenne (%)"
+                       widget="progressbar"
+                       options="{'max_value': 100, 'edit': false}"/>
+                <field name="last_evaluation"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_agh_performance_summary" model="ir.actions.act_window">
+        <field name="name">Synthèse des Performances</field>
+        <field name="res_model">agh.performance.summary</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_3way_match_form" model="ir.ui.view">
+        <field name="name">wizard.3way.match.form</field>
+        <field name="model">wizard.3way.match</field>
+        <field name="arch" type="xml">
+            <form string="Rapprochement 3 Voies (BL / BC / Facture)">
+                <group>
+                    <group string="Documents">
+                        <field name="invoice_id"/>
+                        <field name="partner_id"/>
+                        <field name="purchase_order_id"/>
+                        <field name="stock_picking_ids" widget="many2many_tags"/>
+                    </group>
+                    <group string="Tolerances">
+                        <field name="price_tolerance"/>
+                        <field name="qty_tolerance"/>
+                    </group>
+                </group>
+                <group string="Resultat" invisible="not match_result">
+                    <field name="match_result" nolabel="1" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="action_match" string="Lancer le rapprochement" type="object" class="btn-primary"/>
+                    <button name="action_approve" string="Forcer l'approbation" type="object" class="btn-warning"/>
+                    <button string="Fermer" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_3way_match" model="ir.actions.act_window">
+        <field name="name">Rapprochement 3 Voies</field>
+        <field name="res_model">wizard.3way.match</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

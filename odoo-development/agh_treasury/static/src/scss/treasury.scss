@@ -1,0 +1,24 @@
+.agh_treasury_dashboard {
+    padding: 20px;
+
+    .treasury_kpi_card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        text-align: center;
+
+        .kpi_value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #017e84;
+        }
+        .kpi_label {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+        &.alert_low .kpi_value { color: #dc3545; }
+        &.forecast .kpi_value { color: #0056b3; }
+    }
+}

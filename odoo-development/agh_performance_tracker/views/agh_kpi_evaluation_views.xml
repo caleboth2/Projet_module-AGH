@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         FORM VIEW
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="view_agh_kpi_evaluation_form" model="ir.ui.view">
+        <field name="name">agh.kpi.evaluation.form</field>
+        <field name="model">agh.kpi.evaluation</field>
+        <field name="arch" type="xml">
+            <form string="Évaluation KPI">
+                <header>
+                    <button name="action_start"
+                            string="Démarrer"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_compute_kpis"
+                            string="Calculer les KPI"
+                            type="object"
+                            class="btn-info"
+                            invisible="state not in ('draft', 'in_progress')"
+                            help="Récupère les données des tâches et feuilles de temps pour automatiser les scores."/>
+                    <button name="action_done"
+                            string="Finaliser"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_validate"
+                            string="Valider"
+                            type="object"
+                            class="oe_highlight"
+                            groups="agh_performance_tracker.group_performance_manager"
+                            invisible="state != 'done'"/>
+                    <button name="action_reset_draft"
+                            string="Remettre en brouillon"
+                            type="object"
+                            groups="agh_performance_tracker.group_performance_manager"
+                            invisible="state in ('draft', 'validated')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,done,validated"/>
+                </header>
+
+                <sheet>
+                    <!-- Badge performance -->
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon"
+                            title="Top Performer ⭐"
+                            bg_color="bg-success"
+                            invisible="performance_level != 'top'"/>
+                    <widget name="web_ribbon"
+                            title="Insuffisant ❌"
+                            bg_color="bg-danger"
+                            invisible="performance_level != 'poor'"/>
+
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="display_name" readonly="1"/></h2>
+                    </div>
+
+                    <!-- ── Identification ── -->
+                    <group string="Identification">
+                        <group>
+                            <field name="employee_id" options="{'no_create': True}"/>
+                            <field name="department_id" readonly="1"/>
+                            <field name="job_id" readonly="1"/>
+                            <field name="team_category"/>
+                        </group>
+                        <group>
+                            <field name="manager_id" options="{'no_create': True}"/>
+                            <field name="date_evaluation"/>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="period_label" readonly="1" invisible="not period_label"/>
+                        </group>
+                    </group>
+
+                    <!-- ── Critères KPI ── -->
+                    <group string="Critères d'évaluation (0 = Non évalué → 5 = Excellent)">
+                        <group string="Productivité &amp; Assiduité (Automatisables)">
+                            <field name="score_assiduite" widget="priority"
+                                   options="{'stars': 5}"/>
+                            <field name="score_quantite" widget="priority"
+                                   options="{'stars': 5}"/>
+                            <field name="score_qualite" widget="priority"
+                                   options="{'stars': 5}"/>
+                        </group>
+                        <group string="Deadline (Automatique)">
+                            <field name="tasks_total"/>
+                            <field name="tasks_on_time"/>
+                            <field name="deadline_rate" widget="progressbar"
+                                   options="{'max_value': 100, 'edit': false}"/>
+                            <field name="score_deadline" readonly="1"
+                                   invisible="deadline_override"/>
+                            <field name="deadline_override"/>
+                            <field name="score_deadline_manual"
+                                   invisible="not deadline_override"/>
+                        </group>
+                    </group>
+
+                    <!-- ── Score global ── -->
+                    <group string="Score global">
+                        <group>
+                            <field name="score_total" readonly="1"/>
+                            <field name="score_total_percent" readonly="1"
+                                   string="Score (%)" widget="progressbar"
+                                   options="{'max_value': 100, 'edit': false}"/>
+                        </group>
+                        <group>
+                            <field name="performance_level" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- ── Tabs ── -->
+                    <notebook>
+                        <page string="Commentaires" name="comments">
+                            <group>
+                                <field name="strengths" placeholder="Points forts du collaborateur…"/>
+                                <field name="improvements" placeholder="Axes d'amélioration identifiés…"/>
+                                <field name="objectives_next" placeholder="Objectifs pour la prochaine période…"/>
+                                <field name="manager_comment" placeholder="Commentaire libre du manager…"/>
+                            </group>
+                        </page>
+
+                        <page string="Résumé IA (Ollama)" name="ollama">
+                            <div class="alert alert-info" role="alert"
+                                 invisible="ollama_status != 'not_generated'">
+                                <strong>IA non activée.</strong>
+                                Cliquez sur <em>Générer le résumé IA</em> pour produire un résumé automatique
+                                via Ollama (service LLM local).
+                            </div>
+                            <div class="alert alert-warning" role="alert"
+                                 invisible="ollama_status != 'unavailable'">
+                                <strong>⚠ Service Ollama indisponible.</strong>
+                                Vérifiez que Ollama est démarré et configuré dans
+                                <em>Configuration → Paramètres</em>.
+                            </div>
+                            <div class="alert alert-danger" role="alert"
+                                 invisible="ollama_status != 'error'">
+                                <strong>❌ Erreur lors de la génération.</strong>
+                                Consultez les logs pour plus de détails.
+                            </div>
+                            <group>
+                                <field name="ollama_status" readonly="1"/>
+                                <field name="ollama_generated_at" readonly="1"
+                                       invisible="not ollama_generated_at"/>
+                            </group>
+                            <field name="ollama_summary" readonly="1"
+                                   placeholder="Le résumé IA apparaîtra ici après génération…"
+                                   class="o_field_text_highlighted"/>
+                            <div class="mt-3">
+                                <button name="action_open_ollama_wizard"
+                                        string="🤖 Générer le résumé IA"
+                                        type="object"
+                                        class="btn btn-primary"/>
+                                <button name="action_generate_ollama_summary"
+                                        string="🔄 Regénérer"
+                                        type="object"
+                                        class="btn btn-secondary ms-2"
+                                        invisible="ollama_status != 'success'"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         LIST VIEW
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="view_agh_kpi_evaluation_list" model="ir.ui.view">
+        <field name="name">agh.kpi.evaluation.list</field>
+        <field name="model">agh.kpi.evaluation</field>
+        <field name="arch" type="xml">
+            <list string="Évaluations KPI"
+                  decoration-success="performance_level == 'top'"
+                  decoration-warning="performance_level == 'average'"
+                  decoration-danger="performance_level == 'poor'"
+                  multi_edit="1">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id" optional="show"/>
+                <field name="team_category"/>
+                <field name="period_label"/>
+                <field name="score_assiduite" widget="priority" options="{'stars': 5}"/>
+                <field name="score_deadline" widget="priority" options="{'stars': 5}"/>
+                <field name="score_quantite" widget="priority" options="{'stars': 5}"/>
+                <field name="score_qualite" widget="priority" options="{'stars': 5}"/>
+                <field name="score_total" string="Total/20"/>
+                <field name="score_total_percent" string="%"
+                       widget="progressbar"
+                       options="{'max_value': 100, 'edit': false}"/>
+                <field name="performance_level"/>
+                <field name="ollama_status" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'in_progress'"
+                       decoration-success="state in ('done', 'validated')"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         KANBAN VIEW
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="view_agh_kpi_evaluation_kanban" model="ir.ui.view">
+        <field name="name">agh.kpi.evaluation.kanban</field>
+        <field name="model">agh.kpi.evaluation</field>
+        <field name="arch" type="xml">
+            <kanban group_by="performance_level" default_group_by="performance_level"
+                    class="o_kanban_small_column">
+                <field name="employee_id"/>
+                <field name="score_total_percent"/>
+                <field name="performance_level"/>
+                <field name="state"/>
+                <field name="team_category"/>
+                <field name="period_label"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="employee_id"/>
+                                    </strong>
+                                    <small class="text-muted">
+                                        <field name="team_category"/>
+                                    </small>
+                                </div>
+                                <field name="state" widget="badge"/>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="period_label"/>
+                                <div class="mt-2">
+                                    <strong>Score : </strong>
+                                    <field name="score_total_percent"/> %
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         SEARCH VIEW
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="view_agh_kpi_evaluation_search" model="ir.ui.view">
+        <field name="name">agh.kpi.evaluation.search</field>
+        <field name="model">agh.kpi.evaluation</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher une évaluation">
+                <field name="employee_id"/>
+                <field name="manager_id"/>
+                <field name="department_id"/>
+                <field name="team_category"/>
+                <filter string="Mes évaluations" name="my_evaluations"
+                        domain="[('evaluator_user_id','=',uid)]"/>
+                <filter string="Brouillon" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="En cours" name="in_progress" domain="[('state','=','in_progress')]"/>
+                <filter string="Finalisé" name="done" domain="[('state','=','done')]"/>
+                <filter string="Validé" name="validated" domain="[('state','=','validated')]"/>
+                <separator/>
+                <filter string="Top Performers ⭐" name="top"
+                        domain="[('performance_level','=','top')]"/>
+                <filter string="Insuffisants ❌" name="poor"
+                        domain="[('performance_level','=','poor')]"/>
+                <separator/>
+                <filter string="IA générée" name="ollama_ok"
+                        domain="[('ollama_status','=','success')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter string="Collaborateur" name="group_employee"
+                            context="{'group_by': 'employee_id'}"/>
+                    <filter string="Département" name="group_dept"
+                            context="{'group_by': 'department_id'}"/>
+                    <filter string="Équipe" name="group_team"
+                            context="{'group_by': 'team_category'}"/>
+                    <filter string="Niveau de performance" name="group_level"
+                            context="{'group_by': 'performance_level'}"/>
+                    <filter string="Statut" name="group_state"
+                            context="{'group_by': 'state'}"/>
+                    <filter string="Mois" name="group_month"
+                            context="{'group_by': 'date_evaluation:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         GRAPH VIEW
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="view_agh_kpi_evaluation_graph" model="ir.ui.view">
+        <field name="name">agh.kpi.evaluation.graph</field>
+        <field name="model">agh.kpi.evaluation</field>
+        <field name="arch" type="xml">
+            <graph string="Scores de performance" type="bar">
+                <field name="employee_id" type="row"/>
+                <field name="score_total" type="measure"/>
+                <field name="score_total_percent" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         PIVOT VIEW
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="view_agh_kpi_evaluation_pivot" model="ir.ui.view">
+        <field name="name">agh.kpi.evaluation.pivot</field>
+        <field name="model">agh.kpi.evaluation</field>
+        <field name="arch" type="xml">
+            <pivot string="Analyse KPI">
+                <field name="department_id" type="row"/>
+                <field name="team_category" type="col"/>
+                <field name="score_total" type="measure"/>
+                <field name="score_total_percent" type="measure"/>
+                <field name="score_assiduite" type="measure"/>
+                <field name="score_deadline" type="measure"/>
+                <field name="score_quantite" type="measure"/>
+                <field name="score_qualite" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         ACTIONS
+    ══════════════════════════════════════════════════════════════════════ -->
+    <record id="action_agh_kpi_evaluation" model="ir.actions.act_window">
+        <field name="name">Évaluations KPI</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,kanban,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_agh_kpi_evaluation_search"/>
+        <field name="context">{'search_default_in_progress': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer la première évaluation KPI
+            </p>
+            <p>
+                Évaluez vos collaborateurs sur 4 critères objectifs (0-5) :
+                assiduité, deadline, quantité et qualité.
+            </p>
+        </field>
+    </record>
+
+    <!-- Top Performers -->
+    <record id="action_agh_top_performers" model="ir.actions.act_window">
+        <field name="name">Top Performers ⭐</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('performance_level', '=', 'top')]</field>
+        <field name="context">{'search_default_top': 1}</field>
+    </record>
+
+    <!-- Poor Performers -->
+    <record id="action_agh_poor_performers" model="ir.actions.act_window">
+        <field name="name">Alertes – Insuffisants ❌</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('performance_level', '=', 'poor')]</field>
+        <field name="context">{'search_default_poor': 1}</field>
+    </record>
+
+    <!-- My Evaluations -->
+    <record id="action_agh_my_evaluations" model="ir.actions.act_window">
+        <field name="name">Mes évaluations</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">['|', ('employee_id.user_id', '=', uid), ('evaluator_user_id', '=', uid)]</field>
+        <field name="context">{'search_default_my_evaluations': 1}</field>
+    </record>
+
+</odoo>

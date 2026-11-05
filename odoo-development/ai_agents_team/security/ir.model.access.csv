@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_agent_run_log_user,ai.agent.run.log user,model_ai_agent_run_log,base.group_user,1,0,0,0
+access_ai_agent_run_log_manager,ai.agent.run.log manager,model_ai_agent_run_log,base.group_system,1,1,1,1
+access_ai_agent_config_manager,ai.agent.config manager,model_ai_agent_config,base.group_system,1,1,1,1
+access_ai_agent_config_user,ai.agent.config user,model_ai_agent_config,base.group_user,1,0,0,0
+access_agh_ai_agent_user,agh.ai.agent user,model_agh_ai_agent,base.group_user,1,0,0,0
+access_agh_ai_agent_manager,agh.ai.agent manager,model_agh_ai_agent,base.group_system,1,1,1,1
+access_agh_ai_agent_session_user,agh.ai.agent.session user,model_agh_ai_agent_session,base.group_user,1,1,1,1
+access_agh_ai_agent_session_manager,agh.ai.agent.session manager,model_agh_ai_agent_session,base.group_system,1,1,1,1
+access_agh_ai_agent_message_user,agh.ai.agent.message user,model_agh_ai_agent_message,base.group_user,1,1,1,1
+access_agh_ai_agent_message_manager,agh.ai.agent.message manager,model_agh_ai_agent_message,base.group_system,1,1,1,1

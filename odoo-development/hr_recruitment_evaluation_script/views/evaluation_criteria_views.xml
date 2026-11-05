@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_evaluation_criteria_list" model="ir.ui.view">
+        <field name="name">hr.evaluation.criteria.list</field>
+        <field name="model">hr.evaluation.criteria</field>
+        <field name="arch" type="xml">
+            <list string="Critères d'évaluation">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="max_score"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_evaluation_criteria_form" model="ir.ui.view">
+        <field name="name">hr.evaluation.criteria.form</field>
+        <field name="model">hr.evaluation.criteria</field>
+        <field name="arch" type="xml">
+            <form string="Critère d'évaluation">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="max_score"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_evaluation_criteria" model="ir.actions.act_window">
+        <field name="name">Critères d'évaluation</field>
+        <field name="res_model">hr.evaluation.criteria</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_hr_evaluation_criteria"
+        name="Critères d'évaluation"
+        parent="hr_recruitment.menu_hr_recruitment_configuration"
+        action="action_hr_evaluation_criteria"
+        sequence="30"
+    />
+
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_apk_license" model="mail.template">
+            <field name="name">Livraison de Licence APK</field>
+            <field name="model_id" ref="agh_apk_store.model_agh_apk_license"/>
+            <field name="subject">Votre licence pour {{ object.product_id.name }}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-family: Arial, sans-serif;">
+                    <p style="margin: 0px; padding: 0px; font-size: 14px;">
+                        Bonjour <strong><t t-out="object.partner_id.name"/></strong>,<br/><br/>
+                        Merci pour votre achat de l'APK <strong><t t-out="object.product_id.name"/></strong>.<br/>
+                        Voici votre clé de licence unique :<br/><br/>
+                        <div style="padding: 10px; background-color: #f8f9fa; border: 1px solid #dee2e6; text-align: center;">
+                            <strong style="font-size: 18px; color: #28a745;"><t t-out="object.name"/></strong>
+                        </div><br/>
+                        Conservez-la précieusement !<br/><br/>
+                        Vous pouvez télécharger votre APK ici :
+                        <a t-att-href="'/shop/apk/download/' + object.download_token">
+                            Télécharger l'application
+                        </a><br/><br/>
+                        L'équipe DataGenere.
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

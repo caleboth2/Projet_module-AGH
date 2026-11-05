@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View Tree -->
+    <record id="mobile_app_view_tree" model="ir.ui.view">
+        <field name="name">mobile.app.view.tree</field>
+        <field name="model">mobile.app</field>
+        <field name="arch" type="xml">
+            <list string="Catalogue des Applications">
+                <header>
+                    <button name="action_sync_from_github" string="Synchroniser GitHub" type="object" class="btn-primary"/>
+                </header>
+                <field name="name"/>
+                <field name="github_repo"/>
+                <field name="vault_key_name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- View Form -->
+    <record id="mobile_app_view_form" model="ir.ui.view">
+        <field name="name">mobile.app.view.form</field>
+        <field name="model">mobile.app</field>
+        <field name="arch" type="xml">
+            <form string="Application Mobile">
+                <header>
+                    <button name="%(mobile_sign_request_action)d" string="Voir les demandes" type="action" class="oe_highlight"/>
+                    <button name="fetch_sync_from_app" string="Synchroniser GitHub" type="object" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Nom de l'application..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group title="Dépôt et Code">
+                            <field name="github_repo" placeholder="organisation/depot"/>
+                            <field name="active"/>
+                        </group>
+                        <group title="Sécurité (Vault)">
+                            <field name="vault_key_name" placeholder="nom_de_la_cle"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="mobile_app_action" model="ir.actions.act_window">
+        <field name="name">Catalogue des Apps</field>
+        <field name="res_model">mobile.app</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configurez votre première application mobile.
+            </p>
+            <p>
+                Chaque application est liée à un dépôt GitHub et possède sa propre clé de signature dans Vault.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_mobile_app" name="Catalogue des Apps" parent="menu_mobile_signer_config" action="mobile_app_action" sequence="5"/>
+</odoo>

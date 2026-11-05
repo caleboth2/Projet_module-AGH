@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_grand_livre" model="ir.actions.report">
+        <field name="name">Grand-Livre Général</field>
+        <field name="model">account.general.ledger</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_reporting.report_grand_livre</field>
+        <field name="report_file">agh_reporting.report_grand_livre</field>
+        <field name="attachment_use">False</field>
+    </record>
+
+    <template id="report_grand_livre">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page" style="padding: 20px; font-family: Arial, sans-serif;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <t t-if="docs.company_id.logo">
+                            <img t-att-src="'data:image/png;base64,' + (docs.company_id.logo.decode('utf-8') if docs.company_id.logo else '')"
+                                 style="max-height: 80px;" alt="Logo"/>
+                        </t>
+                        <h2>GRAND-LIVRE GÉNÉRAL</h2>
+                        <h3>Du <t t-out="docs.date_from"/> au <t t-out="docs.date_to"/></h3>
+                        <p><strong>Société:</strong> <t t-out="docs.company_id.name"/></p>
+                    </div>
+
+                    <t t-set="accounts_to_show" t-value="docs.account_ids if docs.account_ids else docs.env['account.account'].search([('company_ids', 'in', docs.company_id.id)])"/>
+                    <t t-foreach="accounts_to_show" t-as="account">
+                        <t t-set="lines" t-value="docs.env['account.move.line'].search([
+                            ('account_id', '=', account.id),
+                            ('date', '&gt;=', docs.date_from),
+                            ('date', '&lt;=', docs.date_to),
+                            ('company_id', '=', docs.company_id.id),
+                            ('parent_state', '=', 'posted'),
+                        ], order='date, move_id')"/>
+                        <t t-if="lines">
+                            <h3 style="background-color: #e8f4fd; padding: 8px; margin-top: 20px;">
+                                Compte: <t t-out="account.code"/> - <t t-out="account.name"/>
+                            </h3>
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                                <thead>
+                                    <tr style="background-color: #f0f0f0;">
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: left;">Date</th>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: left;">Réf. Pièce</th>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: left;">Libellé</th>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: left;">Partenaire</th>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: right;">Débit</th>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: right;">Crédit</th>
+                                        <th style="border: 1px solid #ddd; padding: 6px; text-align: right;">Solde</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="balance_courant" t-value="0.0"/>
+                                    <t t-foreach="lines" t-as="line">
+                                        <t t-set="balance_courant" t-value="balance_courant + line.debit - line.credit"/>
+                                        <tr>
+                                            <td style="border: 1px solid #ddd; padding: 6px;"><t t-out="line.date"/></td>
+                                            <td style="border: 1px solid #ddd; padding: 6px;"><t t-out="line.move_id.name"/></td>
+                                            <td style="border: 1px solid #ddd; padding: 6px;"><t t-out="line.name or ''"/></td>
+                                            <td style="border: 1px solid #ddd; padding: 6px;"><t t-out="line.partner_id.name or ''"/></td>
+                                            <td style="border: 1px solid #ddd; padding: 6px; text-align: right;">
+                                                <t t-if="line.debit">
+                                                    <t t-out="'{:,.2f}'.format(line.debit)"/>
+                                                </t>
+                                            </td>
+                                            <td style="border: 1px solid #ddd; padding: 6px; text-align: right;">
+                                                <t t-if="line.credit">
+                                                    <t t-out="'{:,.2f}'.format(line.credit)"/>
+                                                </t>
+                                            </td>
+                                            <td style="border: 1px solid #ddd; padding: 6px; text-align: right;">
+                                                <t t-out="'{:,.2f}'.format(balance_courant)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr style="background-color: #f0f0f0; font-weight: bold;">
+                                        <td colspan="4" style="border: 1px solid #ddd; padding: 6px; text-align: right;">TOTAUX</td>
+                                        <td style="border: 1px solid #ddd; padding: 6px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.debit for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 6px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(sum(l.credit for l in lines))"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 6px; text-align: right;">
+                                            <t t-out="'{:,.2f}'.format(balance_courant)"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

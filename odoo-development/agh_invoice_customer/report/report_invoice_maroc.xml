@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Action de rapport -->
+        <record id="action_report_invoice_maroc" model="ir.actions.report">
+            <field name="name">Facture Maroc</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">agh_invoice_customer.report_invoice_maroc_document</field>
+            <field name="report_file">agh_invoice_customer.report_invoice_maroc_document</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="attachment_use" eval="False"/>
+        </record>
+
+        <!-- Template document -->
+        <template id="report_invoice_maroc_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="padding: 20px; font-family: Arial, sans-serif;">
+
+                            <!-- En-tete -->
+                            <div style="margin-bottom: 30px;">
+                                <h1 style="margin: 0;">FACTURE</h1>
+                                <p>
+                                    <strong>N. Facture: </strong>
+                                    <span t-out="doc.agh_sequence_maroc or doc.name or ''"/><br/>
+                                    <strong>Date: </strong>
+                                    <span t-field="doc.invoice_date"/><br/>
+                                    <strong>Echeance: </strong>
+                                    <span t-field="doc.invoice_date_due"/>
+                                </p>
+                            </div>
+
+                            <!-- Client -->
+                            <div style="margin-bottom: 30px;">
+                                <h3>Client</h3>
+                                <p>
+                                    <strong t-field="doc.partner_id.name"/><br/>
+                                    <span t-field="doc.partner_id.street"/><br/>
+                                    <span t-field="doc.partner_id.city"/>
+                                    <span t-field="doc.partner_id.zip"/><br/>
+                                    <t t-if="doc.partner_id.agh_ice">
+                                        <strong>ICE: </strong>
+                                        <span t-out="doc.partner_id.agh_ice"/><br/>
+                                    </t>
+                                    <t t-if="doc.partner_id.agh_if">
+                                        <strong>IF: </strong>
+                                        <span t-out="doc.partner_id.agh_if"/><br/>
+                                    </t>
+                                    <t t-if="doc.partner_id.agh_rc">
+                                        <strong>RC: </strong>
+                                        <span t-out="doc.partner_id.agh_rc"/>
+                                    </t>
+                                </p>
+                            </div>
+
+                            <!-- Tableau des lignes -->
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                                <thead>
+                                    <tr style="background-color: #f0f0f0;">
+                                        <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Designation</th>
+                                        <th style="border: 1px solid #ddd; padding: 10px; text-align: right;">Quantite</th>
+                                        <th style="border: 1px solid #ddd; padding: 10px; text-align: right;">Prix unitaire</th>
+                                        <th style="border: 1px solid #ddd; padding: 10px; text-align: right;">TVA</th>
+                                        <th style="border: 1px solid #ddd; padding: 10px; text-align: right;">Total HT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.invoice_line_ids" t-as="line">
+                                        <td style="border: 1px solid #ddd; padding: 10px;">
+                                            <span t-out="line.name or ''"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">
+                                            <span t-out="'%.2f' % (line.quantity or 0.0)"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">
+                                            <span t-out="'%.2f' % (line.price_unit or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">
+                                            <t t-set="tax_rate" t-value="(max(line.tax_ids.mapped('amount')) if line.tax_ids else 0.0)"/>
+                                            <t t-set="tax_amount" t-value="(line.price_subtotal or 0.0) * (tax_rate / 100.0)"/>
+                                            <span t-out="'%.2f' % tax_amount"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                        <td style="border: 1px solid #ddd; padding: 10px; text-align: right;">
+                                            <span t-out="'%.2f' % (line.price_subtotal or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Totaux -->
+                            <div style="text-align: right; margin-bottom: 30px;">
+                                <table style="width: 320px; margin-left: auto; border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding: 4px 8px;"><strong>Total HT:</strong></td>
+                                        <td style="padding: 4px 8px; text-align: right;">
+                                            <span t-out="'%.2f' % (doc.amount_untaxed or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="doc.amount_tax">
+                                        <td style="padding: 4px 8px;"><strong>TVA:</strong></td>
+                                        <td style="padding: 4px 8px; text-align: right;">
+                                            <span t-out="'%.2f' % (doc.amount_tax or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="font-size: 16px; font-weight: bold;">
+                                        <td style="padding: 6px 8px;"><strong>Total TTC:</strong></td>
+                                        <td style="padding: 6px 8px; text-align: right;">
+                                            <span t-out="'%.2f' % (doc.amount_total or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="doc.agh_acompte_amount and doc.agh_acompte_amount > 0">
+                                        <td style="padding: 4px 8px;"><strong>Acompte verse:</strong></td>
+                                        <td style="padding: 4px 8px; text-align: right;">
+                                            <span t-out="'%.2f' % (doc.agh_acompte_amount or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="doc.agh_rest_a_payer and doc.agh_rest_a_payer > 0" style="background-color: #ffffcc;">
+                                        <td style="padding: 6px 8px;"><strong>Reste a payer:</strong></td>
+                                        <td style="padding: 6px 8px; text-align: right;">
+                                            <span t-out="'%.2f' % (doc.agh_rest_a_payer or 0.0)"/>
+                                            <span t-out="doc.currency_id.symbol or ''"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Conditions de paiement -->
+                            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd;">
+                                <h4>Conditions de paiement</h4>
+                                <p>
+                                    <strong>Date d'echeance: </strong>
+                                    <span t-field="doc.invoice_date_due"/><br/>
+                                    <t t-if="doc.invoice_payment_term_id">
+                                        <strong>Terme de paiement: </strong>
+                                        <span t-field="doc.invoice_payment_term_id.name"/><br/>
+                                    </t>
+                                    <t t-if="doc.partner_bank_id">
+                                        <strong>Banque: </strong>
+                                        <span t-field="doc.partner_bank_id.bank_id.name"/><br/>
+                                        <strong>RIB: </strong>
+                                        <span t-field="doc.partner_bank_id.acc_number"/>
+                                    </t>
+                                </p>
+                            </div>
+
+                            <!-- Numero sequentiel DGI -->
+                            <div style="margin-top: 20px; text-align: center; font-size: 10px; color: #999;">
+                                Document genere electroniquement - N. sequentiel DGI:
+                                <span t-out="doc.agh_sequence_maroc or doc.name or ''"/>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

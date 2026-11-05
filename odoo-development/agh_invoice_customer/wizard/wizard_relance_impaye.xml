@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_relance_impaye_form" model="ir.ui.view">
+        <field name="name">wizard.relance.impaye.form</field>
+        <field name="model">wizard.relance.impaye</field>
+        <field name="arch" type="xml">
+            <form string="Relance Impaye">
+                <group>
+                    <group string="Facture">
+                        <field name="invoice_id"/>
+                        <field name="relance_level"/>
+                    </group>
+                    <group string="Destinataire">
+                        <field name="email_to"/>
+                        <field name="subject"/>
+                    </group>
+                </group>
+                <group string="Message de relance">
+                    <field name="body" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_send_relance" string="Envoyer la relance" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_relance_impaye" model="ir.actions.act_window">
+        <field name="name">Relance Impaye</field>
+        <field name="res_model">wizard.relance.impaye</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

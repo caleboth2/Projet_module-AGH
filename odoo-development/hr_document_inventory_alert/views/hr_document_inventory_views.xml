@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Liste autonome des types de contrats -->
+    <record id="view_hr_contract_type_list_inventory" model="ir.ui.view">
+        <field name="name">hr.contract.type.list.inventory</field>
+        <field name="model">hr.contract.type</field>
+        <field name="arch" type="xml">
+            <list string="Types de contrats">
+                <field name="name"/>
+                <field name="required_document_type_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulaire autonome d'un type de contrat -->
+    <record id="view_hr_contract_type_form_inventory" model="ir.ui.view">
+        <field name="name">hr.contract.type.form.inventory</field>
+        <field name="model">hr.contract.type</field>
+        <field name="arch" type="xml">
+            <form string="Type de contrat">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="required_document_type_ids"
+                               widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action des types de contrats -->
+    <record id="action_hr_contract_type_inventory" model="ir.actions.act_window">
+        <field name="name">Types de contrats</field>
+        <field name="res_model">hr.contract.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu des types de contrats -->
+    <menuitem
+        id="menu_hr_contract_type_inventory"
+        name="Types de contrats"
+        parent="menu_hr_document_inventory_root"
+        action="action_hr_contract_type_inventory"
+        sequence="20"
+    />
+
+    <!-- Inventaire sur la fiche employé -->
+    <record id="view_hr_employee_form_documents" model="ir.ui.view">
+        <field name="name">hr.employee.form.documents</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="inside">
+                <group string="Inventaire des documents">
+                    <field name="completeness_rate" widget="progressbar"/>
+                    <field name="is_dossier_incomplete" readonly="1"/>
+                </group>
+
+                <notebook>
+                    <page string="Documents" name="employee_documents">
+                        <field name="employee_document_ids">
+                            <list editable="bottom">
+                                <field name="document_type_id"/>
+                                <field name="attachment_id"/>
+                                <field name="is_provided" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

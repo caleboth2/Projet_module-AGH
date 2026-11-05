@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ══════════════════════════════════════════════════════════
+       Menus Agile dans le module Knowledge Plus
+  ══════════════════════════════════════════════════════════════ -->
+
+  <!-- Sous-menu Agile dans Knowledge Plus (menu racine existant) -->
+  <menuitem id="menu_knowledge_agile_root"
+            name="Agile"
+            parent="knowledge_plus_final_v3.menu_knowledge_root"
+            sequence="50"/>
+
+  <menuitem id="menu_agile_sprints"
+            name="Sprints"
+            parent="menu_knowledge_agile_root"
+            action="action_agile_sprints"
+            sequence="10"/>
+
+  <menuitem id="menu_agile_epics"
+            name="Epics"
+            parent="menu_knowledge_agile_root"
+            action="action_agile_epics"
+            sequence="20"/>
+
+  <menuitem id="menu_agile_burndown"
+            name="Burndown"
+            parent="menu_knowledge_agile_root"
+            action="action_agile_burndown"
+            sequence="30"/>
+
+</odoo>

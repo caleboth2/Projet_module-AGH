@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_cash_count_form" model="ir.ui.view">
+        <field name="name">wizard.cash.count.form</field>
+        <field name="model">wizard.cash.count</field>
+        <field name="arch" type="xml">
+            <form string="Comptage de caisse">
+                <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="expected_amount"/>
+                        <field name="counted_amount"/>
+                        <field name="difference"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="observation" nolabel="1" placeholder="Observations sur le comptage..."/>
+                </group>
+                <footer>
+                    <button name="action_validate" string="Valider" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_cash_count" model="ir.actions.act_window">
+        <field name="name">Comptage de caisse</field>
+        <field name="res_model">wizard.cash.count</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

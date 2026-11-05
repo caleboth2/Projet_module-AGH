@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_supplier_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.supplier.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="agh_supplier_invoice_ref"
+                       placeholder="N. facture fournisseur"
+                       invisible="move_type != 'in_invoice'"/>
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button name="action_validate_level1"
+                        type="object"
+                        string="Valider N1"
+                        class="btn-primary"
+                        invisible="move_type != 'in_invoice' or agh_validation_status != 'draft' or amount_total &gt; 10000"
+                        groups="account.group_account_invoice"/>
+                <button name="action_validate_level2"
+                        type="object"
+                        string="Valider N2"
+                        class="btn-primary"
+                        invisible="move_type != 'in_invoice' or agh_validation_status != 'level1_approved' or amount_total &lt;= 10000"
+                        groups="purchase.group_purchase_manager"/>
+                <button name="action_validate_level3"
+                        type="object"
+                        string="Valider N3"
+                        class="btn-primary"
+                        invisible="move_type != 'in_invoice' or agh_validation_status != 'level2_approved' or amount_total &lt;= 50000"
+                        groups="account.group_account_manager"/>
+                <button name="action_3way_match"
+                        type="object"
+                        string="3-Way Match"
+                        class="btn-secondary"
+                        invisible="move_type != 'in_invoice'"/>
+                <button name="action_reject_invoice"
+                        type="object"
+                        string="Rejeter"
+                        class="btn-danger"
+                        invisible="move_type != 'in_invoice' or agh_validation_status in ('rejected', 'posted')"/>
+            </xpath>
+
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="agh_validation_status" widget="badge"
+                       invisible="move_type != 'in_invoice'"
+                       decoration-danger="agh_validation_status == 'rejected'"
+                       decoration-success="agh_validation_status in ('level1_approved','level2_approved','level3_approved','posted')"
+                       decoration-warning="agh_validation_status == 'draft'"/>
+                <field name="agh_validation_level" widget="badge"
+                       invisible="move_type != 'in_invoice'"/>
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Rapprochement 3 voies" name="agh_3way_match"
+                      invisible="move_type != 'in_invoice'">
+                    <group>
+                        <group>
+                            <field name="agh_purchase_order_id"/>
+                            <field name="agh_stock_picking_ids" widget="many2many_tags"/>
+                            <field name="agh_price_tolerance"/>
+                            <field name="agh_qty_tolerance"/>
+                        </group>
+                        <group>
+                            <field name="agh_3way_match_status" widget="badge"
+                                   decoration-danger="agh_3way_match_status == 'mismatch'"
+                                   decoration-success="agh_3way_match_status in ('matched', 'approved')"/>
+                            <field name="agh_price_deviation"/>
+                            <field name="agh_qty_deviation"/>
+                        </group>
+                    </group>
+                    <field name="agh_match_details" nolabel="1"/>
+                </page>
+
+                <page string="Retenue a la Source" name="agh_ras"
+                      invisible="move_type != 'in_invoice'">
+                    <field name="agh_ras_ids">
+                        <list editable="bottom">
+                            <field name="ras_type"/>
+                            <field name="ras_rate"/>
+                            <field name="taxable_base"/>
+                            <field name="ras_amount" sum="Total RAS"/>
+                            <field name="certificate_issued" widget="boolean_toggle"/>
+                            <button name="action_generate_certificate" type="object" string="Attestation" icon="fa-certificate"/>
+                        </list>
+                    </field>
+                    <group>
+                        <field name="agh_ras_total"/>
+                        <field name="agh_net_to_pay" class="oe_subtotal_footer_separator"/>
+                    </group>
+                </page>
+
+                <page string="Validation" name="agh_validation"
+                      invisible="move_type != 'in_invoice'">
+                    <group string="Historique des validations">
+                        <group>
+                            <field name="agh_level1_approved_by"/>
+                            <field name="agh_level1_approved_date"/>
+                        </group>
+                        <group>
+                            <field name="agh_level2_approved_by"/>
+                            <field name="agh_level2_approved_date"/>
+                        </group>
+                        <group>
+                            <field name="agh_level3_approved_by"/>
+                            <field name="agh_level3_approved_date"/>
+                        </group>
+                    </group>
+                    <group string="Rejet">
+                        <field name="agh_rejection_reason"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_tree_supplier_inherit" model="ir.ui.view">
+        <field name="name">account.move.list.supplier.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="agh_supplier_invoice_ref" optional="hide"/>
+                <field name="agh_validation_status" string="Validation" optional="show" widget="badge"/>
+                <field name="agh_3way_match_status" string="3-Way" optional="hide" widget="badge"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

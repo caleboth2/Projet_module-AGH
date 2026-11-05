@@ -1,0 +1,39 @@
+# Translation of agh_reporting to French (Morocco)
+# Copyright (C) 2024 Agh Data Agency
+# License LGPL-3
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Language-Team: French (Morocco) <fr_MA@li.org>\n"
+"Language: fr_MA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Bilan PCM"
+msgstr "Bilan PCM"
+
+msgid "Compte de Produits et Charges"
+msgstr "Compte de Produits et Charges (CPC)"
+
+msgid "Tableau de flux de trésorerie"
+msgstr "Tableau de Flux de Trésorerie"
+
+msgid "Balance âgée clients"
+msgstr "Balance Âgée Clients"
+
+msgid "Balance âgée fournisseurs"
+msgstr "Balance Âgée Fournisseurs"
+
+msgid "Grand-livre général"
+msgstr "Grand-Livre Général"
+
+msgid "Tableau de bord KPIs"
+msgstr "Tableau de Bord KPIs"
+
+msgid "Planification rapports"
+msgstr "Planification des Rapports"

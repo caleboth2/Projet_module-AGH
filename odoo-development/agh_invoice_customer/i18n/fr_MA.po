@@ -1,0 +1,33 @@
+# Traduction francaise Maroc
+msgid ""
+msgstr ""
+"Project-Id-Version: AGH Invoice Customer 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: fr_MA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Customer Invoice"
+msgstr "Facture Client"
+
+msgid "DGI sequence number"
+msgstr "Numero sequentiel DGI"
+
+msgid "Payment term limit"
+msgstr "Plafond de credit"
+
+msgid "Late days"
+msgstr "Jours de retard"
+
+msgid "Send invoice by email"
+msgstr "Envoyer la facture par email"
+
+msgid "Unpaid reminder"
+msgstr "Relance impaye"
+
+msgid "Down payment"
+msgstr "Acompte"
+
+msgid "Credit note"
+msgstr "Avoir"

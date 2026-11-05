@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Offboarding Wizard View -->
+    <record id="view_agh_employee_offboarding_wizard_form" model="ir.ui.view">
+        <field name="name">agh.employee.offboarding.wizard.form</field>
+        <field name="model">agh.employee.offboarding.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Révoquer tous les accès (Offboarding Instantané)">
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="state != 'draft'">
+                        <strong>Attention :</strong> Cette action révoquera immédiatement les accès GitHub, Vault, SSH et Odoo de l'employé sélectionné.
+                    </div>
+                    <group invisible="state != 'draft'">
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="github_username" placeholder="ex: octocat"/>
+                            <field name="reason" placeholder="Raison de la révocation / Offboarding..."/>
+                        </group>
+                        <group>
+                            <field name="revoke_github"/>
+                            <field name="revoke_ssh"/>
+                            <field name="revoke_vault"/>
+                            <field name="revoke_api_keys"/>
+                        </group>
+                    </group>
+                    <group invisible="state == 'draft'">
+                        <field name="revocation_log" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_execute_offboarding" string="⚡ Révoquer Tous Les Accès (SecOps)" type="object" class="btn-danger" invisible="state != 'draft'"/>
+                    <button string="Fermer" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action Wizard -->
+    <record id="action_agh_employee_offboarding_wizard" model="ir.actions.act_window">
+        <field name="name">Révoquer Tous Les Accès</field>
+        <field name="res_model">agh.employee.offboarding.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu HR -->
+    <menuitem id="menu_agh_offboarding_root" name="Offboarding SecOps" parent="hr.menu_hr_root" sequence="90"/>
+    <menuitem id="menu_agh_offboarding_wizard" name="⚡ Révoquer un Employé" parent="menu_agh_offboarding_root" action="action_agh_employee_offboarding_wizard"/>
+</odoo>

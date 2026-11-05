@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extension du formulaire facture client -->
+    <record id="view_move_form_inherit_maroc" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.maroc</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Numero sequentiel DGI a cote du nom -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="agh_sequence_maroc"
+                       string="N. DGI"
+                       readonly="state != 'draft'"
+                       class="oe_inline"/>
+            </xpath>
+
+            <!-- Reference BC client a cote du journal -->
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="agh_client_ref"
+                       placeholder="Ref. Bon de commande client"
+                       invisible="move_type not in ('out_invoice','out_refund')"/>
+            </xpath>
+
+            <!-- Etats / suivi paiement -->
+            <xpath expr="//field[@name='invoice_payment_term_id']" position="after">
+                <field name="agh_payment_state_ext"
+                       string="Etat paiement"
+                       widget="badge"
+                       decoration-danger="agh_payment_state_ext == 'not_paid'"
+                       decoration-info="agh_payment_state_ext == 'partial'"
+                       decoration-success="agh_payment_state_ext == 'paid'"
+                       decoration-warning="agh_payment_state_ext == 'posted'"/>
+                <field name="agh_relance_count" string="Nb relances"/>
+                <field name="agh_relance_date" string="Prochaine relance"/>
+                <field name="agh_late_days" string="Jours de retard"/>
+                <field name="agh_email_sent" invisible="1"/>
+            </xpath>
+
+            <!-- Boutons d'action dans la button_box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_send_invoice_email"
+                        type="object"
+                        string="Envoyer par email"
+                        class="oe_stat_button"
+                        icon="fa-envelope"
+                        invisible="state != 'posted' or move_type not in ('out_invoice','out_refund')"/>
+                <button name="action_relance_impaye"
+                        type="object"
+                        string="Envoyer relance"
+                        class="oe_stat_button"
+                        icon="fa-bell"
+                        invisible="state != 'posted' or payment_state in ('paid','reversed') or move_type != 'out_invoice'"/>
+            </xpath>
+
+            <!-- Onglets supplementaires -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Acomptes" name="agh_acomptes"
+                      invisible="move_type not in ('out_invoice','out_refund')">
+                    <field name="agh_acompte_ids" readonly="1">
+                        <list string="Acomptes">
+                            <field name="date"/>
+                            <field name="amount"/>
+                            <field name="payment_reference" optional="hide"/>
+                        </list>
+                    </field>
+                    <group>
+                        <field name="agh_acompte_amount" readonly="1"/>
+                        <field name="agh_rest_a_payer" readonly="1"/>
+                    </group>
+                </page>
+                <page string="Avoirs" name="agh_avoirs"
+                      invisible="move_type not in ('out_invoice','out_refund')">
+                    <field name="agh_avoir_ids" readonly="1">
+                        <list string="Avoirs">
+                            <field name="name"/>
+                            <field name="invoice_date"/>
+                            <field name="amount_total"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+                <page string="Relances" name="agh_relances"
+                      invisible="move_type != 'out_invoice'">
+                    <group>
+                        <group>
+                            <field name="agh_relance_count" readonly="1"/>
+                            <field name="agh_relance_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="agh_email_sent"/>
+                            <field name="agh_receipt_confirmed"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert" invisible="agh_late_days &lt;= 0">
+                        <i class="fa fa-warning"/>
+                        Cette facture a <strong><field name="agh_late_days" readonly="1" nolabel="1"/></strong> jours de retard.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vue liste avec indicateurs de retard -->
+    <record id="view_invoice_tree_inherit_maroc" model="ir.ui.view">
+        <field name="name">account.move.list.inherit.maroc</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">agh_late_days &gt; 30</attribute>
+                <attribute name="decoration-warning">agh_late_days &gt; 0 and agh_late_days &lt;= 30</attribute>
+                <attribute name="decoration-success">payment_state == 'paid'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="agh_sequence_maroc" string="N. DGI" optional="show"/>
+                <field name="agh_late_days" string="Retard (j)" optional="show" sum="Total"/>
+                <field name="agh_relance_count" string="Relances" optional="hide"/>
+                <field name="agh_payment_state_ext" string="Etat" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

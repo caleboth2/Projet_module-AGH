@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="module_category_fiscal_maroc" model="ir.module.category">
+            <field name="name">Fiscalité Maroc</field>
+            <field name="description">Gestion fiscale marocaine</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_fiscal_maroc_user" model="res.groups">
+            <field name="name">Utilisateur Fiscalité Maroc</field>
+            <field name="category_id" ref="module_category_fiscal_maroc"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_fiscal_maroc_manager" model="res.groups">
+            <field name="name">Responsable Fiscalité Maroc</field>
+            <field name="category_id" ref="module_category_fiscal_maroc"/>
+            <field name="implied_ids" eval="[(4, ref('group_fiscal_maroc_user'))]"/>
+        </record>
+
+    </data>
+</odoo>

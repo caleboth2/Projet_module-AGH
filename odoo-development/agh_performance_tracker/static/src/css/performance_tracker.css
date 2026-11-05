@@ -1,0 +1,40 @@
+/* AGH Performance Tracker – custom styles */
+
+/* Score badge colors */
+.o_field_widget.o_priority .o_priority_star {
+    font-size: 1.2rem;
+}
+
+/* Performance level badges */
+.badge.bg-success { background-color: #198754 !important; }
+.badge.bg-warning { background-color: #ffc107 !important; }
+.badge.bg-danger  { background-color: #dc3545 !important; }
+
+/* Monospace prompt preview */
+.o_field_text_monospace textarea,
+.o_field_text_monospace .o_field_text {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.82em;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Highlighted summary field */
+.o_field_text_highlighted textarea {
+    background: #f0fff4;
+    border-color: #198754;
+    border-left: 4px solid #198754;
+    padding-left: 12px;
+}
+
+/* Deadline progress bar */
+.o_field_progressbar .o_progress {
+    height: 20px;
+    border-radius: 4px;
+}
+
+/* Kanban card hover */
+.o_kanban_record:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.2s ease;
+}

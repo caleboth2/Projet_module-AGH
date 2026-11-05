@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_agh_job_template_tree" model="ir.ui.view">
+        <field name="name">agh.job.template.tree</field>
+        <field name="model">agh.job.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_agh_job_template_form" model="ir.ui.view">
+        <field name="name">agh.job.template.form</field>
+        <field name="model">agh.job.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" widget="html" options="{'collaborative': true, 'resizable': true}"/>
+                        </page>
+                        <page string="Prérequis">
+                            <field name="requirements" widget="html" options="{'collaborative': true, 'resizable': true}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_agh_job_template" model="ir.actions.act_window">
+        <field name="name">Banque d'annonces</field>
+        <field name="res_model">agh.job.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créez votre premier modèle d'annonce !
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_agh_job_template"
+              name="Banque d'annonces"
+              parent="hr_recruitment.menu_hr_recruitment_configuration"
+              action="action_agh_job_template"
+              sequence="20"/>
+</odoo>

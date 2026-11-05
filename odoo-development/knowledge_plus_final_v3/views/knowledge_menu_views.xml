@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══ RACINE ══════════════════════════════════════════════════ -->
+    <menuitem id="menu_knowledge_root"
+              name="Knowledge Plus IA"
+              sequence="10"
+              web_icon="knowledge_plus_final_v3,static/description/icon.png"/>
+
+    <!-- ══ ARTICLES ════════════════════════════════════════════════ -->
+    <menuitem id="menu_knowledge_articles"
+              name="Articles"
+              parent="menu_knowledge_root"
+              action="action_knowledge_article"
+              sequence="10"/>
+
+    <menuitem id="menu_knowledge_articles_kanban"
+              name="Kanban Agile"
+              parent="menu_knowledge_root"
+              action="action_knowledge_article_kanban"
+              sequence="15"/>
+
+    <menuitem id="menu_knowledge_articles_archived"
+              name="Articles archivés"
+              parent="menu_knowledge_root"
+              action="action_knowledge_article_archived"
+              sequence="18"/>
+
+    <!-- ══ CDC &amp; ÉTUDES BA ═══════════════════════════════════════ -->
+    <menuitem id="menu_knowledge_ba"
+              name="CDC &amp; Études BA"
+              parent="menu_knowledge_root"
+              sequence="30"/>
+
+    <menuitem id="menu_knowledge_ba_all"
+              name="Tous les CDC"
+              parent="menu_knowledge_ba"
+              action="action_ba_specification"
+              sequence="10"/>
+
+    <menuitem id="menu_knowledge_ba_mine"
+              name="Mes CDC"
+              parent="menu_knowledge_ba"
+              action="action_ba_spec_my"
+              sequence="20"/>
+
+    <menuitem id="menu_knowledge_ba_review"
+              name="À réviser"
+              parent="menu_knowledge_ba"
+              action="action_ba_spec_to_review"
+              sequence="30"/>
+
+    <!-- ══ PROJET &amp; AGILE ════════════════════════════════════════ -->
+    <menuitem id="menu_knowledge_project"
+              name="Projet &amp; Agile"
+              parent="menu_knowledge_root"
+              sequence="40"/>
+
+    <menuitem id="menu_knowledge_tasks_without_doc"
+              name="Tâches sans documentation"
+              parent="menu_knowledge_project"
+              action="action_tasks_without_doc"
+              sequence="10"/>
+
+    <menuitem id="menu_knowledge_doc_coverage"
+              name="Couverture documentaire"
+              parent="menu_knowledge_project"
+              action="action_doc_coverage_report"
+              sequence="20"/>
+
+    <!-- ══ CONFIGURATION ════════════════════════════════════════════ -->
+    <menuitem id="menu_knowledge_config"
+              name="Configuration"
+              parent="menu_knowledge_root"
+              sequence="100"/>
+
+    <menuitem id="menu_knowledge_categories"
+              name="Catégories"
+              parent="menu_knowledge_config"
+              action="action_knowledge_category"
+              sequence="10"/>
+
+    <menuitem id="menu_knowledge_tags"
+              name="Tags"
+              parent="menu_knowledge_config"
+              action="action_knowledge_tag"
+              sequence="20"/>
+
+    <menuitem id="menu_knowledge_workflow"
+              name="Workflow"
+              parent="menu_knowledge_config"
+              action="action_knowledge_workflow_config"
+              sequence="30"/>
+
+    <menuitem id="menu_knowledge_ai_assistant"
+              name="Assistant IA"
+              parent="menu_knowledge_config"
+              action="action_knowledge_ai_assistant"
+              sequence="40"
+              groups="base.group_system"/>
+
+</odoo>

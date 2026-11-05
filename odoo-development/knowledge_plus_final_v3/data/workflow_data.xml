@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="default_workflow_config" model="agh.knowledge.workflow.config">
+            <field name="name">Configuration par défaut</field>
+            <field name="requires_validation">True</field>
+            <field name="auto_approve">False</field>
+        </record>
+    </data>
+</odoo>

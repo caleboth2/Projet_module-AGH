@@ -1,0 +1,10 @@
+**/__pycache__/
+*.py[cod]
+*.log
+**/.env
+**/.env.*
+!**/.env.example
+/config/odoo.conf
+/odoo-development/how --stat --oneline 0462526
+.DS_Store
+Thumbs.db

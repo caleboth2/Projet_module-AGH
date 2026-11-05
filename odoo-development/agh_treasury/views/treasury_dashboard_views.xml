@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_treasury_dashboard" model="ir.ui.view">
+        <field name="name">treasury.dashboard.form</field>
+        <field name="model">account.treasury.forecast</field>
+        <field name="arch" type="xml">
+            <form string="Tableau de bord Tresorerie">
+                <header>
+                    <button name="action_generate_forecast" type="object"
+                            string="Generer prevision" class="btn-primary"/>
+                    <button name="action_send_alert" type="object"
+                            string="Envoyer alertes" class="btn-warning"
+                            invisible="not has_alert"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Parametres de prevision">
+                            <field name="horizon"/>
+                            <field name="date"/>
+                            <field name="alert_threshold"/>
+                        </group>
+                        <group string="Resultats">
+                            <field name="total_inflow"/>
+                            <field name="total_outflow"/>
+                            <field name="net_flow"/>
+                            <field name="ending_balance"/>
+                            <field name="has_alert" widget="boolean_toggle"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-danger" role="alert" invisible="not has_alert">
+                        <strong>Alerte Tresorerie!</strong>
+                        Le solde prevu est inferieur au seuil d'alerte.
+                    </div>
+
+                    <notebook>
+                        <page string="Previsions detaillees" name="forecast_lines">
+                            <field name="forecast_line_ids">
+                                <list editable="bottom"
+                                      decoration-success="type == 'inflow'"
+                                      decoration-danger="type == 'outflow'">
+                                    <field name="date"/>
+                                    <field name="type" widget="badge"/>
+                                    <field name="source_type"/>
+                                    <field name="description"/>
+                                    <field name="partner_id"/>
+                                    <field name="amount" widget="monetary" sum="Total"/>
+                                    <field name="probability" widget="progressbar"/>
+                                    <field name="weighted_amount" widget="monetary" sum="Total pondere"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_treasury_forecast_list" model="ir.ui.view">
+        <field name="name">account.treasury.forecast.list</field>
+        <field name="model">account.treasury.forecast</field>
+        <field name="arch" type="xml">
+            <list string="Previsions de tresorerie">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="horizon"/>
+                <field name="total_inflow" widget="monetary"/>
+                <field name="total_outflow" widget="monetary"/>
+                <field name="net_flow" widget="monetary"/>
+                <field name="ending_balance" widget="monetary"/>
+                <field name="has_alert" widget="boolean"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_treasury_forecast" model="ir.actions.act_window">
+        <field name="name">Previsions de Tresorerie</field>
+        <field name="res_model">account.treasury.forecast</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

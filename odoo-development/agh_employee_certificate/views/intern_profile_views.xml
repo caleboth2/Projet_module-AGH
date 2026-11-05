@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- SEARCH -->
+    <record id="view_intern_search" model="ir.ui.view">
+        <field name="name">intern.profile.search</field>
+        <field name="model">intern.profile</field>
+        <field name="arch" type="xml">
+            <search string="Recherche Stagiaires">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="attestation_number"/>
+                <separator/>
+                <filter name="draft_filter" string="Brouillons"
+                        domain="[('state','=','draft')]"/>
+                <filter name="validated_filter" string="Validées"
+                        domain="[('state','=','validated')]"/>
+                <filter name="sent_filter" string="Envoyées"
+                        domain="[('state','=','sent')]"/>
+                <group expand="0" string="Grouper par">
+                    <filter name="group_state" string="Statut"
+                            context="{'group_by':'state'}"/>
+                    <filter name="group_type" string="Type de stage"
+                            context="{'group_by':'stage_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- LIST (Odoo 18) -->
+    <record id="view_intern_list" model="ir.ui.view">
+        <field name="name">intern.profile.list</field>
+        <field name="model">intern.profile</field>
+        <field name="arch" type="xml">
+            <list string="Stagiaires">
+                <field name="attestation_number"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="stage_type"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'validated'"
+                       decoration-success="state == 'sent'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="view_intern_form" model="ir.ui.view">
+        <field name="name">intern.profile.form</field>
+        <field name="model">intern.profile</field>
+        <field name="arch" type="xml">
+            <form string="Attestation Stagiaire">
+                <header>
+                    <button name="action_validate" type="object"
+                            string="Valider" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_print_attestation" type="object"
+                            string="Imprimer" class="btn-secondary"
+                            invisible="state == 'draft'"/>
+                    <button name="action_send_email" type="object"
+                            string="Envoyer Attestation" class="btn-success"
+                            invisible="state != 'validated'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,validated,sent"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nom du stagiaire"/></h1>
+                    </div>
+                    <group>
+                        <group string="Informations Stagiaire">
+                            <field name="email"/>
+                            <field name="cine"/>
+                            <field name="stage_type"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="city"/>
+                        </group>
+                        <group string="Informations Entreprise">
+                            <field name="company_name"/>
+                            <field name="supervisor"/>
+                            <field name="supervisor_job"/>
+                            <field name="attestation_number" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_intern_profile" model="ir.actions.act_window">
+        <field name="name">Stagiaires</field>
+        <field name="res_model">intern.profile</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_intern_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer une fiche stagiaire
+            </p>
+            <p>
+                Gérez vos stagiaires et générez automatiquement leurs attestations.
+            </p>
+        </field>
+    </record>
+
+    <!-- ============================================================
+         MENUS — intégrés dans le menu standard "Employees"
+         (anciennement menu racine "Attestations Stagiaires")
+         ============================================================ -->
+
+    <!-- Déplacer "Attestations Stagiaires" sous le menu existant Attestations -->
+    <menuitem id="menu_intern_profile"
+              name="Attestations Stagiaires"
+              parent="menu_hr_certificate_root"
+              action="action_intern_profile"
+              sequence="30"/>
+
+</odoo>

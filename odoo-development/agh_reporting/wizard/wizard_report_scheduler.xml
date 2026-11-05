@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire wizard envoi immédiat -->
+    <record id="view_wizard_send_report_form" model="ir.ui.view">
+        <field name="name">wizard.send.report.form</field>
+        <field name="model">report.scheduler</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <form string="Envoyer le rapport maintenant">
+                <sheet>
+                    <group>
+                        <field name="report_type" readonly="1"/>
+                        <field name="email_to" required="1"/>
+                        <field name="output_format"/>
+                        <field name="period_days"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_send_now" type="object" string="Envoyer" class="btn-primary"/>
+                    <button string="Annuler" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

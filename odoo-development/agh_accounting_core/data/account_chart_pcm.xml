@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+    PLAN COMPTABLE MAROCAIN (PCM) — Comptes principaux
+    Conforme à la CGNC (Code Général de Normalisation Comptable) du Maroc
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 1 — COMPTES DE FINANCEMENT PERMANENT
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_1111" model="account.account">
+        <field name="code">1111</field>
+        <field name="name">Capital social</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_11"/>
+    </record>
+
+    <record id="pcm_1119" model="account.account">
+        <field name="code">1119</field>
+        <field name="name">Actionnaires, capital souscrit non appelé</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_11"/>
+    </record>
+
+    <record id="pcm_1121" model="account.account">
+        <field name="code">1121</field>
+        <field name="name">Prime d'émission</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_11"/>
+    </record>
+
+    <record id="pcm_1131" model="account.account">
+        <field name="code">1131</field>
+        <field name="name">Réserve légale</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_11"/>
+    </record>
+
+    <record id="pcm_1151" model="account.account">
+        <field name="code">1151</field>
+        <field name="name">Réserves facultatives</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_11"/>
+    </record>
+
+    <record id="pcm_1181" model="account.account">
+        <field name="code">1181</field>
+        <field name="name">Résultats nets en instance d'affectation — Bénéfice</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_13"/>
+    </record>
+
+    <record id="pcm_1189" model="account.account">
+        <field name="code">1189</field>
+        <field name="name">Résultats nets en instance d'affectation — Perte</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_13"/>
+    </record>
+
+    <record id="pcm_1191" model="account.account">
+        <field name="code">1191</field>
+        <field name="name">Résultat net de l'exercice — Bénéfice</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_13"/>
+    </record>
+
+    <record id="pcm_1199" model="account.account">
+        <field name="code">1199</field>
+        <field name="name">Résultat net de l'exercice — Perte</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_13"/>
+    </record>
+
+    <!-- Dettes de financement -->
+    <record id="pcm_1411" model="account.account">
+        <field name="code">1411</field>
+        <field name="name">Emprunts obligataires</field>
+        <field name="account_type">liability_non_current</field>
+        <field name="group_id" ref="pcm_group_14"/>
+    </record>
+
+    <record id="pcm_1481" model="account.account">
+        <field name="code">1481</field>
+        <field name="name">Emprunts auprès des établissements de crédit</field>
+        <field name="account_type">liability_non_current</field>
+        <field name="group_id" ref="pcm_group_14"/>
+    </record>
+
+    <record id="pcm_1511" model="account.account">
+        <field name="code">1511</field>
+        <field name="name">Provisions pour litiges</field>
+        <field name="account_type">liability_non_current</field>
+        <field name="group_id" ref="pcm_group_15"/>
+    </record>
+
+    <record id="pcm_1521" model="account.account">
+        <field name="code">1521</field>
+        <field name="name">Provisions pour garanties données aux clients</field>
+        <field name="account_type">liability_non_current</field>
+        <field name="group_id" ref="pcm_group_15"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 2 — COMPTES D'ACTIF IMMOBILISÉ
+    ════════════════════════════════════════════════════ -->
+
+    <!-- Immobilisations en non-valeurs -->
+    <record id="pcm_2111" model="account.account">
+        <field name="code">2111</field>
+        <field name="name">Frais de constitution</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_21"/>
+    </record>
+
+    <record id="pcm_2121" model="account.account">
+        <field name="code">2121</field>
+        <field name="name">Frais préliminaires</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_21"/>
+    </record>
+
+    <!-- Immobilisations incorporelles -->
+    <record id="pcm_2210" model="account.account">
+        <field name="code">2210</field>
+        <field name="name">Immobilisations en recherche et développement</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_22"/>
+    </record>
+
+    <record id="pcm_2220" model="account.account">
+        <field name="code">2220</field>
+        <field name="name">Brevets, marques, droits et valeurs similaires</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_22"/>
+    </record>
+
+    <record id="pcm_2230" model="account.account">
+        <field name="code">2230</field>
+        <field name="name">Fonds commercial</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_22"/>
+    </record>
+
+    <!-- Immobilisations corporelles -->
+    <record id="pcm_2310" model="account.account">
+        <field name="code">2310</field>
+        <field name="name">Terrains</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_23"/>
+    </record>
+
+    <record id="pcm_2320" model="account.account">
+        <field name="code">2320</field>
+        <field name="name">Constructions</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_23"/>
+    </record>
+
+    <record id="pcm_2332" model="account.account">
+        <field name="code">2332</field>
+        <field name="name">Matériel et outillage</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_23"/>
+    </record>
+
+    <record id="pcm_2340" model="account.account">
+        <field name="code">2340</field>
+        <field name="name">Matériel de transport</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_23"/>
+    </record>
+
+    <record id="pcm_2350" model="account.account">
+        <field name="code">2350</field>
+        <field name="name">Mobilier, matériel de bureau et aménagements divers</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_23"/>
+    </record>
+
+    <record id="pcm_2355" model="account.account">
+        <field name="code">2355</field>
+        <field name="name">Matériel informatique</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_23"/>
+    </record>
+
+    <!-- Amortissements -->
+    <record id="pcm_2820" model="account.account">
+        <field name="code">2820</field>
+        <field name="name">Amortissements des constructions</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_28"/>
+    </record>
+
+    <record id="pcm_2832" model="account.account">
+        <field name="code">2832</field>
+        <field name="name">Amortissements du matériel et outillage</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_28"/>
+    </record>
+
+    <record id="pcm_2840" model="account.account">
+        <field name="code">2840</field>
+        <field name="name">Amortissements du matériel de transport</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_28"/>
+    </record>
+
+    <record id="pcm_2850" model="account.account">
+        <field name="code">2850</field>
+        <field name="name">Amortissements du mobilier et matériel de bureau</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_28"/>
+    </record>
+
+    <record id="pcm_2855" model="account.account">
+        <field name="code">2855</field>
+        <field name="name">Amortissements du matériel informatique</field>
+        <field name="account_type">asset_non_current</field>
+        <field name="group_id" ref="pcm_group_28"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 3 — ACTIF CIRCULANT
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_3111" model="account.account">
+        <field name="code">3111</field>
+        <field name="name">Marchandises</field>
+        <field name="account_type">asset_current</field>
+        <field name="group_id" ref="pcm_group_31"/>
+    </record>
+
+    <record id="pcm_3121" model="account.account">
+        <field name="code">3121</field>
+        <field name="name">Matières et fournitures consommables</field>
+        <field name="account_type">asset_current</field>
+        <field name="group_id" ref="pcm_group_31"/>
+    </record>
+
+    <record id="pcm_3411" model="account.account">
+        <field name="code">3411</field>
+        <field name="name">Clients — Ventes de biens et services</field>
+        <field name="account_type">asset_receivable</field>
+        <field name="reconcile">True</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_3412" model="account.account">
+        <field name="code">3412</field>
+        <field name="name">Clients — Retenues de garantie</field>
+        <field name="account_type">asset_receivable</field>
+        <field name="reconcile">True</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_3421" model="account.account">
+        <field name="code">3421</field>
+        <field name="name">Clients — Effets à recevoir</field>
+        <field name="account_type">asset_receivable</field>
+        <field name="reconcile">True</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_3441" model="account.account">
+        <field name="code">3441</field>
+        <field name="name">Personnel — Avances et acomptes</field>
+        <field name="account_type">asset_current</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_3455" model="account.account">
+        <field name="code">3455</field>
+        <field name="name">État — TVA récupérable</field>
+        <field name="account_type">asset_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_34551" model="account.account">
+        <field name="code">34551</field>
+        <field name="name">État — TVA récupérable sur immobilisations</field>
+        <field name="account_type">asset_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_34552" model="account.account">
+        <field name="code">34552</field>
+        <field name="name">État — TVA récupérable sur charges</field>
+        <field name="account_type">asset_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_3456" model="account.account">
+        <field name="code">3456</field>
+        <field name="name">État — Autres comptes débiteurs</field>
+        <field name="account_type">asset_current</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 4 — PASSIF CIRCULANT
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_4411" model="account.account">
+        <field name="code">4411</field>
+        <field name="name">Fournisseurs</field>
+        <field name="account_type">liability_payable</field>
+        <field name="reconcile">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4412" model="account.account">
+        <field name="code">4412</field>
+        <field name="name">Fournisseurs — Retenues de garantie</field>
+        <field name="account_type">liability_payable</field>
+        <field name="reconcile">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4415" model="account.account">
+        <field name="code">4415</field>
+        <field name="name">Fournisseurs — Effets à payer</field>
+        <field name="account_type">liability_payable</field>
+        <field name="reconcile">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4432" model="account.account">
+        <field name="code">4432</field>
+        <field name="name">Personnel — Rémunérations dues</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4441" model="account.account">
+        <field name="code">4441</field>
+        <field name="name">État — Impôts et taxes</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4443" model="account.account">
+        <field name="code">4443</field>
+        <field name="name">État — Impôt sur les sociétés</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4455" model="account.account">
+        <field name="code">4455</field>
+        <field name="name">État — TVA facturée</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_44551" model="account.account">
+        <field name="code">44551</field>
+        <field name="name">État — TVA facturée au taux de 20%</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_44552" model="account.account">
+        <field name="code">44552</field>
+        <field name="name">État — TVA facturée au taux de 14%</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_44553" model="account.account">
+        <field name="code">44553</field>
+        <field name="name">État — TVA facturée au taux de 10%</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_44554" model="account.account">
+        <field name="code">44554</field>
+        <field name="name">État — TVA facturée au taux de 7%</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4456" model="account.account">
+        <field name="code">4456</field>
+        <field name="name">État — Retenues à la source (RAS)</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_ras_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4458" model="account.account">
+        <field name="code">4458</field>
+        <field name="name">État — TVA due (compte de liquidation)</field>
+        <field name="account_type">liability_current</field>
+        <field name="is_tax_account">True</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4461" model="account.account">
+        <field name="code">4461</field>
+        <field name="name">CNSS — Cotisations à verser</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_45"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 5 — TRÉSORERIE
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_5111" model="account.account">
+        <field name="code">5111</field>
+        <field name="name">Valeurs à encaisser</field>
+        <field name="account_type">asset_cash</field>
+        <field name="group_id" ref="pcm_group_51"/>
+    </record>
+
+    <record id="pcm_5141" model="account.account">
+        <field name="code">5141</field>
+        <field name="name">Banques — Comptes courants MAD</field>
+        <field name="account_type">asset_cash</field>
+        <field name="group_id" ref="pcm_group_51"/>
+    </record>
+
+    <record id="pcm_5142" model="account.account">
+        <field name="code">5142</field>
+        <field name="name">Banques — Comptes courants EUR</field>
+        <field name="account_type">asset_cash</field>
+        <field name="group_id" ref="pcm_group_51"/>
+    </record>
+
+    <record id="pcm_5143" model="account.account">
+        <field name="code">5143</field>
+        <field name="name">Banques — Comptes courants USD</field>
+        <field name="account_type">asset_cash</field>
+        <field name="group_id" ref="pcm_group_51"/>
+    </record>
+
+    <record id="pcm_5161" model="account.account">
+        <field name="code">5161</field>
+        <field name="name">Caisses en dirhams</field>
+        <field name="account_type">asset_cash</field>
+        <field name="group_id" ref="pcm_group_51"/>
+    </record>
+
+    <record id="pcm_5510" model="account.account">
+        <field name="code">5510</field>
+        <field name="name">Crédits d'escompte</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_55"/>
+    </record>
+
+    <record id="pcm_5520" model="account.account">
+        <field name="code">5520</field>
+        <field name="name">Crédits de trésorerie</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_55"/>
+    </record>
+
+    <record id="pcm_5530" model="account.account">
+        <field name="code">5530</field>
+        <field name="name">Banques — Soldes créditeurs</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_55"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 6 — CHARGES
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_6111" model="account.account">
+        <field name="code">6111</field>
+        <field name="name">Achats de marchandises (groupe A)</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6121" model="account.account">
+        <field name="code">6121</field>
+        <field name="name">Achats de matières premières (groupe A)</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6131" model="account.account">
+        <field name="code">6131</field>
+        <field name="name">Achats de matières et fournitures consommables</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6141" model="account.account">
+        <field name="code">6141</field>
+        <field name="name">Achats d'emballages</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6152" model="account.account">
+        <field name="code">6152</field>
+        <field name="name">Entretien et réparations</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6153" model="account.account">
+        <field name="code">6153</field>
+        <field name="name">Primes d'assurances</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6155" model="account.account">
+        <field name="code">6155</field>
+        <field name="name">Rémunérations du personnel extérieur à l'entreprise</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6156" model="account.account">
+        <field name="code">6156</field>
+        <field name="name">Rémunérations d'intermédiaires et honoraires</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6157" model="account.account">
+        <field name="code">6157</field>
+        <field name="name">Redevances crédit-bail</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6161" model="account.account">
+        <field name="code">6161</field>
+        <field name="name">Locations et charges locatives</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6163" model="account.account">
+        <field name="code">6163</field>
+        <field name="name">Charges de personnel extérieur</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6165" model="account.account">
+        <field name="code">6165</field>
+        <field name="name">Publicité, publications et relations publiques</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6167" model="account.account">
+        <field name="code">6167</field>
+        <field name="name">Transports</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6168" model="account.account">
+        <field name="code">6168</field>
+        <field name="name">Déplacements, missions et réceptions</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6171" model="account.account">
+        <field name="code">6171</field>
+        <field name="name">Impôts, taxes et droits assimilés — résultats</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <record id="pcm_6174" model="account.account">
+        <field name="code">6174</field>
+        <field name="name">Droits d'enregistrement et de timbre</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_61"/>
+    </record>
+
+    <!-- Charges de personnel -->
+    <record id="pcm_6171rh" model="account.account">
+        <field name="code">6311</field>
+        <field name="name">Rémunérations du personnel</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_63"/>
+    </record>
+
+    <record id="pcm_6316" model="account.account">
+        <field name="code">6316</field>
+        <field name="name">Charges sociales — CNSS</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_63"/>
+    </record>
+
+    <record id="pcm_6321" model="account.account">
+        <field name="code">6321</field>
+        <field name="name">Rémunérations du personnel non permanent</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_63"/>
+    </record>
+
+    <!-- Dotations aux amortissements -->
+    <record id="pcm_6191" model="account.account">
+        <field name="code">6191</field>
+        <field name="name">Dotations aux amortissements des non-valeurs</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_65"/>
+    </record>
+
+    <record id="pcm_6192" model="account.account">
+        <field name="code">6192</field>
+        <field name="name">Dotations aux amortissements des immobilisations incorporelles</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_65"/>
+    </record>
+
+    <record id="pcm_6193" model="account.account">
+        <field name="code">6193</field>
+        <field name="name">Dotations aux amortissements des immobilisations corporelles</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_65"/>
+    </record>
+
+    <!-- Charges financières -->
+    <record id="pcm_6711" model="account.account">
+        <field name="code">6711</field>
+        <field name="name">Charges d'intérêts</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_67"/>
+    </record>
+
+    <record id="pcm_6712" model="account.account">
+        <field name="code">6712</field>
+        <field name="name">Pertes sur créances liées à des participations</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_67"/>
+    </record>
+
+    <record id="pcm_6740" model="account.account">
+        <field name="code">6740</field>
+        <field name="name">Pertes de change</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_67"/>
+    </record>
+
+    <!-- Impôts sur les résultats -->
+    <record id="pcm_6910" model="account.account">
+        <field name="code">6910</field>
+        <field name="name">Impôt sur les sociétés (IS)</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_69"/>
+    </record>
+
+    <record id="pcm_6920" model="account.account">
+        <field name="code">6920</field>
+        <field name="name">Cotisation minimale (CM)</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_69"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 7 — PRODUITS
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_7111" model="account.account">
+        <field name="code">7111</field>
+        <field name="name">Ventes de marchandises (groupe A)</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <record id="pcm_7121" model="account.account">
+        <field name="code">7121</field>
+        <field name="name">Ventes de biens produits par l'entreprise</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <record id="pcm_7126" model="account.account">
+        <field name="code">7126</field>
+        <field name="name">Ventes de prestations de services</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <record id="pcm_7127" model="account.account">
+        <field name="code">7127</field>
+        <field name="name">Ventes et produits accessoires</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <record id="pcm_7129" model="account.account">
+        <field name="code">7129</field>
+        <field name="name">RRR accordés par l'entreprise</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <record id="pcm_7141" model="account.account">
+        <field name="code">7141</field>
+        <field name="name">Variation des stocks de produits</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <record id="pcm_7197" model="account.account">
+        <field name="code">7197</field>
+        <field name="name">Transferts de charges d'exploitation</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_71"/>
+    </record>
+
+    <!-- Subventions -->
+    <record id="pcm_7311" model="account.account">
+        <field name="code">7311</field>
+        <field name="name">Subventions reçues</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_73"/>
+    </record>
+
+    <!-- Produits financiers -->
+    <record id="pcm_7711" model="account.account">
+        <field name="code">7711</field>
+        <field name="name">Produits d'intérêts et assimilés</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_77"/>
+    </record>
+
+    <record id="pcm_7740" model="account.account">
+        <field name="code">7740</field>
+        <field name="name">Gains de change</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_77"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         CLASSE 8 — RÉSULTATS
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_8100" model="account.account">
+        <field name="code">8100</field>
+        <field name="name">Résultat net de l'exercice</field>
+        <field name="account_type">equity</field>
+        <field name="group_id" ref="pcm_group_8"/>
+    </record>
+
+    <!-- ════════════════════════════════════════════════════
+         COMPTES D'ATTENTE ET DE RÉGULARISATION
+    ════════════════════════════════════════════════════ -->
+
+    <record id="pcm_3491" model="account.account">
+        <field name="code">3491</field>
+        <field name="name">Produits à recevoir</field>
+        <field name="account_type">asset_current</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_3492" model="account.account">
+        <field name="code">3492</field>
+        <field name="name">Charges constatées d'avance</field>
+        <field name="account_type">asset_current</field>
+        <field name="group_id" ref="pcm_group_34"/>
+    </record>
+
+    <record id="pcm_4492" model="account.account">
+        <field name="code">4492</field>
+        <field name="name">Charges à payer</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <record id="pcm_4493" model="account.account">
+        <field name="code">4493</field>
+        <field name="name">Produits constatés d'avance</field>
+        <field name="account_type">liability_current</field>
+        <field name="group_id" ref="pcm_group_44"/>
+    </record>
+
+    <!-- Compte d'attente et de virements -->
+    <record id="pcm_5115" model="account.account">
+        <field name="code">5115</field>
+        <field name="name">Virements de fonds</field>
+        <field name="account_type">asset_cash</field>
+        <field name="group_id" ref="pcm_group_51"/>
+    </record>
+
+    <!-- Compte d'écart de règlement -->
+    <record id="pcm_7588" model="account.account">
+        <field name="code">7588</field>
+        <field name="name">Écarts de règlement favorables</field>
+        <field name="account_type">income</field>
+        <field name="group_id" ref="pcm_group_75"/>
+    </record>
+
+    <record id="pcm_6588" model="account.account">
+        <field name="code">6588</field>
+        <field name="name">Écarts de règlement défavorables</field>
+        <field name="account_type">expense</field>
+        <field name="group_id" ref="pcm_group_65"/>
+    </record>
+
+    </data>
+</odoo>

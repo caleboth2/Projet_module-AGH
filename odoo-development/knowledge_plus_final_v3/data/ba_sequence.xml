@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_ba_specification" model="ir.sequence">
+        <field name="name">Cahier des charges BA</field>
+        <field name="code">agh.ba.specification</field>
+        <field name="prefix">CDC/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Séquence pour la numérotation -->
+        <record id="seq_hr_certificate" model="ir.sequence">
+            <field name="name">HR Certificate Number</field>
+            <field name="code">hr.certificate</field>
+            <field name="prefix">CERT-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Template email -->
+        <record id="email_template_certificate" model="mail.template">
+            <field name="name">Attestation Email</field>
+            <field name="model_id" ref="model_hr_certificate"/>
+            <field name="email_from">${object.company_id.email or '' }</field>
+            <field name="email_to">${object.employee_id.work_email or ''}</field>
+            <field name="subject">Votre attestation ${object.name}</field>
+            <field name="body_html"><![CDATA[
+                <p>Cher(e) ${object.employee_id.name},</p>
+                <p>Votre attestation <strong>${object.name}</strong> est prête.</p>
+                <p>Cordialement,<br/>Service RH</p>
+            ]]></field>
+        </record>
+    </data>
+
+    <!-- Vue liste -->
+    <record id="view_hr_certificate_tree" model="ir.ui.view">
+        <field name="name">hr.certificate.list</field>
+        <field name="model">hr.certificate</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="certificate_type"/>
+                <field name="date"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'validated' or state == 'sent'"
+                       decoration-warning="state == 'requested'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="view_hr_certificate_form" model="ir.ui.view">
+        <field name="name">hr.certificate.form</field>
+        <field name="model">hr.certificate</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_validate" type="object" string="Valider"
+                            invisible="state != 'requested'" class="btn-primary"/>
+                    <button name="generate_pdf" type="object" string="Générer PDF"
+                            invisible="state == 'requested'"/>
+                    <button name="action_send_email" type="object" string="Envoyer par Email"
+                            invisible="state != 'validated'"/>
+                    <button name="action_view_pdf" type="object" string="Voir PDF"
+                            invisible="not pdf_attachment_id"/>
+                    <field name="state" widget="statusbar" statusbar_visible="requested,validated,sent"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Informations">
+                            <field name="name" readonly="1"/>
+                            <field name="employee_id"/>
+                            <field name="certificate_type"/>
+                            <field name="date"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group string="Signature">
+                            <field name="signature_image" widget="image" options="{'size': [128, 64]}"/>
+                            <field name="signature_name"/>
+                        </group>
+                    </group>
+                    <group string="Dates de congé" invisible="certificate_type != 'ATT_CONGE'">
+                        <field name="leave_date_start"/>
+                        <field name="leave_date_end"/>
+                    </group>
+                    <group string="Suivi">
+                        <field name="requested_by_id" readonly="1"/>
+                        <field name="request_date" readonly="1"/>
+                        <field name="email_sent" readonly="1"/>
+                        <field name="send_date" readonly="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action fenêtre -->
+    <record id="action_hr_certificate" model="ir.actions.act_window">
+        <field name="name">Attestations</field>
+        <field name="res_model">hr.certificate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

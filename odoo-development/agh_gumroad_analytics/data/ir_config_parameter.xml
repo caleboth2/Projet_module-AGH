@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="param_ollama_url" model="ir.config_parameter">
+            <field name="key">agh_gumroad_analytics.ollama_url</field>
+            <field name="value">http://host.docker.internal:11434</field>
+        </record>
+        <record id="param_ollama_model" model="ir.config_parameter">
+            <field name="key">agh_gumroad_analytics.ollama_model</field>
+            <field name="value">llama3.1</field>
+        </record>
+    </data>
+</odoo>

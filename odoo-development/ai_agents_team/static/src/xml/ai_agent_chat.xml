@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="ai_agents_team.AiAgentChat">
+        <div class="o_ai_chat_container d-flex flex-column h-100 bg-view border-0 shadow-lg">
+            <!-- Header -->
+            <div class="o_ai_chat_header d-flex align-items-center justify-content-between p-3 border-bottom shadow-sm">
+                <div class="d-flex align-items-center">
+                    <i class="fa fa-magic me-2 fs-4 text-white animated pulse infinite"/>
+                    <h5 class="mb-0 text-white font-weight-bold">Ask AI - App Factory</h5>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1 rounded-pill px-3 py-1 text-white border-0 bg-transparent" 
+                            type="button" 
+                            t-on-click="clearChat"
+                            t-att-disabled="state.isTyping"
+                            title="Vider la conversation / Commencer une nouvelle session">
+                        <i class="fa fa-trash"/>
+                        <span class="small">Vider</span>
+                    </button>
+                    <span class="badge rounded-pill bg-light-purple text-white border border-light-purple">Local LLM • Souverain</span>
+                </div>
+            </div>
+
+            <!-- Chat Body -->
+            <div class="o_ai_chat_body flex-grow-1 overflow-auto p-4 bg-chat" t-ref="chatBody">
+                <!-- Message de bienvenue si la conversation est vide -->
+                <t t-if="state.messages.length === 0">
+                    <div class="text-center my-5 p-4 border border-dashed rounded-3 mx-auto" style="max-width: 500px;">
+                        <i class="fa fa-comments-o fs-1 text-muted mb-3"/>
+                        <h4 class="text-dark">Bienvenue sur Ask AI</h4>
+                        <p class="text-muted small">
+                            Posez vos questions à l'Assistant IA souverain de l'App Factory. 
+                            Toutes vos données restent hébergées localement via Ollama.
+                        </p>
+                    </div>
+                </t>
+
+                <t t-foreach="state.messages" t-as="msg" t-key="msg_index">
+                    <div t-attf-class="d-flex mb-4 #{msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'}">
+                        <!-- Message Bubble -->
+                        <div t-attf-class="o_ai_msg_bubble p-3 rounded-4 shadow-sm #{msg.role === 'user' ? 'bg-user text-white' : 'bg-assistant text-dark'}" style="max-width: 80%;">
+                            <div class="o_ai_msg_header d-flex align-items-center mb-1 text-muted-small" t-if="msg.role === 'assistant'">
+                                <i class="fa fa-magic me-1 text-primary"/>
+                                <span class="fw-bold">Assistant IA</span>
+                            </div>
+                            <div class="o_ai_message_text text-wrap">
+                                <t t-out="formatMessage(msg.content)"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <!-- Typing Indicator -->
+                <div t-if="state.isTyping" class="d-flex justify-content-start mb-4">
+                    <div class="bg-assistant p-3 rounded-4 shadow-sm">
+                        <div class="o_ai_typing_dots d-flex gap-1 align-items-center">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer / Input -->
+            <div class="o_ai_chat_footer p-3 border-top bg-light">
+                <!-- Suggestions -->
+                <t t-if="state.messages.length === 0">
+                    <div class="o_ai_suggestions d-flex flex-wrap gap-2 mb-3 justify-content-center">
+                        <t t-foreach="suggestions" t-as="suggestion" t-key="suggestion">
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-sm rounded-pill text-truncate px-3 py-1.5" 
+                                    style="max-width: 250px;"
+                                    t-on-click="() => this.selectSuggestion(suggestion)">
+                                <t t-esc="suggestion"/>
+                            </button>
+                        </t>
+                    </div>
+                </t>
+
+                <div class="input-group shadow-sm rounded-pill overflow-hidden border">
+                    <input type="text" 
+                           class="form-control border-0 px-4 py-2.5 bg-white text-dark" 
+                           placeholder="Posez-moi une question ou demandez une action..."
+                           t-model="state.userInput"
+                           t-on-keypress="onKeyPress"
+                           t-att-disabled="state.isTyping"
+                           style="outline: none; box-shadow: none; font-size: 0.95rem;"/>
+                    <button class="btn btn-primary px-4 border-0 d-flex align-items-center justify-content-center" 
+                            type="button" 
+                            t-on-click="sendMessage" 
+                            t-att-disabled="state.isTyping"
+                            style="background-color: #714B67; transition: background-color 0.2s;">
+                        <i class="fa fa-paper-plane text-white"/>
+                    </button>
+                </div>
+                <div class="mt-2 text-center small text-muted-xs">
+                    <i class="fa fa-lock me-1"/> Données souveraines hébergées en local via Ollama
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

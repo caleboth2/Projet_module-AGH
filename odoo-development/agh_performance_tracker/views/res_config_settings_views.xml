@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_agh_performance" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.agh.performance</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="AGH Performance Tracker" name="agh_performance_tracker">
+                    <block title="Configuration Ollama">
+                        <setting>
+                            <field name="ollama_url"/>
+                        </setting>
+                        <setting>
+                            <field name="ollama_model"/>
+                        </setting>
+                        <setting>
+                            <field name="ollama_timeout"/>
+                        </setting>
+                    </block>
+                    <div class="alert alert-info mt8" role="alert">
+                        <strong>Note :</strong> Ollama doit être installé et démarré localement.
+                        Commande : <code>ollama serve</code><br/>
+                        En Docker : exposez le port 11434 et utilisez l'IP du conteneur Odoo.
+                    </div>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

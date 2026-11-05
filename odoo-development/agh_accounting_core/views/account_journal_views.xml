@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FORM VIEW — Journal comptable (account.journal)
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_journal_form_pcm" model="ir.ui.view">
+        <field name="name">account.journal.form.pcm</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Ajout onglet PCM dans le journal -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Paramètres PCM" name="pcm_settings">
+                    <group col="2">
+                        <group string="Classification PCM">
+                            <field name="pcm_journal_type"/>
+                            <field name="sequence_prefix_pcm"
+                                   placeholder="Ex. : VTE, ACH, BQ01"/>
+                        </group>
+                        <group string="Options">
+                            <field name="lock_posted_entries"/>
+                            <field name="requires_counterpart"/>
+                            <field name="is_multicurrency"/>
+                        </group>
+                    </group>
+                    <group string="Analytique par défaut">
+                        <field name="default_analytic_account_id"/>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TREE VIEW — Journaux comptables
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_journal_tree_pcm" model="ir.ui.view">
+        <field name="name">account.journal.tree.pcm</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="pcm_journal_type" optional="show"/>
+                <field name="sequence_prefix_pcm" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FORM VIEW — Compte comptable (account.account)
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_account_form_pcm" model="ir.ui.view">
+        <field name="name">account.account.form.pcm</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='account_type']" position="after">
+                <field name="pcm_account_type"/>
+                <field name="pcm_class" readonly="1"/>
+                <field name="pcm_class_label" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//sheet" position="inside">
+                <group string="Paramètres PCM Maroc" col="2">
+                    <group>
+                        <field name="is_tax_account"/>
+                        <field name="is_ras_account"/>
+                        <field name="is_immobilisation" readonly="1"/>
+                        <field name="lock_date_restriction"/>
+                    </group>
+                    <group>
+                        <field name="analytical_default_id"/>
+                        <field name="depreciation_method"
+                               invisible="not is_immobilisation"/>
+                        <field name="depreciation_rate"
+                               invisible="not is_immobilisation"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TREE VIEW — Comptes PCM (vue plan comptable)
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_account_tree_pcm" model="ir.ui.view">
+        <field name="name">account.account.tree.pcm</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="pcm_class" optional="show" string="Cl."/>
+            </xpath>
+            <xpath expr="//field[@name='account_type']" position="after">
+                <field name="pcm_account_type" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PISTE D'AUDIT — Vue liste
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_audit_tree" model="ir.ui.view">
+        <field name="name">account.move.audit.tree</field>
+        <field name="model">account.move.audit</field>
+        <field name="arch" type="xml">
+            <list string="Piste d'audit" create="false" edit="false" delete="false"
+                  decoration-info="action == 'create'"
+                  decoration-success="action == 'post'"
+                  decoration-danger="action == 'cancel'"
+                  decoration-warning="action == 'write'">
+                <field name="date"/>
+                <field name="move_id"/>
+                <field name="action" widget="badge"/>
+                <field name="user_id"/>
+                <field name="description"/>
+                <field name="move_state"/>
+                <field name="ip_address"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_audit_search" model="ir.ui.view">
+        <field name="name">account.move.audit.search</field>
+        <field name="model">account.move.audit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="move_id"/>
+                <field name="user_id"/>
+                <filter name="today" string="Aujourd'hui"
+                        domain="[('date', '>=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <filter name="create" string="Créations"
+                        domain="[('action', '=', 'create')]"/>
+                <filter name="post" string="Validations"
+                        domain="[('action', '=', 'post')]"/>
+                <filter name="cancel" string="Annulations"
+                        domain="[('action', '=', 'cancel')]"/>
+                <group expand="0" string="Grouper par">
+                    <filter name="by_user" string="Utilisateur"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter name="by_action" string="Action"
+                            context="{'group_by': 'action'}"/>
+                    <filter name="by_day" string="Jour"
+                            context="{'group_by': 'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_audit_trail" model="ir.actions.act_window">
+        <field name="name">Piste d'Audit Comptable</field>
+        <field name="res_model">account.move.audit</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_audit_search"/>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aucune entrée d'audit trouvée.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_audit_trail"
+              name="Piste d'Audit"
+              parent="account.menu_finance_configuration"
+              action="action_audit_trail"
+              sequence="99"
+              groups="account.group_account_manager"/>
+
+</odoo>

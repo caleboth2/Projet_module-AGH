@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_cloture_annuelle_form" model="ir.ui.view">
+        <field name="name">wizard.cloture.annuelle.form</field>
+        <field name="model">wizard.cloture.annuelle</field>
+        <field name="arch" type="xml">
+            <form string="Clôture annuelle PCM">
+                <header>
+                    <button name="action_check" type="object" string="Vérifier"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_close" type="object" string="Clôturer l'exercice"
+                            class="btn-success"
+                            confirm="Cette action génère l'écriture d'affectation du résultat et verrouille la période. Continuer ?"
+                            invisible="state != 'draft' or not fiscal_year_id"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Exercice">
+                            <field name="fiscal_year_id"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Affectation">
+                            <field name="journal_id"/>
+                            <field name="lock_date"/>
+                        </group>
+                    </group>
+                    <group string="Résultat de l'exercice">
+                        <field name="total_produits" readonly="1"/>
+                        <field name="total_charges" readonly="1"/>
+                        <field name="resultat" readonly="1"/>
+                        <field name="is_benefit" readonly="1"/>
+                    </group>
+                    <group string="Écriture générée" invisible="not move_id">
+                        <field name="move_id" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_cloture_annuelle" model="ir.actions.act_window">
+        <field name="name">Clôture annuelle</field>
+        <field name="res_model">wizard.cloture.annuelle</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_wizard_cloture_annuelle"
+              name="Clôture annuelle"
+              parent="account.menu_finance"
+              action="action_wizard_cloture_annuelle"
+              sequence="100"/>
+
+    <!-- Vue de la date de verrouillage sur la société -->
+    <record id="view_company_lock_date_form" model="ir.ui.view">
+        <field name="name">res.company.agh.lock.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Verrouillage comptable AGH">
+                    <field name="agh_fiscalyear_lock_date"/>
+                    <field name="agh_period_lock_date"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

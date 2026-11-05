@@ -1,0 +1,29 @@
+<odoo>
+
+    <menuitem
+        id="menu_figma_root"
+        name="Figma"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_figma_teams"
+        name="Teams"
+        parent="menu_figma_root"
+        action="action_figma_teams"
+        sequence="1"/>
+
+    <menuitem
+        id="menu_figma_projects"
+        name="Projects"
+        parent="menu_figma_root"
+        action="action_figma_projects"
+        sequence="2"/>
+
+    <menuitem
+        id="menu_figma_designs"
+        name="Designs"
+        parent="menu_figma_root"
+        action="action_figma_design"
+        sequence="3"/>
+
+</odoo>

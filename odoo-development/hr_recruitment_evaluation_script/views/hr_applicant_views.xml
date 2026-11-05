@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_applicant_evaluation_form" model="ir.ui.view">
+        <field name="name">hr.applicant.evaluation.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+
+            <xpath expr="//sheet" position="inside">
+    <notebook>
+        <page string="Grille d'évaluation" name="evaluation_script">
+            <!-- contenu actuel de la page -->
+        </page>
+    </notebook>
+</xpath>
+                <page string="Grille d'évaluation" name="evaluation_script">
+
+                    <group string="Résultat de l'évaluation">
+                        <group>
+                            <field name="evaluation_score"/>
+                            <field name="evaluation_max_score"/>
+                            <field name="evaluation_score_20"
+                                   string="Score sur 20"/>
+                        </group>
+
+                        <group>
+                            <field name="evaluation_recommendation"
+                                   widget="badge"
+                                   decoration-success="evaluation_recommendation == 'passed'"
+                                   decoration-danger="evaluation_recommendation == 'rejected'"
+                                   decoration-warning="evaluation_recommendation == 'pending'"/>
+                        </group>
+                    </group>
+
+                    <separator string="Critères d'entretien"/>
+
+                    <field name="evaluation_line_ids">
+                        <list editable="bottom">
+                            <field name="criteria_id"/>
+                            <field name="is_passed"/>
+                            <field name="score" readonly="1"/>
+                            <field name="comment"/>
+                        </list>
+                    </field>
+
+                    <group>
+                        <field name="evaluation_comment"
+                               placeholder="Ajoutez une observation générale sur le candidat..."/>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

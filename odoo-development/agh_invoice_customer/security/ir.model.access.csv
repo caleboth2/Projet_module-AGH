@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wizard_send_invoice_user,access.wizard.send.invoice.user,model_wizard_send_invoice,account.group_account_user,1,1,1,1
+access_wizard_send_invoice_manager,access.wizard.send.invoice.manager,model_wizard_send_invoice,account.group_account_manager,1,1,1,1
+access_wizard_relance_impaye_user,access.wizard.relance.impaye.user,model_wizard_relance_impaye,account.group_account_user,1,1,1,1
+access_wizard_relance_impaye_manager,access.wizard.relance.impaye.manager,model_wizard_relance_impaye,account.group_account_manager,1,1,1,1

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_fiscal_maroc_root"
+              name="Fiscalité Maroc"
+              sequence="50"
+              web_icon="agh_fiscal_maroc,static/description/icon.svg"/>
+
+    <menuitem id="menu_fiscal_maroc_tva"
+              name="TVA"
+              parent="menu_fiscal_maroc_root"
+              sequence="10"/>
+
+    <menuitem id="menu_tva_declarations"
+              name="Déclarations TVA"
+              parent="menu_fiscal_maroc_tva"
+              action="action_account_tva_declaration"
+              sequence="10"/>
+
+    <menuitem id="menu_tva_credit_requests"
+              name="Demandes de remboursement"
+              parent="menu_fiscal_maroc_tva"
+              action="action_tva_credit_request"
+              sequence="20"/>
+
+    <menuitem id="menu_fiscal_maroc_is"
+              name="Impôt sur les Sociétés"
+              parent="menu_fiscal_maroc_root"
+              sequence="20"/>
+
+    <menuitem id="menu_is_declarations"
+              name="Déclarations IS"
+              parent="menu_fiscal_maroc_is"
+              action="action_account_is_declaration"
+              sequence="10"/>
+
+    <menuitem id="menu_fiscal_maroc_cm"
+              name="Cotisation Minimale"
+              parent="menu_fiscal_maroc_root"
+              action="action_account_cotisation_minimale"
+              sequence="30"/>
+
+    <menuitem id="menu_fiscal_maroc_tp"
+              name="Taxe Professionnelle"
+              parent="menu_fiscal_maroc_root"
+              action="action_account_taxe_professionnelle"
+              sequence="40"/>
+
+    <menuitem id="menu_fiscal_maroc_calendar"
+              name="Calendrier fiscal"
+              parent="menu_fiscal_maroc_root"
+              action="action_account_fiscal_calendar"
+              sequence="50"/>
+
+</odoo>

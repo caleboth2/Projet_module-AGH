@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         FORM VIEW — Écriture comptable (account.move)
+    ═══════════════════════════════════════════════════════════ -->
+    <record id="view_move_form_pcm" model="ir.ui.view">
+        <field name="name">account.move.form.pcm</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Ajout du groupe PCM en haut du formulaire -->
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="pcm_move_type" widget="selection"/>
+                <field name="fiscal_year_id" readonly="1"/>
+            </xpath>
+
+            <!-- Indicateurs débit/crédit + équilibre -->
+            <xpath expr="//field[@name='line_ids']" position="before">
+                <group string="Contrôle débit / crédit" col="4"
+                       invisible="move_type != 'entry'">
+                    <field name="debit_total" readonly="1"/>
+                    <field name="credit_total" readonly="1"/>
+                    <field name="balance_ok" readonly="1"
+                           widget="boolean_toggle"/>
+                    <label for="balance_ok" string="Équilibrée"/>
+                </group>
+            </xpath>
+
+            <!-- Régularisation -->
+            <xpath expr="//page[@name='other_info']" position="inside">
+                <separator string="Régularisation PCM"/>
+                <group col="2">
+                    <field name="is_regularisation"/>
+                    <field name="regularisation_type"
+                           invisible="not is_regularisation"
+                           required="is_regularisation"/>
+                    <field name="extourne_date"
+                           invisible="is_regularisation == False"/>
+                    <field name="extourne_move_id" readonly="1"
+                           invisible="extourne_move_id == False"/>
+                </group>
+
+                <separator string="Analytique"/>
+                <group col="2">
+                    <field name="analytic_account_id"/>
+                </group>
+            </xpath>
+
+            <!-- Piste d'audit (onglet dédié) -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Piste d'audit" name="audit_trail"
+                      groups="account.group_account_manager">
+                    <field name="audit_trail_ids" readonly="1">
+                        <list decoration-info="action == 'create'"
+                              decoration-success="action == 'post'"
+                              decoration-danger="action == 'cancel'">
+                            <field name="date"/>
+                            <field name="action"/>
+                            <field name="user_id"/>
+                            <field name="description"/>
+                            <field name="move_state"/>
+                            <field name="ip_address"/>
+                        </list>
+                    </field>
+                    <group col="2">
+                        <field name="last_modified_by" readonly="1"/>
+                        <field name="last_modified_date" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ACTION — Exercices comptables (Redirige vers OCA) -->
+    <record id="action_fiscal_year" model="ir.actions.act_window">
+        <field name="name">Exercices Comptables</field>
+        <field name="res_model">account.fiscal.year</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aucun exercice comptable trouvé.
+            </p>
+            <p>Créez votre premier exercice comptable (Logiciel OCA).</p>
+        </field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_fiscal_year"
+              name="Exercices Comptables"
+              parent="account.menu_finance_configuration"
+              action="action_fiscal_year"
+              sequence="15"
+              groups="account.group_account_manager"/>
+
+</odoo>

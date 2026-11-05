@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_fiscal_calendar_list" model="ir.ui.view">
+        <field name="name">account.fiscal.calendar.list</field>
+        <field name="model">account.fiscal.calendar</field>
+        <field name="arch" type="xml">
+            <list string="Calendrier fiscal"
+                  decoration-danger="state == 'overdue'"
+                  decoration-warning="state == 'soon'"
+                  decoration-success="state == 'done'"
+                  decoration-info="state == 'upcoming'">
+                <field name="name"/>
+                <field name="declaration_type"/>
+                <field name="fiscal_year"/>
+                <field name="period_from"/>
+                <field name="period_to"/>
+                <field name="due_date"/>
+                <field name="days_remaining"/>
+                <field name="user_id"/>
+                <field name="state" widget="badge"/>
+                <field name="is_done"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_fiscal_calendar_form" model="ir.ui.view">
+        <field name="name">account.fiscal.calendar.form</field>
+        <field name="model">account.fiscal.calendar</field>
+        <field name="arch" type="xml">
+            <form string="Échéance fiscale">
+                <header>
+                    <button name="action_mark_done" string="Marquer effectuée"
+                            type="object" class="btn-primary"
+                            invisible="is_done"/>
+                    <button name="action_mark_undone" string="Annuler effectuée"
+                            type="object"
+                            invisible="not is_done"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="declaration_type"/>
+                            <field name="fiscal_year"/>
+                            <field name="company_id"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group>
+                            <field name="period_from"/>
+                            <field name="period_to"/>
+                            <field name="due_date"/>
+                            <field name="deadline"/>
+                            <field name="days_before_notify"/>
+                            <field name="days_remaining"/>
+                            <field name="is_done"/>
+                            <field name="notification_sent"/>
+                        </group>
+                    </group>
+                    <group string="Déclaration liée">
+                        <field name="declaration_id"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_fiscal_calendar_calendar" model="ir.ui.view">
+        <field name="name">account.fiscal.calendar.calendar</field>
+        <field name="model">account.fiscal.calendar</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendrier fiscal" date_start="due_date" color="declaration_type" mode="month">
+                <field name="name"/>
+                <field name="declaration_type"/>
+                <field name="user_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_account_fiscal_calendar_search" model="ir.ui.view">
+        <field name="name">account.fiscal.calendar.search</field>
+        <field name="model">account.fiscal.calendar</field>
+        <field name="arch" type="xml">
+            <search string="Recherche calendrier fiscal">
+                <field name="name"/>
+                <field name="fiscal_year"/>
+                <field name="declaration_type"/>
+                <filter string="À venir" name="filter_upcoming" domain="[('is_done','=',False)]"/>
+                <filter string="Effectuées" name="filter_done" domain="[('is_done','=',True)]"/>
+                <separator/>
+                <filter string="TVA" name="filter_tva"
+                        domain="[('declaration_type','in',['tva_monthly','tva_quarterly'])]"/>
+                <filter string="IS" name="filter_is"
+                        domain="[('declaration_type','in',['is_acompte_t1','is_acompte_t2','is_acompte_t3','is_acompte_t4','is_annual'])]"/>
+                <filter string="CM" name="filter_cm" domain="[('declaration_type','=','cm_annual')]"/>
+                <filter string="TP" name="filter_tp" domain="[('declaration_type','=','tp_annual')]"/>
+                <group expand="1" string="Grouper par">
+                    <filter string="Type" name="group_type" context="{'group_by':'declaration_type'}"/>
+                    <filter string="Exercice" name="group_year" context="{'group_by':'fiscal_year'}"/>
+                    <filter string="Société" name="group_company" context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_fiscal_calendar" model="ir.actions.act_window">
+        <field name="name">Calendrier fiscal</field>
+        <field name="res_model">account.fiscal.calendar</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="search_view_id" ref="view_account_fiscal_calendar_search"/>
+    </record>
+
+</odoo>

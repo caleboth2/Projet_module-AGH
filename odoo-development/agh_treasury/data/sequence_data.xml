@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_effet_commerce" model="ir.sequence">
+            <field name="name">Effet de commerce</field>
+            <field name="code">account.effet.commerce</field>
+            <field name="prefix">EFFET-%(year)s-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

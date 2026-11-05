@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Epic – Liste -->
+  <record id="view_agile_epic_list" model="ir.ui.view">
+    <field name="name">agh.agile.epic.list</field>
+    <field name="model">agh.agile.epic</field>
+    <field name="arch" type="xml">
+      <list string="Epics Agile"
+            decoration-success="state == 'done'"
+            decoration-primary="state == 'active'"
+            decoration-muted="state in ('cancelled','backlog')">
+        <field name="name"/>
+        <field name="project_id"/>
+        <field name="moscow" widget="badge"
+               decoration-danger="moscow == 'must'"
+               decoration-warning="moscow == 'should'"
+               decoration-success="moscow == 'could'"/>
+        <field name="state" widget="badge"
+               decoration-primary="state == 'active'"
+               decoration-success="state == 'done'"/>
+        <field name="task_count" string="User Stories"/>
+        <field name="task_done_count" string="Terminées"/>
+        <field name="story_points" string="SP"/>
+        <field name="progress_pct" widget="progressbar"/>
+        <field name="article_count" string="Docs Knowledge"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- Epic – Formulaire -->
+  <record id="view_agile_epic_form" model="ir.ui.view">
+    <field name="name">agh.agile.epic.form</field>
+    <field name="model">agh.agile.epic</field>
+    <field name="arch" type="xml">
+      <form string="Epic Agile">
+        <header>
+          <button name="write" string="🚀 Activer" type="object"
+                  context="{'state': 'active'}"
+                  invisible="state != 'backlog'"
+                  class="btn-primary"/>
+          <field name="state" widget="statusbar"
+                 statusbar_visible="backlog,active,done"/>
+        </header>
+        <sheet>
+          <div class="oe_button_box" name="button_box">
+            <button name="action_view_tasks" type="object"
+                    class="oe_stat_button" icon="fa-list-ul">
+              <div class="o_stat_info">
+                <field name="task_count" class="o_stat_value"/>
+                <span class="o_stat_text">User Stories</span>
+              </div>
+            </button>
+            <button name="action_view_articles" type="object"
+                    class="oe_stat_button" icon="fa-book">
+              <div class="o_stat_info">
+                <field name="article_count" class="o_stat_value"/>
+                <span class="o_stat_text">Knowledge</span>
+              </div>
+            </button>
+          </div>
+          <div class="oe_title">
+            <h1><field name="name" placeholder="Titre de l'Epic…"/></h1>
+          </div>
+          <group>
+            <group>
+              <field name="project_id"/>
+              <field name="moscow"/>
+              <field name="priority" widget="priority"/>
+              <field name="color" widget="color_picker"/>
+            </group>
+            <group>
+              <field name="sprint_ids" widget="many2many_tags"
+                     domain="[('project_id', '=', project_id)]"/>
+              <field name="story_points" readonly="1"/>
+              <field name="progress_pct" readonly="1" widget="progressbar"/>
+            </group>
+          </group>
+          <field name="description" placeholder="Description de l'Epic…"/>
+          <separator string="Articles Knowledge liés"/>
+          <field name="article_ids" widget="many2many_tags"
+                 domain="[('state', '!=', 'archived')]"/>
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <!-- Epic – Kanban -->
+  <record id="view_agile_epic_kanban" model="ir.ui.view">
+    <field name="name">agh.agile.epic.kanban</field>
+    <field name="model">agh.agile.epic</field>
+    <field name="arch" type="xml">
+      <kanban default_group_by="state">
+        <field name="name"/>
+        <field name="project_id"/>
+        <field name="moscow"/>
+        <field name="state"/>
+        <field name="task_count"/>
+        <field name="task_done_count"/>
+        <field name="story_points"/>
+        <field name="progress_pct"/>
+        <field name="article_count"/>
+        <field name="color"/>
+        <templates>
+          <t t-name="card" t-att-color="record.color.raw_value">
+            <strong><t t-esc="record.name.value"/></strong>
+            <div class="mt-1">
+              <span class="badge bg-secondary"><t t-esc="record.moscow.value"/></span>
+            </div>
+            <div class="mt-1 text-muted" style="font-size:12px">
+              📋 <t t-esc="record.task_done_count.raw_value"/>/<t t-esc="record.task_count.raw_value"/> stories
+              — ⚡ <t t-esc="record.story_points.raw_value"/> SP
+              — 📖 <t t-esc="record.article_count.raw_value"/> docs
+            </div>
+          </t>
+        </templates>
+      </kanban>
+    </field>
+  </record>
+
+  <!-- Action Epic -->
+  <record id="action_agile_epics" model="ir.actions.act_window">
+    <field name="name">Epics Agile</field>
+    <field name="res_model">agh.agile.epic</field>
+    <field name="view_mode">kanban,list,form</field>
+  </record>
+
+</odoo>

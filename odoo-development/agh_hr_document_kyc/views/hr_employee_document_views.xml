@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_employee_document_kyc_list" model="ir.ui.view">
+        <field name="name">hr.employee.document.kyc.list</field>
+        <field name="model">hr.employee.document</field>
+        <field name="arch" type="xml">
+            <list string="Documents KYC">
+                <field name="employee_id"/>
+                <field name="document_type_id"/>
+                <field name="attachment_id"/>
+                <field name="kyc_status" widget="badge"
+                       decoration-info="kyc_status == 'processing'"
+                       decoration-success="kyc_status == 'validated'"
+                       decoration-danger="kyc_status == 'rejected'"
+                       decoration-muted="kyc_status == 'draft'"/>
+                <field name="ocr_confidence"/>
+                <field name="extracted_document_number"/>
+                <field name="extracted_expiry_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hr_employee_document_kyc_form" model="ir.ui.view">
+        <field name="name">hr.employee.document.kyc.form</field>
+        <field name="model">hr.employee.document</field>
+        <field name="arch" type="xml">
+            <form string="Document KYC">
+                <header>
+                    <field name="kyc_status"
+                           widget="statusbar"
+                           statusbar_visible="draft,processing,validated,rejected"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group string="Document">
+                            <field name="employee_id"/>
+                            <field name="document_type_id"/>
+                            <field name="attachment_id"/>
+                        </group>
+
+                        <group string="Statut KYC">
+                            <field name="kyc_status"/>
+                            <field name="ocr_confidence"/>
+                            <field name="ocr_analyzed_at"/>
+                            <field name="ocr_analyzed_by"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Informations extraites">
+                            <group>
+                                <field name="extracted_first_name"/>
+                                <field name="extracted_last_name"/>
+                                <field name="extracted_document_number"/>
+                                <field name="extracted_issue_date"/>
+                                <field name="extracted_expiry_date"/>
+                            </group>
+                        </page>
+
+                        <page string="Résultat OCR">
+                            <field name="ocr_raw_text"/>
+                        </page>
+
+                        <page string="Rejet"
+                              invisible="kyc_status != 'rejected'">
+                            <field name="rejection_reason"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_employee_document_kyc" model="ir.actions.act_window">
+        <field name="name">Documents KYC</field>
+        <field name="res_model">hr.employee.document</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_hr_employee_document_kyc"
+        name="Documents KYC"
+        parent="hr_document_inventory_alert.menu_hr_document_inventory_root"
+        action="action_hr_employee_document_kyc"
+        sequence="30"
+    />
+
+</odoo>

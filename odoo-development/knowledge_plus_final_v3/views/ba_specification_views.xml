@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ─── Vue formulaire principale ──────────────────────────── -->
+    <record id="view_ba_specification_form" model="ir.ui.view">
+        <field name="name">agh.ba.specification.form</field>
+        <field name="model">agh.ba.specification</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit_review" string="Soumettre à révision"
+                            type="object" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_validate" string="Valider"
+                            type="object" invisible="state != 'review'" class="btn-success"/>
+                    <button name="action_reset_draft" string="Remettre en brouillon"
+                            type="object" invisible="state not in ['review','obsolete']"
+                            class="btn-secondary"/>
+                    <button name="action_new_version" string="Nouvelle version"
+                            type="object" invisible="state != 'validated'" class="btn-secondary"
+                            icon="fa-code-fork"/>
+                    <button name="action_set_obsolete" string="Marquer obsolète"
+                            type="object" invisible="state != 'validated'" class="btn-warning"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,validated"/>
+                </header>
+                <sheet>
+                    <!-- Smart buttons -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_files" type="object"
+                                class="oe_stat_button" icon="fa-files-o">
+                            <div class="o_stat_info">
+                                <field name="file_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Fichiers</span>
+                            </div>
+                        </button>
+                        <button name="action_view_tasks" type="object"
+                                class="oe_stat_button" icon="fa-tasks"
+                                invisible="task_count == 0">
+                            <div class="o_stat_info">
+                                <field name="task_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Tâches</span>
+                            </div>
+                        </button>
+                        <button name="action_view_articles" type="object"
+                                class="oe_stat_button" icon="fa-book"
+                                invisible="article_count == 0">
+                            <div class="o_stat_info">
+                                <field name="article_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Articles</span>
+                            </div>
+                        </button>
+                        <button name="action_view_requirements" type="object"
+                                class="oe_stat_button" icon="fa-check-circle"
+                                invisible="requirement_count == 0">
+                            <div class="o_stat_info">
+                                <field name="requirement_validated_count" class="o_stat_value"/>
+                                <span class="o_stat_text">Exigences validées</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Titre -->
+                    <div class="oe_title">
+                        <div class="o_field_widget o_field_char" style="font-size:12px;color:#888;margin-bottom:4px">
+                            <field name="reference" readonly="1"/>
+                        </div>
+                        <h1>
+                            <field name="name" placeholder="Titre du cahier des charges..."/>
+                        </h1>
+                        <div>
+                            <field name="priority" widget="priority"/>
+                        </div>
+                    </div>
+
+                    <group>
+                        <group string="Identification">
+                            <field name="spec_type"/>
+                            <field name="version"/>
+                            <field name="project_id"/>
+                            <field name="ba_author_id"/>
+                            <field name="reviewer_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Planification">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="date_validated" invisible="state != 'validated'"/>
+                            <field name="validated_by" invisible="state != 'validated'" readonly="1"/>
+                            <field name="validation_date" invisible="state != 'validated'" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Description">
+                        <field name="description" nolabel="1"
+                               placeholder="Description courte du périmètre..."/>
+                    </group>
+
+                    <notebook>
+                        <!-- Onglet Périmètre -->
+                        <page string="Périmètre &amp; Objectifs" name="scope_page" icon="fa-crosshairs">
+                            <field name="scope" placeholder="Décrivez ici le périmètre, les objectifs et les contraintes..."/>
+                        </page>
+
+                        <!-- Onglet Fichiers -->
+                        <page string="Fichiers" name="files_page" icon="fa-folder-open">
+                            <field name="file_ids" context="{'default_spec_id': id}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="file_type" widget="badge"/>
+                                    <field name="file_extension" string="Format"/>
+                                    <field name="version"/>
+                                    <field name="is_final" widget="boolean_toggle"/>
+                                    <field name="uploaded_by"/>
+                                    <field name="upload_date" string="Déposé le"/>
+                                    <button name="action_download" type="object"
+                                            icon="fa-download" string="Télécharger"/>
+                                    <button name="action_preview" type="object"
+                                            icon="fa-eye" string="Aperçu"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="file_type"/>
+                                            <field name="version"/>
+                                            <field name="is_final"/>
+                                        </group>
+                                        <group>
+                                            <field name="attachment_id"
+                                                   string="Fichier (Excel, PDF, Word...)"
+                                                   domain="[]"/>
+                                            <field name="uploaded_by"/>
+                                            <field name="upload_date"/>
+                                        </group>
+                                    </group>
+                                    <group string="Description">
+                                        <field name="description" nolabel="1"
+                                               placeholder="Décrivez ce fichier..."/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!-- Onglet Exigences -->
+                        <page string="Exigences" name="requirements_page" icon="fa-list-ol">
+                            <div class="mb-2" invisible="requirement_count == 0">
+                                <field name="requirement_progress" widget="progressbar"
+                                       options="{'editable': false}"/>
+                            </div>
+                            <field name="requirement_ids" context="{'default_spec_id': id}">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="reference" string="Réf."/>
+                                    <field name="name" string="Exigence"/>
+                                    <field name="req_type" widget="badge"/>
+                                    <field name="priority" widget="badge"
+                                           decoration-danger="priority == 'must'"
+                                           decoration-warning="priority == 'should'"
+                                           decoration-info="priority == 'could'"
+                                           decoration-muted="priority == 'wont'"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'validated'"
+                                           decoration-danger="state == 'rejected'"
+                                           decoration-warning="state == 'deferred'"
+                                           decoration-muted="state == 'draft'"/>
+                                    <button name="action_validate" type="object"
+                                            icon="fa-check" string="Valider"
+                                            invisible="state == 'validated'"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="reference"/>
+                                            <field name="name"/>
+                                            <field name="req_type"/>
+                                            <field name="priority"/>
+                                            <field name="state"/>
+                                        </group>
+                                        <group>
+                                            <field name="task_ids" widget="many2many_tags"/>
+                                        </group>
+                                    </group>
+                                    <group string="Description">
+                                        <field name="description" nolabel="1"
+                                               placeholder="Décrivez cette exigence en détail..."/>
+                                    </group>
+                                    <group string="Notes">
+                                        <field name="note" nolabel="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!-- Onglet Liaisons -->
+                        <page string="Liaisons" name="links_page" icon="fa-link">
+                            <group string="Tâches couvertes par ce CDC">
+                                <field name="task_ids" widget="many2many_tags"
+                                       domain="[('project_id','=',project_id)]"
+                                       nolabel="1"/>
+                            </group>
+                            <separator string="Articles de documentation liés"/>
+                            <field name="article_ids" widget="many2many_tags"
+                                   domain="[('state','=','approved')]"
+                                   nolabel="1"
+                                   placeholder="Lier des articles approuvés..."/>
+                        </page>
+
+                        <!-- Onglet Validation -->
+                        <page string="Validation" name="validation_page" icon="fa-check-square-o">
+                            <group>
+                                <field name="validation_comment"
+                                       placeholder="Commentaires de validation..."/>
+                            </group>
+                        </page>
+
+                        <!-- Onglet Historique versions -->
+                        <page string="Versions" name="versions_page" icon="fa-history">
+                            <field name="version_history_ids" readonly="1">
+                                <list>
+                                    <field name="version"/>
+                                    <field name="validated_by"/>
+                                    <field name="validation_date"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Vue liste ───────────────────────────────────────────── -->
+    <record id="view_ba_specification_list" model="ir.ui.view">
+        <field name="name">agh.ba.specification.list</field>
+        <field name="model">agh.ba.specification</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'obsolete'"
+                  decoration-success="state == 'validated'"
+                  decoration-warning="state == 'review'">
+                <field name="reference" string="Réf."/>
+                <field name="name" string="Titre"/>
+                <field name="spec_type" widget="badge"/>
+                <field name="project_id"/>
+                <field name="ba_author_id" widget="many2one_avatar_user"/>
+                <field name="version"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'validated'"
+                       decoration-warning="state == 'review'"
+                       decoration-muted="state in ('draft','obsolete')"/>
+                <field name="priority" widget="priority"/>
+                <field name="date_end" string="Échéance"/>
+                <field name="file_count" string="Fichiers"/>
+                <field name="requirement_progress" widget="progressbar" string="Exigences"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ─── Vue Kanban ──────────────────────────────────────────── -->
+    <record id="view_ba_specification_kanban" model="ir.ui.view">
+        <field name="name">agh.ba.specification.kanban</field>
+        <field name="model">agh.ba.specification</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="spec_type"/>
+                <field name="project_id"/>
+                <field name="ba_author_id"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="file_count"/>
+                <field name="requirement_progress"/>
+                <field name="date_end"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span class="badge text-bg-secondary" t-esc="record.spec_type.value"/>
+                            <field name="priority" widget="priority"/>
+                        </div>
+                        <strong><field name="name"/></strong>
+                        <div class="text-muted small mt-1">
+                            <i class="fa fa-folder-o" title="Projet"/> <field name="project_id"/>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2 text-muted small">
+                            <span><i class="fa fa-files-o" title="Fichiers"/> <field name="file_count"/> fichiers</span>
+                            <span invisible="date_end == False">
+                                <i class="fa fa-calendar" title="Échéance"/> <field name="date_end"/>
+                            </span>
+                        </div>
+                        <div class="mt-2" invisible="requirement_progress == 0">
+                            <field name="requirement_progress" widget="progressbar"
+                                   options="{'editable': false}"/>
+                        </div>
+                        <div class="mt-2">
+                            <field name="ba_author_id" widget="many2one_avatar_user"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ─── Filtres de recherche ─────────────────────────────────── -->
+    <record id="view_ba_specification_search" model="ir.ui.view">
+        <field name="name">agh.ba.specification.search</field>
+        <field name="model">agh.ba.specification</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Titre"/>
+                <field name="reference" string="Référence"/>
+                <field name="project_id" string="Projet"/>
+                <field name="ba_author_id" string="Business Analyst"/>
+                <filter name="filter_draft" string="Brouillons" domain="[('state','=','draft')]"/>
+                <filter name="filter_review" string="En révision" domain="[('state','=','review')]"/>
+                <filter name="filter_validated" string="Validés" domain="[('state','=','validated')]"/>
+                <filter name="filter_mine" string="Mes CDC"
+                        domain="[('ba_author_id','=',uid)]"/>
+                <filter name="filter_cdc" string="Cahiers des charges"
+                        domain="[('spec_type','=','cdc')]"/>
+                <filter name="filter_functional" string="Études fonctionnelles"
+                        domain="[('spec_type','=','functional')]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter name="group_project" string="Projet"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by': 'spec_type'}"/>
+                    <filter name="group_state" string="Statut"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_ba" string="Business Analyst"
+                            context="{'group_by': 'ba_author_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Actions ─────────────────────────────────────────────── -->
+    <record id="action_ba_specification" model="ir.actions.act_window">
+        <field name="name">Cahiers des charges</field>
+        <field name="res_model">agh.ba.specification</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créez votre premier cahier des charges
+            </p>
+            <p>Gérez vos cahiers des charges, études fonctionnelles et
+               techniques par projet avec leurs fichiers Excel, PDF et Word.</p>
+        </field>
+    </record>
+
+    <record id="action_ba_spec_my" model="ir.actions.act_window">
+        <field name="name">Mes CDC &amp; Études</field>
+        <field name="res_model">agh.ba.specification</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('ba_author_id', '=', uid)]</field>
+    </record>
+
+    <record id="action_ba_spec_to_review" model="ir.actions.act_window">
+        <field name="name">À réviser</field>
+        <field name="res_model">agh.ba.specification</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('state', '=', 'review'), ('reviewer_ids', 'in', [uid])]</field>
+    </record>
+
+</odoo>

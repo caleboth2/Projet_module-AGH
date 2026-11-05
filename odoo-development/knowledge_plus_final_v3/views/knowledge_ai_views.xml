@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_knowledge_ai_assistant_form" model="ir.ui.view">
+        <field name="name">agh.knowledge.ai.assistant.form</field>
+        <field name="model">agh.knowledge.ai.assistant</field>
+        <field name="arch" type="xml">
+            <form string="Assistant IA Local (Ollama)">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Ex: Assistant Ollama Llama3"/></h1>
+                    </div>
+                    <group>
+                        <group string="Configuration Ollama">
+                            <field name="ollama_host" placeholder="http://host.docker.internal:11434"/>
+                        </group>
+                        <group string="Paramètres LLM">
+                            <field name="max_tokens"/>
+                            <field name="temperature"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-info-circle" title="Information"/> <b>LLM Local Souverain :</b> Assurez-vous qu'Ollama est lancé sur votre machine.
+                        Pour Docker, utilisez l'URL <code>http://host.docker.internal:11434</code>.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_knowledge_ai_assistant_tree" model="ir.ui.view">
+        <field name="name">agh.knowledge.ai.assistant.tree</field>
+        <field name="model">agh.knowledge.ai.assistant</field>
+        <field name="arch" type="xml">
+            <list string="Profils IA Locaux">
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="ollama_host"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_knowledge_ai_assistant" model="ir.actions.act_window">
+        <field name="name">Assistant IA Local</field>
+        <field name="res_model">agh.knowledge.ai.assistant</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

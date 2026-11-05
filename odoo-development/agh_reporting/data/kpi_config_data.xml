@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="kpi_ca" model="account.kpi">
+            <field name="name">Chiffre d'affaires</field>
+            <field name="kpi_code">CA</field>
+            <field name="formula">_get_ca</field>
+            <field name="unit">amount</field>
+        </record>
+
+        <record id="kpi_marge_brute" model="account.kpi">
+            <field name="name">Marge brute</field>
+            <field name="kpi_code">MB</field>
+            <field name="formula">_get_mb</field>
+            <field name="unit">amount</field>
+        </record>
+
+        <record id="kpi_dso" model="account.kpi">
+            <field name="name">DSO (Délai encaissement clients)</field>
+            <field name="kpi_code">DSO</field>
+            <field name="formula">_get_dso</field>
+            <field name="unit">days</field>
+            <field name="target_value">45</field>
+        </record>
+
+        <record id="kpi_dpo" model="account.kpi">
+            <field name="name">DPO (Délai paiement fournisseurs)</field>
+            <field name="kpi_code">DPO</field>
+            <field name="formula">_get_dpo</field>
+            <field name="unit">days</field>
+            <field name="target_value">60</field>
+        </record>
+
+        <record id="kpi_bfr" model="account.kpi">
+            <field name="name">Besoin en Fonds de Roulement</field>
+            <field name="kpi_code">BFR</field>
+            <field name="formula">_get_bfr</field>
+            <field name="unit">amount</field>
+        </record>
+
+        <record id="kpi_taux_impayes" model="account.kpi">
+            <field name="name">Taux d'impayés</field>
+            <field name="kpi_code">IMP</field>
+            <field name="formula">_get_taux_impayes</field>
+            <field name="unit">percentage</field>
+            <field name="target_value">5</field>
+        </record>
+    </data>
+</odoo>

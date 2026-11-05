@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_form_agh_gumroad" model="ir.ui.view">
+        <field name="name">project.project.form.agh.gumroad</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="AGH Gumroad Analytics">
+                    <group>
+                        <group>
+                            <field name="gumroad_hourly_rate"/>
+                            <field name="gumroad_dev_cost" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="gumroad_sales_count" readonly="1"/>
+                            <field name="gumroad_revenue" readonly="1"/>
+                            <field name="gumroad_roi" readonly="1"/>
+                        </group>
+                    </group>
+                    <field name="gumroad_product_ids">
+                        <list>
+                            <field name="name"/>
+                            <field name="total_sales"/>
+                            <field name="total_revenue"/>
+                            <field name="avg_basket"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

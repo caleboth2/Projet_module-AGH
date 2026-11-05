@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Principal Facturation Client -->
+    <menuitem id="menu_agh_invoice_customer_root"
+              name="Facturation Client"
+              sequence="10"/>
+
+    <menuitem id="menu_agh_invoice_customer_main"
+              name="Factures"
+              parent="menu_agh_invoice_customer_root"
+              sequence="10"/>
+
+    <!-- Sous-menus Factures -->
+    <menuitem id="menu_agh_invoice_customer_invoices"
+              name="Factures Clients"
+              parent="menu_agh_invoice_customer_main"
+              action="account.action_move_out_invoice_type"
+              sequence="10"/>
+
+    <menuitem id="menu_agh_invoice_customer_recouvrement"
+              name="Tableau de bord Recouvrement"
+              parent="menu_agh_invoice_customer_main"
+              action="action_invoice_recouvrement_kanban"
+              sequence="20"/>
+
+    <!-- Partenaires -->
+    <menuitem id="menu_agh_invoice_customer_partners"
+              name="Clients"
+              parent="menu_agh_invoice_customer_root"
+              action="action_partner_client_maroc"
+              sequence="20"/>
+</odoo>

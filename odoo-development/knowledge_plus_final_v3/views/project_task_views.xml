@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Smart button Knowledge sur la tâche -->
+    <record id="view_task_form_knowledge_plus" model="ir.ui.view">
+        <field name="name">project.task.form.knowledge.plus</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart button dans le button_box -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_knowledge_articles"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-book"
+                        invisible="knowledge_article_count == 0">
+                    <div class="o_stat_info">
+                        <field name="knowledge_article_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Documentation</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <!-- Onglet Documentation dans le notebook de la tâche -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Documentation" name="knowledge_page" invisible="knowledge_article_count == 0">
+                    <group string="Couverture documentaire">
+                        <field name="doc_coverage" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <separator string="Articles de documentation liés"/>
+                    <field name="knowledge_article_ids"
+                           widget="many2many_tags"
+                           domain="[('state', '=', 'approved')]"
+                           context="{'default_task_ids': [(4, id)]}"
+                           placeholder="Lier des articles approuvés..."/>
+                    <group>
+                        <button name="action_create_knowledge_article"
+                                type="object"
+                                string="Créer un article de documentation"
+                                class="btn-secondary"
+                                icon="fa-plus"/>
+                    </group>
+                    <separator string="Détail des articles"/>
+                    <field name="knowledge_article_ids" nolabel="1">
+                        <list>
+                            <field name="name" string="Article"/>
+                            <field name="state" string="État"/>
+                            <field name="author_id" string="Auteur"/>
+                            <field name="doc_priority" string="Priorité" widget="priority"/>
+                            <field name="version" string="Version"/>
+                            <field name="view_count" string="Consultations"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Vue liste des tâches : colonne couverture documentaire -->
+    <record id="view_task_list_knowledge_plus" model="ir.ui.view">
+        <field name="name">project.task.list.knowledge.plus</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_deadline']" position="after">
+                <field name="doc_coverage"/>
+                <field name="knowledge_article_count" string="Docs"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action : toutes les tâches sans documentation -->
+    <record id="action_tasks_without_doc" model="ir.actions.act_window">
+        <field name="name">Tâches sans documentation</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="domain">[('doc_coverage', '=', 'none'), ('stage_id.fold', '=', False)]</field>
+        <field name="context">{'search_default_my_tasks': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Toutes les tâches actives sont documentées !
+            </p>
+        </field>
+    </record>
+
+    <!-- Action : tableau de bord documentation projet -->
+    <record id="action_doc_coverage_report" model="ir.actions.act_window">
+        <field name="name">Couverture documentaire</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'group_by': ['doc_coverage', 'project_id']}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,33 @@
+// AGH Invoice Customer Dashboard Styles
+.agh_invoice_dashboard {
+    padding: 20px;
+
+    .agh_kpi_card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+
+        .kpi_value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #875a7b;
+        }
+
+        .kpi_label {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+
+        &.danger .kpi_value { color: #dc3545; }
+        &.success .kpi_value { color: #28a745; }
+        &.warning .kpi_value { color: #ffc107; }
+    }
+}

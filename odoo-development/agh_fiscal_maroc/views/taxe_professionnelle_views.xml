@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_taxe_professionnelle_list" model="ir.ui.view">
+        <field name="name">account.taxe.professionnelle.list</field>
+        <field name="model">account.taxe.professionnelle</field>
+        <field name="arch" type="xml">
+            <list string="Taxe Professionnelle"
+                  decoration-info="state == 'draft'"
+                  decoration-success="state == 'paid'">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="fiscal_year"/>
+                <field name="category"/>
+                <field name="total_base" sum="Base totale"/>
+                <field name="total_tp" sum="Total TP"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_taxe_professionnelle_form" model="ir.ui.view">
+        <field name="name">account.taxe.professionnelle.form</field>
+        <field name="model">account.taxe.professionnelle</field>
+        <field name="arch" type="xml">
+            <form string="Taxe Professionnelle">
+                <header>
+                    <button name="action_calculate" string="Calculer"
+                            type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_confirm" string="Confirmer"
+                            type="object" class="btn-primary"
+                            invisible="state != 'calculated'"/>
+                    <button name="action_pay" string="Marquer payée"
+                            type="object" class="btn-primary"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" string="Annuler"
+                            type="object"
+                            invisible="state in ('cancelled', 'paid')"/>
+                    <button name="action_draft" string="Réinitialiser"
+                            type="object"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,calculated,confirmed,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="fiscal_year"/>
+                            <field name="category"/>
+                        </group>
+                        <group>
+                            <field name="activity_description"/>
+                            <field name="location"/>
+                            <field name="is_exonerated"/>
+                            <field name="exoneration_end_date" invisible="not is_exonerated"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Calcul TP" name="calcul">
+                            <group>
+                                <group string="Base">
+                                    <field name="rental_value"/>
+                                    <field name="fixed_assets_value"/>
+                                    <field name="total_base" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group string="Taux et montants">
+                                    <field name="municipal_rate"/>
+                                    <field name="municipal_tp"/>
+                                    <field name="regional_rate"/>
+                                    <field name="regional_tp"/>
+                                    <field name="total_tp" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Détail" name="detail">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="description"/>
+                                    <field name="base_amount"/>
+                                    <field name="rate"/>
+                                    <field name="amount"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Paiement" name="payment">
+                            <group>
+                                <field name="payment_date"/>
+                                <field name="payment_ref"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_taxe_professionnelle" model="ir.actions.act_window">
+        <field name="name">Taxe Professionnelle</field>
+        <field name="res_model">account.taxe.professionnelle</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

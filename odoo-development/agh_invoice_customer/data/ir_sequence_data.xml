@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence factures clients -->
+        <record id="seq_facture_client_maroc" model="ir.sequence">
+            <field name="name">Facture Client Maroc</field>
+            <field name="code">account.move.out_invoice.maroc</field>
+            <field name="prefix">FAC-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">standard</field>
+        </record>
+
+        <!-- Sequence avoirs clients -->
+        <record id="seq_avoir_client_maroc" model="ir.sequence">
+            <field name="name">Avoir Client Maroc</field>
+            <field name="code">account.move.out_refund.maroc</field>
+            <field name="prefix">AVR-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">standard</field>
+        </record>
+
+        <!-- Sequence acomptes -->
+        <record id="seq_acompte_client_maroc" model="ir.sequence">
+            <field name="name">Acompte Client Maroc</field>
+            <field name="code">account.move.acompte.maroc</field>
+            <field name="prefix">ACP-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+            <field name="implementation">standard</field>
+        </record>
+    </data>
+</odoo>

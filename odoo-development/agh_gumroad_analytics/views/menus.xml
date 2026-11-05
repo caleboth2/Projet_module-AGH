@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_agh_gumroad_analytics_root"
+              name="AGH Gumroad Analytics" sequence="92"/>
+
+    <menuitem id="menu_agh_ga_products" name="Products"
+              parent="menu_agh_gumroad_analytics_root"
+              action="action_agh_gumroad_product" sequence="10"/>
+
+    <menuitem id="menu_agh_ga_sales" name="Sales"
+              parent="menu_agh_gumroad_analytics_root"
+              action="action_agh_gumroad_sale" sequence="20"/>
+
+    <menuitem id="menu_agh_ga_metrics" name="Daily Metrics"
+              parent="menu_agh_gumroad_analytics_root"
+              action="action_agh_gumroad_metric" sequence="30"/>
+
+    <menuitem id="menu_agh_ga_reports" name="Weekly Reports"
+              parent="menu_agh_gumroad_analytics_root"
+              action="action_agh_gumroad_report" sequence="40"/>
+
+    <menuitem id="menu_agh_ga_sync" name="Manual Sync"
+              parent="menu_agh_gumroad_analytics_root"
+              action="action_agh_gumroad_sync_wizard" sequence="50"/>
+</odoo>

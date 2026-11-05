@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- 1. Développeur Mobile Flutter -->
+        <record id="job_template_flutter" model="agh.job.template">
+            <field name="name">Stagiaire Développeur Mobile Flutter</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Contribuer activement au développement et à l'amélioration de nos applications mobiles multiplateformes (iOS et Android).</li>
+                        <li>Acquérir une maîtrise du framework Flutter et de l'écosystème Dart en situation réelle.</li>
+                        <li>Participer au cycle complet de développement : conception, codage, tests et déploiement.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Développer de nouvelles fonctionnalités en utilisant Flutter.</li>
+                        <li>Assurer la maintenance et l'optimisation des applications existantes.</li>
+                        <li>Intégrer les interfaces utilisateur (UI) conçues par l'équipe de design.</li>
+                        <li>Collaborer avec l'équipe backend pour l'intégration des API.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Connaissances de base en Dart.</li>
+                        <li>Familiarité avec le framework Flutter (widget, state management).</li>
+                        <li>Compréhension des principes de la programmation orientée objet (POO).</li>
+                        <li>Notions de Git (gestion de version).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 2. Développeur Backend -->
+        <record id="job_template_backend" model="agh.job.template">
+            <field name="name">Stagiaire Développeur Backend</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Participer à la conception, au développement et à la maintenance de l'architecture serveur et des API de nos applications.</li>
+                        <li>Appliquer les meilleures pratiques en matière de sécurité, de performance et de scalabilité.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Développer des API RESTful ou GraphQL robustes et performantes.</li>
+                        <li>Gérer les bases de données (conception, optimisation des requêtes).</li>
+                        <li>Mettre en place des tests unitaires et d'intégration.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Maîtrise d'au moins un langage backend (ex: Python/Django/Flask, Node.js/Express).</li>
+                        <li>Connaissance des systèmes de gestion de bases de données (ex: PostgreSQL, MongoDB).</li>
+                        <li>Notions sur les concepts de cloud et de conteneurisation (Docker).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 3. Développeur LLM -->
+        <record id="job_template_llm" model="agh.job.template">
+            <field name="name">Stagiaire Développeur LLM / Ingénierie Prompt</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Explorer et implémenter des solutions basées sur les grands modèles de langage (LLM).</li>
+                        <li>Développer des prototypes et des intégrations d'IA générative.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Concevoir et tester des prompts efficaces pour des LLM (ex: OpenAI, Llama).</li>
+                        <li>Intégrer des modèles LLM via des API dans nos produits (RAG, agents).</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Bonnes compétences en Python.</li>
+                        <li>Familiarité with les frameworks LLM (ex: LangChain, LlamaIndex).</li>
+                        <li>Compréhension des concepts fondamentaux de l'IA et du NLP.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 4. Designer Mobile -->
+        <record id="job_template_designer" model="agh.job.template">
+            <field name="name">Stagiaire Designer Mobile UX/UI</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Contribuer à la conception d'interfaces utilisateur (UI) attrayantes et d'expériences utilisateur (UX) intuitives.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Créer des wireframes, des prototypes interactifs et des maquettes haute fidélité.</li>
+                        <li>Élaborer et maintenir le système de design mobile.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Maîtrise d'un ou plusieurs outils de conception (ex: Figma).</li>
+                        <li>Compréhension des principes fondamentaux de l'UX et de l'UI mobile.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 5. Marketeur -->
+        <record id="job_template_marketer" model="agh.job.template">
+            <field name="name">Stagiaire Marketeur Digital et Contenu</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister l'équipe marketing dans l'élaboration et l'exécution des stratégies de marketing digital.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Créer du contenu engageant pour les plateformes sociales, le blog et les newsletters.</li>
+                        <li>Participer à la gestion des campagnes publicitaires en ligne (SEA/Social Ads).</li>
+                        <li>Aider à l'optimisation pour les moteurs de recherche (SEO).</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Notions de base en marketing digital (SEO, SEA, Social Media Marketing).</li>
+                        <li>Familiarité with les outils d'analyse web (ex: Google Analytics).</li>
+                        <li>Aisance rédactionnelle et bonne maîtrise du français.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 6. Éditeur Vidéo -->
+        <record id="job_template_video_editor" model="agh.job.template">
+            <field name="name">Stagiaire Éditeur Vidéo et Contenu Multimédia</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Contribuer à la création de contenu vidéo de haute qualité.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Réaliser le montage, l'étalonnage et le mixage sonore des vidéos.</li>
+                        <li>Créer des animations graphiques simples (motion graphics).</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Maîtrise des logiciels de montage vidéo professionnels (Adobe Premiere Pro, Final Cut Pro).</li>
+                        <li>Notions en animation graphique (Adobe After Effects).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 7. Ingénieur Cross Compiling -->
+        <record id="job_template_cross_compiling" model="agh.job.template">
+            <field name="name">Stagiaire Ingénieur Cross Compiling et Intégration</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Optimisation des chaînes d'outils de compilation croisée.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Configurer et maintenir les environnements de compilation croisée.</li>
+                        <li>Automatiser les processus de build et de test via des outils CI/CD.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Bonne connaissance d'un langage système (C, C++, Rust).</li>
+                        <li>Familiarité with les systèmes de build (CMake, Makefiles).</li>
+                        <li>Compréhension des architectures matérielles (x86, ARM).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 8. Assistant RH -->
+        <record id="job_template_rh_assistant" model="agh.job.template">
+            <field name="name">Stagiaire Assistant RH et Administration du Personnel</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Soutenir le service des Ressources Humaines dans ses tâches quotidiennes.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Participer au processus de recrutement (tri des CV, planification).</li>
+                        <li>Gérer l'intégration administrative des nouveaux collaborateurs.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Maîtrise des outils bureautiques.</li>
+                        <li>Sens de la confidentialité et discrétion absolue.</li>
+                        <li>Organisation et rigueur administrative.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 9. Business and Data Analyst -->
+        <record id="job_template_data_analyst" model="agh.job.template">
+            <field name="name">Stagiaire Business and Data Analyst</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Analyser les données business pour identifier les tendances et optimiser la prise de décision.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Collecter, nettoyer et analyser des ensembles de données.</li>
+                        <li>Créer et maintenir des visualisations de données.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Maîtrise d'Excel ou Google Sheets.</li>
+                        <li>Connaissances en SQL.</li>
+                        <li>Familiarité with un outil de Business Intelligence (Tableau, Power BI).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 10. Coordinateur d'équipe Développement Mobile -->
+        <record id="job_template_coord_mobile" model="agh.job.template">
+            <field name="name">Stagiaire Coordinateur d'Équipe Développement Mobile</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister le Manager dans la coordination quotidienne des développeurs Mobile.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Organiser et animer les réunions Agiles (Daily Scrums).</li>
+                        <li>Aider à la gestion du backlog produit.</li>
+                        <li>Lever les obstacles rencontrés par l'équipe.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Forte affinité with les technologies mobiles.</li>
+                        <li>Familiarité with les outils de gestion de projet Agiles (Jira, Trello).</li>
+                        <li>Excellentes capacités de communication.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 11. Coordinateur d'équipe Business and Data Analyst -->
+        <record id="job_template_coord_data" model="agh.job.template">
+            <field name="name">Stagiaire Coordinateur d'Équipe Business &amp; Data Analyst</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister le Manager dans la coordination quotidienne de l'équipe Data.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Organiser et animer les réunions de suivi de projet.</li>
+                        <li>Aider à la gestion du backlog d'analyse.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Affinité with les concepts d'analyse de données et de BI.</li>
+                        <li>Compréhension de base de SQL.</li>
+                        <li>Esprit de facilitation et aptitude à la résolution de problèmes.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 12. Coordinateur d'équipe Marketing -->
+        <record id="job_template_coord_marketing" model="agh.job.template">
+            <field name="name">Stagiaire Coordinateur d'Équipe Marketing Digital</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister le Manager Marketing dans la planification et le suivi des campagnes.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Organiser et animer les réunions de coordination.</li>
+                        <li>Aider à la gestion du calendrier de contenu.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Affinité with les concepts de Marketing Digital.</li>
+                        <li>Connaissance des outils de gestion de projet.</li>
+                        <li>Excellentes compétences de communication.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 13. Coordinateur d'équipe QA -->
+        <record id="job_template_coord_qa" model="agh.job.template">
+            <field name="name">Stagiaire Coordinateur d'Équipe QA (Qualité Logicielle)</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister le Manager dans l'orchestration de la stratégie de test.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Organiser et animer les rituels Agiles dédiés à la Qualité.</li>
+                        <li>Coordonner les campagnes de tests.</li>
+                        <li>Aider à la gestion du backlog de bugs.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Affinité with les méthodologies de test.</li>
+                        <li>Rigueur extrême, esprit critique.</li>
+                        <li>Connaissance des outils Jira, Xray, Zephyr.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 14 & 19. Stagiaire Crowdfunding -->
+        <record id="job_template_crowdfunding" model="agh.job.template">
+            <field name="name">Stagiaire Crowdfunding et Levée de Fonds</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Participer activement à la stratégie de levée de fonds via le crowdfunding.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Identifier des prospects et investisseurs potentiels.</li>
+                        <li>Assister à la création des supports de campagne (pitchs, vidéos).</li>
+                        <li>Gérer la communication with la communauté.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Familiarité with les plateformes de crowdfunding (Kickstarter, Ulule).</li>
+                        <li>Excellent sens de la communication et de la persuasion.</li>
+                        <li>Proactivité et autonomie.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 15. Stagiaire Développeur Odoo -->
+        <record id="job_template_odoo" model="agh.job.template">
+            <field name="name">Stagiaire Développeur Odoo</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Participer activement au développement et à l'intégration de modules Odoo.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Développer de nouveaux modules Odoo en Python.</li>
+                        <li>Maintenir, déboguer et optimiser les modules existants.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Bonne connaissance du langage Python.</li>
+                        <li>Notions de PostgreSQL.</li>
+                        <li>Familiarité with les systèmes ERP.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 16. Développeur Blockchain -->
+        <record id="job_template_blockchain" model="agh.job.template">
+            <field name="name">Stagiaire Développeur Blockchain</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Développement d'applications décentralisées (dApps).</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Développer des smart contracts en Solidity.</li>
+                        <li>Contribuer à la logique blockchain en Rust.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Compréhension des bases de la Blockchain.</li>
+                        <li>Expérience en Solidity et Rust.</li>
+                        <li>Rigueur extrême (audit de smart contracts).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 17. QA Testeur Mobile -->
+        <record id="job_template_qa_mobile" model="agh.job.template">
+            <field name="name">Stagiaire QA Testeur Mobile (Flutter &amp; Django)</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Améliorer la qualité et la fiabilité des applications mobiles.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Exécuter des plans de tests sur iOS et Android.</li>
+                        <li>Valider l'intégration des API (Backend Django).</li>
+                        <li>Rapports de bugs clairs.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Familiarité with Flutter/Dart et Django.</li>
+                        <li>Curiosité technique et œil pour le détail.</li>
+                        <li>Orthographe irréprochable.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 18. QA Testeur LLM -->
+        <record id="job_template_qa_llm" model="agh.job.template">
+            <field name="name">Stagiaire QA Testeur LLM / Validateur de Modèles d'IA</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Garantir la fiabilité et l'exactitude des solutions LLM.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Concevoir des tests pour évaluer la performance des LLM (biais, toxicité).</li>
+                        <li>Prompt Testing et reporting d'hallucinations.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Bonnes compétences en Python.</li>
+                        <li>Familiarité with les LLM (OpenAI, Llama).</li>
+                        <li>Esprit critique et créativité (edge cases).</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 20. Assistant Administratif -->
+        <record id="job_template_admin_assistant" model="agh.job.template">
+            <field name="name">Stagiaire Assistant Administratif et Gestion du Personnel</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister dans la gestion administrative quotidienne.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Gestion des dossiers du personnel (archivage, mise à jour).</li>
+                        <li>Support administratif et logistique.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Maîtrise de Google Workspace / Office.</li>
+                        <li>Rigueur extrême et sens de la confidentialité.</li>
+                        <li>Excellentes capacités rédactionnelles.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 21. Micro-Influenceur -->
+        <record id="job_template_influencer" model="agh.job.template">
+            <field name="name">Micro-Influenceur Interne Commercial Vente d'Applications</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du poste</h3>
+                    <ul>
+                        <li>Promotion et vente de nos applications numériques.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Créer du contenu engageant (vidéos, posts) pour promouvoir nos produits.</li>
+                        <li>Développer un pipeline de vente via les réseaux sociaux.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Forte présence en ligne ou communauté engagée.</li>
+                        <li>Capacité à créer du contenu de qualité.</li>
+                        <li>Orientation résultats.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- 22. Project Manager -->
+        <record id="job_template_pm" model="agh.job.template">
+            <field name="name">Stagiaire Project Manager (Chef de Projet Junior)</field>
+            <field name="description" type="html">
+                <div>
+                    <h3>Objectifs du stage</h3>
+                    <ul>
+                        <li>Assister le management dans la planification et le suivi des projets Agiles.</li>
+                    </ul>
+                    <h3>Missions principales</h3>
+                    <ul>
+                        <li>Gérer le Backlog et animer les rituels Agiles.</li>
+                        <li>Appliquer la Matrice RACI.</li>
+                    </ul>
+                </div>
+            </field>
+            <field name="requirements" type="html">
+                <div>
+                    <ul>
+                        <li>Méthodologies Agiles (Scrum, Kanban).</li>
+                        <li>Outils Jira, Trello, Odoo.</li>
+                        <li>Leadership et sens de l'organisation.</li>
+                    </ul>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View Tree -->
+    <record id="mobile_sign_request_view_tree" model="ir.ui.view">
+        <field name="name">mobile.sign.request.view.tree</field>
+        <field name="model">mobile.sign.request</field>
+        <field name="arch" type="xml">
+            <list string="Demandes de Signature" decoration-info="state == 'pending'" decoration-success="state == 'signed'" decoration-muted="state == 'rejected'">
+                <header>
+                    <button name="fetch_latest_build_from_github" string="Récupérer les derniers builds" type="object" class="oe_highlight"/>
+                </header>
+                <field name="app_id"/>
+                <field name="version"/>
+                <field name="file_hash"/>
+                <field name="create_date"/>
+                <field name="state" widget="badge" decoration-info="state == 'pending'" decoration-success="state == 'signed'" decoration-danger="state == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- View Form -->
+    <record id="mobile_sign_request_view_form" model="ir.ui.view">
+        <field name="name">mobile.sign.request.view.form</field>
+        <field name="model">mobile.sign.request</field>
+        <field name="arch" type="xml">
+            <form string="Demande de Signature Mobile">
+                <header>
+                    <button name="action_approve_and_sign" string="Approuver et Signer" type="object" class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_reject" string="Refuser" type="object" invisible="state != 'pending'"/>
+                    <button name="fetch_latest_build_from_github" string="Vérifier GitHub" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,signed,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="app_id" placeholder="Sélectionnez l'application..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="version"/>
+                            <field name="file_hash"/>
+                        </group>
+                        <group>
+                            <field name="github_artifact_id"/>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="mobile_sign_request_action" model="ir.actions.act_window">
+        <field name="name">Demandes de Signature</field>
+        <field name="res_model">mobile.sign.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Aucune demande de signature détectée.
+            </p>
+            <p>
+                Odoo interroge automatiquement GitHub pour chaque application configurée.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Root -->
+    <menuitem id="menu_mobile_signer_root" name="Signature Mobile" sequence="100" web_icon="agh_mobile_signer,static/description/icon.png"/>
+    
+    <menuitem id="menu_mobile_sign_request" name="Demandes" parent="menu_mobile_signer_root" action="mobile_sign_request_action" sequence="10"/>
+    
+    <menuitem id="menu_mobile_signer_config" name="Configuration" parent="menu_mobile_signer_root" sequence="100"/>
+    
+    <menuitem id="menu_mobile_signer_settings" name="Paramètres" parent="menu_mobile_signer_config" action="agh_mobile_signer_config_action" sequence="10"/>
+</odoo>

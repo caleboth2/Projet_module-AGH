@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_tva_declaration" model="ir.sequence">
+            <field name="name">Déclaration TVA</field>
+            <field name="code">account.tva.declaration</field>
+            <field name="prefix">TVA/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_is_declaration" model="ir.sequence">
+            <field name="name">Déclaration IS</field>
+            <field name="code">account.is.declaration</field>
+            <field name="prefix">IS/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_cotisation_minimale" model="ir.sequence">
+            <field name="name">Cotisation Minimale</field>
+            <field name="code">account.cotisation.minimale</field>
+            <field name="prefix">CM/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_taxe_professionnelle" model="ir.sequence">
+            <field name="name">Taxe Professionnelle</field>
+            <field name="code">account.taxe.professionnelle</field>
+            <field name="prefix">TP/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_tva_credit_request" model="ir.sequence">
+            <field name="name">Demande remboursement TVA</field>
+            <field name="code">tva.credit.request</field>
+            <field name="prefix">TVA-CR/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Tâche planifiée notifications calendrier fiscal
+             NB: le champ "numbercall" a été retiré dans Odoo 18 -->
+        <record id="cron_fiscal_calendar_notify" model="ir.cron">
+            <field name="name">Notifications du calendrier fiscal</field>
+            <field name="model_id" ref="model_account_fiscal_calendar"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_upcoming_deadlines()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

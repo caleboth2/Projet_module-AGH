@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_figma_design_tree" model="ir.ui.view">
+        <field name="name">agh.figma.design.tree</field>
+        <field name="model">agh.figma.design</field>
+        <field name="arch" type="xml">
+
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="version"/>
+                <field name="status"/>
+            </list>
+
+        </field>
+    </record>
+
+    <record id="view_figma_design_form" model="ir.ui.view">
+        <field name="name">agh.figma.design.form</field>
+        <field name="model">agh.figma.design</field>
+        <field name="arch" type="xml">
+
+            <form>
+
+                <header>
+
+                    <button
+                        name="action_sync_figma"
+                        type="object"
+                        string="Sync Figma"
+                        class="btn-primary"
+                    />
+
+                    <field
+                        name="status"
+                        widget="statusbar"
+                    />
+
+                </header>
+
+                <sheet>
+
+                    <group>
+
+                        <field name="name"/>
+                        <field name="figma_file_key"/>
+                        <field name="figma_url"/>
+                        <field name="project_id"/>
+                        <field name="figma_project"/>
+                        <field name="task_id"/>
+
+                    </group>
+
+                    <notebook>
+
+                        <page string="Preview">
+
+                            <field
+                                name="image_preview"
+                                widget="image"
+                            />
+
+                        </page>
+
+                        <page string="Specifications">
+
+                            <group>
+
+                                <field name="colors"/>
+                                <field name="typography"/>
+                                <field name="spacing"/>
+
+                            </group>
+
+                        </page>
+
+                        <page string="AI Report">
+
+                            <field
+                                name="ai_report"
+                                widget="html"
+                            />
+
+                        </page>
+
+                        <page string="Development Assets">
+                            <group>
+                                <field name="svg_main" widget="binary" filename="name" string="Main SVG Export"/>
+                                <field name="raw_json" string="Raw API JSON" widget="ace" options="{'mode': 'json'}"/>
+                            </group>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+            </form>
+
+        </field>
+    </record>
+
+    <record id="action_figma_design" model="ir.actions.act_window">
+        <field name="name">Figma Designs</field>
+        <field name="res_model">agh.figma.design</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    
+
+</odoo>

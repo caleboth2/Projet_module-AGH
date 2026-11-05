@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action Client pour le Chat IA -->
+    <record id="action_ai_agent_chat" model="ir.actions.client">
+        <field name="name">Ask AI</field>
+        <field name="tag">ai_agent_chat_action</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu principal Ask AI -->
+    <menuitem id="menu_ai_agent_chat_root"
+              name="Ask AI"
+              action="action_ai_agent_chat"
+              web_icon="fa,fa-magic,#FFFFFF,#714B67"
+              sequence="1"/>
+</odoo>

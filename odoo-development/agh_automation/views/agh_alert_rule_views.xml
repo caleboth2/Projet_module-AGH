@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_agh_alert_rule_tree" model="ir.ui.view">
+        <field name="name">agh.alert.rule.list</field>
+        <field name="model">agh.alert.rule</field>
+        <field name="arch" type="xml">
+            <list string="Regles d'alerte">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="threshold_value"/>
+                <field name="alert_type"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_agh_alert_rule_form" model="ir.ui.view">
+        <field name="name">agh.alert.rule.form</field>
+        <field name="model">agh.alert.rule</field>
+        <field name="arch" type="xml">
+            <form string="Regle d'alerte">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="model_id"/>
+                        <field name="condition_domain"
+                               placeholder="Ex: [('state','=','posted')]"/>
+                        <field name="threshold_value"/>
+                        <field name="alert_type"/>
+                        <field name="recipient_ids" widget="many2many_tags"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_agh_alert_rule" model="ir.actions.act_window">
+        <field name="name">Regles d'alerte</field>
+        <field name="res_model">agh.alert.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Definissez des conditions automatiques pour declencher des alertes (email, notification, SMS).</p>
+        </field>
+    </record>
+
+    <!-- Action d'ouverture du tableau de bord -->
+    <record id="action_open_automation_dashboard" model="ir.actions.server">
+        <field name="name">Ouvrir le tableau de bord Automatisation</field>
+        <field name="model_id" ref="model_agh_automation_config"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_open_dashboard()</field>
+    </record>
+
+    <menuitem id="menu_agh_automation_root"
+              name="Automatisation"
+              sequence="90"
+              web_icon="agh_automation,static/description/icon.svg"/>
+
+    <menuitem id="menu_agh_automation_dashboard"
+              name="Tableau de bord"
+              parent="menu_agh_automation_root"
+              action="action_open_automation_dashboard"
+              sequence="5"/>
+
+    <menuitem id="menu_agh_alert_rule"
+              name="Regles d'alerte"
+              parent="menu_agh_automation_root"
+              action="action_agh_alert_rule"
+              sequence="10"/>
+</odoo>

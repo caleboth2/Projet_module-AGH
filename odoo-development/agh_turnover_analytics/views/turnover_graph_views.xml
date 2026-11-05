@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_department_turnover_graph" model="ir.ui.view">
+        <field name="name">hr.department.turnover.graph</field>
+        <field name="model">hr.department</field>
+        <field name="arch" type="xml">
+            <graph string="Turnover par Département" type="bar">
+                <field name="name" type="row"/>
+                <field name="turnover_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_hr_department_turnover_analytics" model="ir.actions.act_window">
+        <field name="name">Analyse du Turnover</field>
+        <field name="res_model">hr.department</field>
+        <field name="view_mode">graph,pivot,kanban,list,form</field>
+        <field name="view_id" ref="view_hr_department_turnover_graph"/>
+    </record>
+
+    <menuitem id="menu_hr_department_turnover_analytics"
+              name="Analyse Turnover"
+              parent="hr.menu_hr_root"
+              action="action_hr_department_turnover_analytics"
+              sequence="50"/>
+</odoo>

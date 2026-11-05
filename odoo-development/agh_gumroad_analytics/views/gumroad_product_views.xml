@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_agh_gumroad_product_list" model="ir.ui.view">
+        <field name="name">agh.gumroad.product.list</field>
+        <field name="model">agh.gumroad.product</field>
+        <field name="arch" type="xml">
+            <list string="AGH Gumroad Products">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="price"/>
+                <field name="currency"/>
+                <field name="total_sales"/>
+                <field name="total_revenue"/>
+                <field name="avg_basket"/>
+                <field name="published"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_agh_gumroad_product_form" model="ir.ui.view">
+        <field name="name">agh.gumroad.product.form</field>
+        <field name="model">agh.gumroad.product</field>
+        <field name="arch" type="xml">
+            <form string="AGH Gumroad Product">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="gumroad_id"/>
+                            <field name="gumroad_url" widget="url"/>
+                            <field name="connector_id"/>
+                        </group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="price"/>
+                            <field name="currency"/>
+                            <field name="published"/>
+                        </group>
+                    </group>
+                    <group string="KPIs">
+                        <field name="total_sales"/>
+                        <field name="total_revenue"/>
+                        <field name="avg_basket"/>
+                    </group>
+                    <notebook>
+                        <page string="Sales"><field name="sale_ids"/></page>
+                        <page string="Daily Metrics"><field name="metric_ids"/></page>
+                        <page string="Raw Gumroad Payload (audit)">
+                            <field name="raw_json" widget="text"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_agh_gumroad_product" model="ir.actions.act_window">
+        <field name="name">AGH Gumroad Products</field>
+        <field name="res_model">agh.gumroad.product</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_contract_view_form_inherit_sequence" model="ir.ui.view">
+        <field name="name">hr.contract.form.inherit.sequence</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Mise en valeur de la référence du contrat -->
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="placeholder">Généré automatiquement (ex: REF-RECRUT-2026-001)</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

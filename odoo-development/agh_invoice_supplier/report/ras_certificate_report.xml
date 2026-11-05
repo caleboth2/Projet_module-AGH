@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_ras_certificate" model="ir.actions.report">
+        <field name="name">Attestation RAS</field>
+        <field name="model">account.ras.maroc</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agh_invoice_supplier.ras_certificate</field>
+        <field name="report_file">agh_invoice_supplier.ras_certificate</field>
+        <field name="binding_model_id" ref="model_account_ras_maroc"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="ras_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="ras">
+                <t t-call="web.external_layout">
+                    <div class="page" style="padding: 20px; font-family: Arial, sans-serif;">
+                        <div style="text-align: center; margin-bottom: 30px;">
+                            <h2>Attestation de Retenue a la Source</h2>
+                            <h4>Article 153 du CGI - Maroc</h4>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <p><strong>N. Attestation: </strong><span t-esc="ras.certificate_number or 'En cours'"/></p>
+                            <p><strong>Date: </strong><span t-field="ras.date"/></p>
+                        </div>
+
+                        <p>Je soussigne(e), <strong t-field="ras.company_id.name"/>,</p>
+                        <p>atteste avoir preleve la retenue a la source sur le paiement effectue a:</p>
+
+                        <div style="background-color: #f5f5f5; padding: 12px; margin: 16px 0;">
+                            <p><strong>Fournisseur: </strong><span t-field="ras.partner_id.name"/></p>
+                            <p><strong>ICE: </strong><span t-esc="ras.partner_id.agh_ice or ''"/></p>
+                            <p><strong>IF: </strong><span t-esc="ras.partner_id.agh_tax_id or ''"/></p>
+                        </div>
+
+                        <p>au titre de la facture:</p>
+                        <div style="background-color: #f5f5f5; padding: 12px; margin: 16px 0;">
+                            <p><strong>N. Facture: </strong><span t-field="ras.invoice_id.name"/></p>
+                            <p><strong>Date: </strong><span t-field="ras.invoice_id.invoice_date"/></p>
+                            <p><strong>Montant TTC: </strong><span t-field="ras.invoice_id.amount_total" t-options="{'widget': 'monetary', 'display_currency': ras.currency_id}"/></p>
+                        </div>
+
+                        <p>Detail de la retenue:</p>
+                        <table class="table table-bordered" style="width: 100%; margin: 16px 0;">
+                            <thead>
+                                <tr>
+                                    <th>Nature</th>
+                                    <th>Taux</th>
+                                    <th>Base taxable</th>
+                                    <th>Montant retenu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-esc="ras.ras_type"/></td>
+                                    <td><span t-esc="ras.ras_rate"/>%</td>
+                                    <td><span t-field="ras.taxable_base" t-options="{'widget': 'monetary', 'display_currency': ras.currency_id}"/></td>
+                                    <td><span t-field="ras.ras_amount" t-options="{'widget': 'monetary', 'display_currency': ras.currency_id}"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>La presente attestation est delivree pour servir et valoir ce que de droit.</p>
+
+                        <div style="margin-top: 50px;">
+                            <p>Fait a <span t-esc="ras.company_id.city or 'Casablanca'"/>, le <span t-field="ras.date"/></p>
+                            <div style="margin-top: 30px;">
+                                <p><strong>Cachet et signature</strong></p>
+                                <div style="width: 200px; height: 80px; border: 1px solid #ccc; margin-top: 8px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

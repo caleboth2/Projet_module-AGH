@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_send_invoice_form" model="ir.ui.view">
+        <field name="name">wizard.send.invoice.form</field>
+        <field name="model">wizard.send.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Envoyer la Facture par Email">
+                <group>
+                    <group string="Facture">
+                        <field name="invoice_id"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <group string="Email">
+                        <field name="email_to"/>
+                        <field name="email_cc"/>
+                        <field name="subject"/>
+                        <field name="attach_pdf"/>
+                    </group>
+                </group>
+                <group string="Message">
+                    <field name="body" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_send" string="Envoyer" type="object" class="btn-primary"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_send_invoice" model="ir.actions.act_window">
+        <field name="name">Envoyer la Facture</field>
+        <field name="res_model">wizard.send.invoice</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

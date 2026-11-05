@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Health Score Form View -->
+    <record id="view_agh_health_score_dashboard_form" model="ir.ui.view">
+        <field name="name">agh.health.score.dashboard.form</field>
+        <field name="model">agh.health.score.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Tableau de Bord Santé Financière &amp; Opérationnelle">
+                <header>
+                    <button name="action_run_ai_agents_orchestration" string="🤖 Lancer Analyse Agents IA (QA/PM/SecOps)" type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Indicateurs Globaux">
+                            <field name="date"/>
+                            <field name="health_score" widget="progressbar"/>
+                            <field name="health_status"/>
+                        </group>
+                        <group string="Finance &amp; Vélocité">
+                            <field name="dev_cost"/>
+                            <field name="completed_tasks_count"/>
+                            <field name="velocity_score"/>
+                        </group>
+                    </group>
+                    <group string="Stabilité App &amp; APK Release">
+                        <group>
+                            <field name="critical_crashes_count"/>
+                        </group>
+                        <group>
+                            <field name="apk_release_status"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Analyses des Agents IA Souverains (Ollama)">
+                            <group>
+                                <field name="qa_agent_feedback" readonly="1"/>
+                                <field name="pm_agent_feedback" readonly="1"/>
+                                <field name="secops_agent_feedback" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Health Score List View -->
+    <record id="view_agh_health_score_dashboard_tree" model="ir.ui.view">
+        <field name="name">agh.health.score.dashboard.list</field>
+        <field name="model">agh.health.score.dashboard</field>
+        <field name="arch" type="xml">
+            <list string="Évaluations Macro Santé">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="dev_cost"/>
+                <field name="velocity_score"/>
+                <field name="critical_crashes_count"/>
+                <field name="health_score"/>
+                <field name="health_status"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agh_health_score_dashboard" model="ir.actions.act_window">
+        <field name="name">Financial &amp; Operational Health Score</field>
+        <field name="res_model">agh.health.score.dashboard</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_agh_health_score_root" name="Macro Health Score DG" sequence="20"/>
+    <menuitem id="menu_agh_health_score_dash" name="Health Score Dashboard" parent="menu_agh_health_score_root" action="action_agh_health_score_dashboard"/>
+    <menuitem id="menu_agh_health_score_project" name="Macro Health Score" parent="project.menu_main_pm" action="action_agh_health_score_dashboard" sequence="10"/>
+</odoo>

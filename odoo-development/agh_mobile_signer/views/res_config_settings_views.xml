@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.mobile.signer</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Signature Mobile" string="Signature Mobile" name="agh_mobile_signer">
+                    <block title="Configuration Tor et Sécurité" name="tor_security_section">
+                        <setting string="Proxy Tor" help="Configuration du proxy SOCKS5 pour sortir via Tor">
+                            <field name="agh_tor_proxy_url" placeholder="socks5h://127.0.0.1:9050"/>
+                        </setting>
+                    </block>
+                    <block title="Coffre-fort (Vault)" name="vault_section">
+                        <setting string="URL Vault" help="Adresse locale du serveur Vault ou HSM">
+                            <field name="agh_vault_url" placeholder="http://vault.local:8200"/>
+                        </setting>
+                        <setting string="Token Vault" help="Token sécurisé pour l'API Transit">
+                            <field name="agh_vault_token" password="True"/>
+                        </setting>
+                    </block>
+                    <block title="Intégration GitHub" name="github_section">
+                        <setting string="Token GitHub" help="Token d'accès personnel (Classic ou Fine-grained)">
+                            <field name="agh_github_token" password="True"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="agh_mobile_signer_config_action" model="ir.actions.act_window">
+        <field name="name">Configuration Signature Mobile</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'agh_mobile_signer'}</field>
+    </record>
+</odoo>

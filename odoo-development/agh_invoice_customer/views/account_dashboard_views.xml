@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Search View Recouvrement -->
+    <record id="view_account_search_recouvrement_maroc" model="ir.ui.view">
+        <field name="name">account.move.search.recouvrement.maroc</field>
+        <field name="model">account.move</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <search string="Recouvrement">
+                <field name="partner_id" string="Client"/>
+                <field name="agh_sequence_maroc" string="N. DGI"/>
+                <field name="name" string="Reference"/>
+                <filter name="impayes" string="Impayes"
+                        domain="[('payment_state','in',('not_paid','partial','in_payment')),('state','=','posted')]"/>
+                <filter name="late" string="En retard"
+                        domain="[('agh_late_days','>',0)]"/>
+                <filter name="critical" string="Critique (&gt;60j)"
+                        domain="[('agh_late_days','>',60)]"/>
+                <separator/>
+                <filter name="this_month" string="Ce mois" date="invoice_date"/>
+                <filter name="last_month" string="Mois dernier" date="invoice_date"/>
+                <group expand="1" string="Grouper par">
+                    <filter name="group_partner" string="Client"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_state" string="Etat paiement"
+                            context="{'group_by': 'agh_payment_state_ext'}"/>
+                    <filter name="group_month" string="Mois"
+                            context="{'group_by': 'invoice_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Vue Kanban Recouvrement -->
+    <record id="view_account_kanban_recouvrement_maroc" model="ir.ui.view">
+        <field name="name">account.move.kanban.recouvrement.maroc</field>
+        <field name="model">account.move</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="agh_payment_state_ext"
+                    class="o_kanban_small_column"
+                    quick_create="false">
+                <field name="name"/>
+                <field name="agh_sequence_maroc"/>
+                <field name="partner_id"/>
+                <field name="amount_total"/>
+                <field name="amount_residual"/>
+                <field name="invoice_date_due"/>
+                <field name="invoice_date"/>
+                <field name="agh_late_days"/>
+                <field name="agh_payment_state_ext"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+                <progressbar field="agh_payment_state_ext"
+                             colors='{"paid": "success", "posted": "warning", "partial": "info", "not_paid": "danger"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="agh_sequence_maroc"/>
+                                        </strong>
+                                        <small class="o_kanban_record_subtitle text-muted">
+                                            <field name="partner_id"/>
+                                        </small>
+                                    </div>
+                                    <div class="o_kanban_record_top_right">
+                                        <field name="agh_payment_state_ext" widget="badge"
+                                               decoration-success="agh_payment_state_ext == 'paid'"
+                                               decoration-warning="agh_payment_state_ext == 'posted'"
+                                               decoration-danger="agh_payment_state_ext == 'not_paid'"
+                                               decoration-info="agh_payment_state_ext == 'partial'"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <div class="d-flex justify-content-between align-items-center mt-1">
+                                        <span class="fw-bold text-primary fs-5">
+                                            <field name="amount_total" widget="monetary"/>
+                                        </span>
+                                        <t t-if="record.agh_late_days.raw_value &gt; 0">
+                                            <span class="badge text-bg-danger rounded-pill">
+                                                <i class="fa fa-clock-o me-1"/>
+                                                <t t-esc="record.agh_late_days.value"/> j
+                                            </span>
+                                        </t>
+                                    </div>
+                                    <div class="text-muted small mt-1">
+                                        <i class="fa fa-calendar me-1"/>
+                                        Echeance: <field name="invoice_date_due"/>
+                                    </div>
+                                    <t t-if="record.amount_residual.raw_value &gt; 0">
+                                        <div class="mt-1">
+                                            <span class="text-warning small">
+                                                Restant: <field name="amount_residual" widget="monetary"/>
+                                            </span>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action Tableau de bord Recouvrement -->
+    <record id="action_invoice_recouvrement_kanban" model="ir.actions.act_window">
+        <field name="name">Tableau de bord Recouvrement</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('move_type','=','out_invoice'),('state','=','posted')]</field>
+        <field name="context">{'default_move_type': 'out_invoice', 'search_default_impayes': 1}</field>
+        <field name="search_view_id" ref="view_account_search_recouvrement_maroc"/>
+    </record>
+</odoo>

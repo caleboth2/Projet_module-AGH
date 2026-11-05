@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_effet_commerce_tree" model="ir.ui.view">
+        <field name="name">account.effet.commerce.list</field>
+        <field name="model">account.effet.commerce</field>
+        <field name="arch" type="xml">
+            <list string="Effets de commerce"
+                  decoration-danger="state == 'impaye'"
+                  decoration-success="state == 'encaisse'"
+                  decoration-warning="state == 'remis'">
+                <field name="name"/>
+                <field name="effet_type"/>
+                <field name="tireur_id"/>
+                <field name="tire_id"/>
+                <field name="montant" sum="Total"/>
+                <field name="date_creation"/>
+                <field name="date_echeance"/>
+                <field name="state" widget="badge"/>
+                <field name="currency_id" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_effet_commerce_form" model="ir.ui.view">
+        <field name="name">account.effet.commerce.form</field>
+        <field name="model">account.effet.commerce</field>
+        <field name="arch" type="xml">
+            <form string="Effet de commerce">
+                <header>
+                    <button name="action_remettre_encaissement" type="object"
+                            string="Remettre a l'encaissement" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_encaisser" type="object"
+                            string="Encaisser" class="btn-success"
+                            invisible="state != 'remis'"/>
+                    <button name="action_impayer" type="object"
+                            string="Declarer impaye" class="btn-danger"
+                            invisible="state in ('encaisse', 'annule')"/>
+                    <button name="action_annuler" type="object"
+                            string="Annuler" class="btn-secondary"
+                            invisible="state in ('encaisse', 'impaye')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,remis,encaisse"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="effet_type"/>
+                            <field name="tireur_id" placeholder="Tireur (client)"/>
+                            <field name="tire_id" placeholder="Tire (fournisseur)"/>
+                        </group>
+                        <group>
+                            <field name="montant"/>
+                            <field name="currency_id"/>
+                            <field name="date_creation"/>
+                            <field name="date_echeance"/>
+                        </group>
+                    </group>
+                    <group string="Escompte">
+                        <field name="interest_rate"/>
+                        <field name="date_remise"/>
+                        <field name="discount_amount"/>
+                        <field name="net_amount"/>
+                    </group>
+                    <group string="Informations complementaires">
+                        <field name="payment_id"/>
+                        <field name="invoice_id"/>
+                        <field name="observation"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_effet_commerce" model="ir.actions.act_window">
+        <field name="name">Effets de commerce</field>
+        <field name="res_model">account.effet.commerce</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

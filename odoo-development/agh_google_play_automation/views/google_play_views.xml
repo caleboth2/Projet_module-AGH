@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Google Play App Form View -->
+    <record id="view_agh_google_play_app_form" model="ir.ui.view">
+        <field name="name">agh.google.play.app.form</field>
+        <field name="model">agh.google.play.app</field>
+        <field name="arch" type="xml">
+            <form string="Google Play Application">
+                <header>
+                    <button name="action_sync_google_play" string="Synchroniser Google Play API" type="object" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="ex: AGH Mobile App"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="package_name"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="track_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Releases &amp; Tracks">
+                            <field name="track_ids">
+                                <list editable="bottom">
+                                    <field name="version_code"/>
+                                    <field name="version_name"/>
+                                    <field name="track_name"/>
+                                    <field name="status"/>
+                                    <field name="release_notes"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Configuration API Google Console">
+                            <group>
+                                <field name="service_account_json" placeholder="Copier le JSON de la clé Service Account Google Developer API"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Google Play App List View -->
+    <record id="view_agh_google_play_app_tree" model="ir.ui.view">
+        <field name="name">agh.google.play.app.list</field>
+        <field name="model">agh.google.play.app</field>
+        <field name="arch" type="xml">
+            <list string="Google Play Applications">
+                <field name="name"/>
+                <field name="package_name"/>
+                <field name="track_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_agh_google_play_app" model="ir.actions.act_window">
+        <field name="name">Google Play Console Pipeline</field>
+        <field name="res_model">agh.google.play.app</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_agh_google_play_root" name="Google Play Pipeline" sequence="25"/>
+    <menuitem id="menu_agh_google_play_app" name="Applications &amp; APK Status" parent="menu_agh_google_play_root" action="action_agh_google_play_app"/>
+    <menuitem id="menu_agh_google_play_project" name="Google Play Automation" parent="project.menu_main_pm" action="action_agh_google_play_app" sequence="50"/>
+</odoo>

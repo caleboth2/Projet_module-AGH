@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Séquence pour les planifications -->
+        <record id="seq_report_scheduler" model="ir.sequence">
+            <field name="name">Planification rapport</field>
+            <field name="code">report.scheduler</field>
+            <field name="prefix">SCHED/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Template email pour rapports -->
+        <record id="email_template_report_scheduler" model="mail.template">
+            <field name="name">Envoi rapport planifié</field>
+            <field name="model_id" ref="model_report_scheduler"/>
+            <field name="subject">Rapport périodique - ${object.env.company.name}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif;">
+                    <h3>Rapport périodique</h3>
+                    <p>Bonjour,</p>
+                    <p>Veuillez trouver ci-joint le rapport demandé.</p>
+                    <p>Cordialement,</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Planification par défaut - Bilan mensuel (inactif) -->
+        <record id="default_scheduler_bilan_mensuel" model="report.scheduler">
+            <field name="name">Bilan mensuel - Direction</field>
+            <field name="report_type">bilan</field>
+            <field name="frequency">monthly</field>
+            <field name="day_of_month">1</field>
+            <field name="hour">9</field>
+            <field name="minute">0</field>
+            <field name="email_to">direction@example.com</field>
+            <field name="output_format">pdf</field>
+            <field name="period_days">30</field>
+            <field name="compare_previous">True</field>
+            <field name="active">False</field>
+        </record>
+
+        <!-- Planification par défaut - Balance âgée clients (inactif) -->
+        <record id="default_scheduler_balance_client" model="report.scheduler">
+            <field name="name">Balance âgée clients - Comptabilité</field>
+            <field name="report_type">balance_agee_client</field>
+            <field name="frequency">monthly</field>
+            <field name="day_of_month">5</field>
+            <field name="hour">10</field>
+            <field name="minute">0</field>
+            <field name="email_to">comptabilite@example.com</field>
+            <field name="output_format">pdf</field>
+            <field name="period_days">90</field>
+            <field name="active">False</field>
+        </record>
+    </data>
+</odoo>

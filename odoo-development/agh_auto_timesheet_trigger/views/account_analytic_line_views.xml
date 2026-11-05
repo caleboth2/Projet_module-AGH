@@ -1,0 +1,17 @@
+<odoo>
+    <record id="view_timesheet_line_tree_agh_secure" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.agh.secure</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+        <field name="arch" type="xml">
+            <!-- Verrouillage du champ unit_amount pour les non-managers -->
+            <xpath expr="//field[@name='unit_amount']" position="attributes">
+                <attribute name="readonly">not context.get('uid') == 1</attribute>
+                <attribute name="decoration-danger">is_manual_entry</attribute>
+            </xpath>
+            <xpath expr="//field[@name='unit_amount']" position="after">
+                <field name="is_manual_entry" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

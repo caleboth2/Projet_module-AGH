@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action tableau de bord – top performers -->
+    <record id="action_agh_top_performers" model="ir.actions.act_window">
+        <field name="name">Top Performers ⭐</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,kanban,graph</field>
+        <field name="domain">[('performance_level','=','top'),('state','in',['done','validated'])]</field>
+        <field name="context">{'search_default_top': 1}</field>
+    </record>
+
+    <!-- Action alertes – collaborateurs en difficulté -->
+    <record id="action_agh_poor_performers" model="ir.actions.act_window">
+        <field name="name">Alertes – Insuffisants ❌</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('performance_level','=','poor'),('state','in',['done','validated'])]</field>
+    </record>
+
+    <!-- Action mes évaluations en cours -->
+    <record id="action_agh_my_evaluations" model="ir.actions.act_window">
+        <field name="name">Mes évaluations</field>
+        <field name="res_model">agh.kpi.evaluation</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('evaluator_user_id','=',uid)]</field>
+        <field name="context">{'search_default_in_progress': 1}</field>
+    </record>
+
+</odoo>

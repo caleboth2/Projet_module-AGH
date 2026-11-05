@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue recherche -->
+    <record id="view_report_scheduler_search" model="ir.ui.view">
+        <field name="name">report.scheduler.search</field>
+        <field name="model">report.scheduler</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="report_type"/>
+                <field name="email_to"/>
+                <filter name="active" string="Actifs" domain="[('active', '=', True)]"/>
+                <filter name="inactive" string="Inactifs" domain="[('active', '=', False)]"/>
+                <separator/>
+                <group expand="0" string="Grouper par">
+                    <filter name="group_report_type" string="Type rapport" context="{'group_by': 'report_type'}"/>
+                    <filter name="group_frequency" string="Fréquence" context="{'group_by': 'frequency'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Vue liste -->
+    <record id="view_report_scheduler_tree" model="ir.ui.view">
+        <field name="name">report.scheduler.tree</field>
+        <field name="model">report.scheduler</field>
+        <field name="arch" type="xml">
+            <list string="Planifications"
+                  decoration-info="active == True"
+                  decoration-muted="active == False">
+                <field name="name"/>
+                <field name="report_type" widget="badge"/>
+                <field name="frequency" widget="badge"/>
+                <field name="next_send"/>
+                <field name="last_sent"/>
+                <field name="email_to"/>
+                <field name="output_format" widget="badge"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+    <record id="view_report_scheduler_form" model="ir.ui.view">
+        <field name="name">report.scheduler.form</field>
+        <field name="model">report.scheduler</field>
+        <field name="arch" type="xml">
+            <form string="Planification rapport">
+                <header>
+                    <button name="action_send_now" type="object" string="Envoyer maintenant"
+                            class="btn-primary" invisible="active == False"/>
+                    <button name="action_view_history" type="object" string="Historique" class="btn-secondary"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom de la planification"/>
+                        </h1>
+                    </div>
+
+                    <group name="report_config" string="Configuration du rapport">
+                        <group>
+                            <field name="report_type" required="1"/>
+                            <field name="period_days"/>
+                            <field name="compare_previous"/>
+                            <field name="output_format"/>
+                        </group>
+                        <group>
+                            <field name="frequency" required="1"/>
+                            <field name="day_of_month"
+                                   invisible="frequency != 'monthly'"/>
+                            <field name="day_of_week"
+                                   invisible="frequency != 'weekly'"/>
+                            <field name="hour"/>
+                            <field name="minute"/>
+                        </group>
+                    </group>
+
+                    <group name="recipients" string="Destinataires">
+                        <field name="email_to" placeholder="destinataire1@email.com, destinataire2@email.com" required="1"/>
+                        <field name="email_cc" placeholder="cc@email.com"/>
+                        <field name="email_bcc" placeholder="bcc@email.com"/>
+                    </group>
+
+                    <group name="schedule_info" string="Informations planification">
+                        <group>
+                            <field name="last_sent"/>
+                        </group>
+                        <group>
+                            <field name="next_send"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Historique des envois">
+                            <field name="history_ids">
+                                <list string="Historique envois">
+                                    <field name="sent_date"/>
+                                    <field name="status" widget="badge"
+                                           decoration-danger="status == 'error'"
+                                           decoration-success="status == 'sent'"/>
+                                    <field name="recipients"/>
+                                    <field name="error_message"/>
+                                    <button name="action_resend" type="object" string="Renvoi" class="btn-secondary"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Aperçu email">
+                            <field name="body_preview" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue historique -->
+    <record id="view_report_scheduler_history_tree" model="ir.ui.view">
+        <field name="name">report.scheduler.history.tree</field>
+        <field name="model">report.scheduler.history</field>
+        <field name="arch" type="xml">
+            <list string="Historique des envois">
+                <field name="sent_date"/>
+                <field name="status" widget="badge"
+                       decoration-danger="status == 'error'"
+                       decoration-success="status == 'sent'"/>
+                <field name="recipients"/>
+                <field name="error_message"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_report_scheduler_history_form" model="ir.ui.view">
+        <field name="name">report.scheduler.history.form</field>
+        <field name="model">report.scheduler.history</field>
+        <field name="arch" type="xml">
+            <form string="Détail envoi">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="scheduler_id"/>
+                            <field name="sent_date"/>
+                        </group>
+                        <group>
+                            <field name="status" widget="badge"/>
+                            <field name="recipients"/>
+                        </group>
+                    </group>
+                    <group string="Erreur" invisible="status != 'error'">
+                        <field name="error_message" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_resend" type="object" string="Renvoyer" class="btn-primary"/>
+                        <button string="Fermer" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action principale planifications -->
+    <record id="action_report_scheduler" model="ir.actions.act_window">
+        <field name="name">Planification des rapports</field>
+        <field name="res_model">report.scheduler</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_report_scheduler_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Planifiez l'envoi automatique de rapports financiers.
+            </p>
+            <p>
+                Configurez des envois périodiques (quotidiens, hebdomadaires,
+                mensuels) des rapports financiers par email.
+            </p>
+        </field>
+    </record>
+
+    <!-- Action historique -->
+    <record id="action_report_scheduler_history" model="ir.actions.act_window">
+        <field name="name">Historique des envois</field>
+        <field name="res_model">report.scheduler.history</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_report_scheduler_history_tree"/>
+    </record>
+</odoo>

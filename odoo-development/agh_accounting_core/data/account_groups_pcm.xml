@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             GROUPES PCM — Classes principales (1 chiffre)
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_1" model="account.group">
+            <field name="name">Classe 1 — Comptes de financement permanent</field>
+            <field name="code_prefix_start">1</field>
+            <field name="code_prefix_end">1</field>
+        </record>
+
+        <record id="pcm_group_2" model="account.group">
+            <field name="name">Classe 2 — Comptes d'actif immobilisé</field>
+            <field name="code_prefix_start">2</field>
+            <field name="code_prefix_end">2</field>
+        </record>
+
+        <record id="pcm_group_3" model="account.group">
+            <field name="name">Classe 3 — Comptes d'actif circulant (hors trésorerie)</field>
+            <field name="code_prefix_start">3</field>
+            <field name="code_prefix_end">3</field>
+        </record>
+
+        <record id="pcm_group_4" model="account.group">
+            <field name="name">Classe 4 — Comptes de passif circulant (hors trésorerie)</field>
+            <field name="code_prefix_start">4</field>
+            <field name="code_prefix_end">4</field>
+        </record>
+
+        <record id="pcm_group_5" model="account.group">
+            <field name="name">Classe 5 — Comptes de trésorerie</field>
+            <field name="code_prefix_start">5</field>
+            <field name="code_prefix_end">5</field>
+        </record>
+
+        <record id="pcm_group_6" model="account.group">
+            <field name="name">Classe 6 — Comptes de charges</field>
+            <field name="code_prefix_start">6</field>
+            <field name="code_prefix_end">6</field>
+        </record>
+
+        <record id="pcm_group_7" model="account.group">
+            <field name="name">Classe 7 — Comptes de produits</field>
+            <field name="code_prefix_start">7</field>
+            <field name="code_prefix_end">7</field>
+        </record>
+
+        <record id="pcm_group_8" model="account.group">
+            <field name="name">Classe 8 — Comptes de résultats</field>
+            <field name="code_prefix_start">8</field>
+            <field name="code_prefix_end">8</field>
+        </record>
+
+        <record id="pcm_group_9" model="account.group">
+            <field name="name">Classe 9 — Comptes analytiques</field>
+            <field name="code_prefix_start">9</field>
+            <field name="code_prefix_end">9</field>
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 1
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_11" model="account.group">
+            <field name="name">11 — Capital et réserves</field>
+            <field name="code_prefix_start">11</field>
+            <field name="code_prefix_end">11</field>
+            
+        </record>
+
+        <record id="pcm_group_13" model="account.group">
+            <field name="name">13 — Résultats nets en instance d'affectation</field>
+            <field name="code_prefix_start">13</field>
+            <field name="code_prefix_end">13</field>
+            
+        </record>
+
+        <record id="pcm_group_14" model="account.group">
+            <field name="name">14 — Dettes de financement</field>
+            <field name="code_prefix_start">14</field>
+            <field name="code_prefix_end">14</field>
+            
+        </record>
+
+        <record id="pcm_group_15" model="account.group">
+            <field name="name">15 — Provisions durables pour risques et charges</field>
+            <field name="code_prefix_start">15</field>
+            <field name="code_prefix_end">15</field>
+            
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 2
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_21" model="account.group">
+            <field name="name">21 — Immobilisations en non-valeurs</field>
+            <field name="code_prefix_start">21</field>
+            <field name="code_prefix_end">21</field>
+            
+        </record>
+
+        <record id="pcm_group_22" model="account.group">
+            <field name="name">22 — Immobilisations incorporelles</field>
+            <field name="code_prefix_start">22</field>
+            <field name="code_prefix_end">22</field>
+            
+        </record>
+
+        <record id="pcm_group_23" model="account.group">
+            <field name="name">23 — Immobilisations corporelles</field>
+            <field name="code_prefix_start">23</field>
+            <field name="code_prefix_end">23</field>
+            
+        </record>
+
+        <record id="pcm_group_24" model="account.group">
+            <field name="name">24 — Immobilisations financières</field>
+            <field name="code_prefix_start">24</field>
+            <field name="code_prefix_end">24</field>
+            
+        </record>
+
+        <record id="pcm_group_28" model="account.group">
+            <field name="name">28 — Amortissements des immobilisations</field>
+            <field name="code_prefix_start">28</field>
+            <field name="code_prefix_end">28</field>
+            
+        </record>
+
+        <record id="pcm_group_29" model="account.group">
+            <field name="name">29 — Provisions pour dépréciation des immobilisations</field>
+            <field name="code_prefix_start">29</field>
+            <field name="code_prefix_end">29</field>
+            
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 3
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_31" model="account.group">
+            <field name="name">31 — Stocks</field>
+            <field name="code_prefix_start">31</field>
+            <field name="code_prefix_end">31</field>
+            
+        </record>
+
+        <record id="pcm_group_34" model="account.group">
+            <field name="name">34 — Créances de l'actif circulant</field>
+            <field name="code_prefix_start">34</field>
+            <field name="code_prefix_end">34</field>
+            
+        </record>
+
+        <record id="pcm_group_35" model="account.group">
+            <field name="name">35 — Titres et valeurs de placement</field>
+            <field name="code_prefix_start">35</field>
+            <field name="code_prefix_end">35</field>
+            
+        </record>
+
+        <record id="pcm_group_37" model="account.group">
+            <field name="name">37 — Écarts de conversion — Actif</field>
+            <field name="code_prefix_start">37</field>
+            <field name="code_prefix_end">37</field>
+            
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 4
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_44" model="account.group">
+            <field name="name">44 — Dettes du passif circulant</field>
+            <field name="code_prefix_start">44</field>
+            <field name="code_prefix_end">44</field>
+            
+        </record>
+
+        <record id="pcm_group_45" model="account.group">
+            <field name="name">45 — Autres créanciers</field>
+            <field name="code_prefix_start">45</field>
+            <field name="code_prefix_end">45</field>
+            
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 5
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_51" model="account.group">
+            <field name="name">51 — Trésorerie — Actif</field>
+            <field name="code_prefix_start">51</field>
+            <field name="code_prefix_end">51</field>
+            
+        </record>
+
+        <record id="pcm_group_55" model="account.group">
+            <field name="name">55 — Trésorerie — Passif</field>
+            <field name="code_prefix_start">55</field>
+            <field name="code_prefix_end">55</field>
+            
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 6
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_61" model="account.group">
+            <field name="name">61 — Charges d'exploitation</field>
+            <field name="code_prefix_start">61</field>
+            <field name="code_prefix_end">61</field>
+            
+        </record>
+
+        <record id="pcm_group_63" model="account.group">
+            <field name="name">63 — Charges du personnel</field>
+            <field name="code_prefix_start">63</field>
+            <field name="code_prefix_end">63</field>
+            
+        </record>
+
+        <record id="pcm_group_65" model="account.group">
+            <field name="name">65 — Autres charges d'exploitation</field>
+            <field name="code_prefix_start">65</field>
+            <field name="code_prefix_end">65</field>
+            
+        </record>
+
+        <record id="pcm_group_67" model="account.group">
+            <field name="name">67 — Charges financières</field>
+            <field name="code_prefix_start">67</field>
+            <field name="code_prefix_end">67</field>
+            
+        </record>
+
+        <record id="pcm_group_69" model="account.group">
+            <field name="name">69 — Impôts sur les résultats</field>
+            <field name="code_prefix_start">69</field>
+            <field name="code_prefix_end">69</field>
+            
+        </record>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SOUS-GROUPES Classe 7
+        ═══════════════════════════════════════════════════════════════════════ -->
+
+        <record id="pcm_group_71" model="account.group">
+            <field name="name">71 — Produits d'exploitation</field>
+            <field name="code_prefix_start">71</field>
+            <field name="code_prefix_end">71</field>
+            
+        </record>
+
+        <record id="pcm_group_73" model="account.group">
+            <field name="name">73 — Produits accessoires</field>
+            <field name="code_prefix_start">73</field>
+            <field name="code_prefix_end">73</field>
+            
+        </record>
+
+        <record id="pcm_group_75" model="account.group">
+            <field name="name">75 — Autres produits d'exploitation</field>
+            <field name="code_prefix_start">75</field>
+            <field name="code_prefix_end">75</field>
+            
+        </record>
+
+        <record id="pcm_group_77" model="account.group">
+            <field name="name">77 — Produits financiers</field>
+            <field name="code_prefix_start">77</field>
+            <field name="code_prefix_end">77</field>
+            
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire Tableau de bord KPIs -->
+    <record id="view_kpi_dashboard_form" model="ir.ui.view">
+        <field name="name">account.kpi.dashboard.form</field>
+        <field name="model">account.kpi.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Tableau de bord KPIs">
+                <header>
+                    <button name="action_refresh" type="object" string="Rafraîchir" class="btn-primary"/>
+                    <button name="action_export_excel" type="object" string="Exporter Excel" class="btn-secondary"/>
+                    <button name="action_export_pdf" type="object" string="Exporter PDF" class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <group string="Période d'analyse">
+                                <field name="date_from" string="Du"/>
+                                <field name="date_to" string="Au"/>
+                                <field name="company_id" options="{'no_create': True}" string="Société"/>
+                            </group>
+                        </div>
+                    </div>
+
+                    <div class="oe_title mb-3">
+                        <h2>Indicateurs de Performance Financière</h2>
+                    </div>
+
+                    <!-- KPIs ligne 1 -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">Chiffre d'affaires</p>
+                                    <h4 class="fw-bold text-primary mb-0">
+                                        <field name="ca" widget="monetary" nolabel="1"/>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">Marge Brute</p>
+                                    <h4 class="fw-bold mb-0">
+                                        <field name="mb" widget="monetary" nolabel="1"/>
+                                    </h4>
+                                    <small class="text-muted">
+                                        Taux: <field name="taux_mb" nolabel="1"/>%
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">DSO — Délai encaissement</p>
+                                    <h4 class="fw-bold mb-0">
+                                        <field name="dso" nolabel="1"/> jours
+                                    </h4>
+                                    <small class="text-info">Objectif: &lt; 45 j</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">DPO — Délai paiement</p>
+                                    <h4 class="fw-bold mb-0">
+                                        <field name="dpo" nolabel="1"/> jours
+                                    </h4>
+                                    <small class="text-success">Objectif: &gt; 60 j</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KPIs ligne 2 -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">BFR</p>
+                                    <h4 class="fw-bold mb-0">
+                                        <field name="bfr" widget="monetary" nolabel="1"/>
+                                    </h4>
+                                    <small class="text-muted">Stocks + Créances - Dettes</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">Taux d'impayés</p>
+                                    <h4 class="fw-bold mb-0 text-warning">
+                                        <field name="taux_impayes" nolabel="1"/>%
+                                    </h4>
+                                    <small class="text-muted">Factures impayées / CA</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">Trésorerie disponible</p>
+                                    <h4 class="fw-bold mb-0 text-success">
+                                        <field name="tresorerie" widget="monetary" nolabel="1"/>
+                                    </h4>
+                                    <small class="text-muted">Solde bancaire net</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body">
+                                    <p class="text-muted small mb-1">Résultat Net</p>
+                                    <h4 class="fw-bold mb-0">
+                                        <field name="resultat_net" widget="monetary" nolabel="1"/>
+                                    </h4>
+                                    <small class="text-muted">Produits - Charges</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action KPI Dashboard -->
+    <record id="action_kpi_dashboard" model="ir.actions.act_window">
+        <field name="name">Tableau de bord KPIs</field>
+        <field name="res_model">account.kpi.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_kpi_dashboard_form"/>
+        <field name="target">main</field>
+    </record>
+
+    <!-- Vue formulaire bilan / cpc / flux -->
+    <record id="view_financial_report_form" model="ir.ui.view">
+        <field name="name">account.financial.report.form</field>
+        <field name="model">account.financial.report</field>
+        <field name="arch" type="xml">
+            <form string="Rapport Financier PCM">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="report_type" required="1"/>
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
+                        </group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True}"/>
+                            <field name="compare_previous"/>
+                            <field name="include_draft"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate_report" type="object" string="Générer rapport" class="btn-primary"/>
+                    <button string="Annuler" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue formulaire balance âgée -->
+    <record id="view_balance_aged_form" model="ir.ui.view">
+        <field name="name">account.balance.aged.form</field>
+        <field name="model">account.balance.aged</field>
+        <field name="arch" type="xml">
+            <form string="Balance Âgée">
+                <sheet>
+                    <group>
+                        <field name="partner_type" required="1"/>
+                        <field name="date_at" required="1"/>
+                        <field name="period_length"/>
+                        <field name="company_id" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate" type="object" string="Générer" class="btn-primary"/>
+                    <button string="Annuler" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue formulaire grand-livre -->
+    <record id="view_general_ledger_form" model="ir.ui.view">
+        <field name="name">account.general.ledger.form</field>
+        <field name="model">account.general.ledger</field>
+        <field name="arch" type="xml">
+            <form string="Grand-Livre Général">
+                <sheet>
+                    <group>
+                        <field name="date_from" required="1"/>
+                        <field name="date_to" required="1"/>
+                        <field name="account_ids" widget="many2many_tags"/>
+                        <field name="company_id" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate" type="object" string="Générer" class="btn-primary"/>
+                    <button string="Annuler" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste KPI -->
+    <record id="view_account_kpi_tree" model="ir.ui.view">
+        <field name="name">account.kpi.tree</field>
+        <field name="model">account.kpi</field>
+        <field name="arch" type="xml">
+            <list string="KPIs">
+                <field name="name"/>
+                <field name="kpi_code"/>
+                <field name="unit"/>
+                <field name="target_value"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_kpi_form" model="ir.ui.view">
+        <field name="name">account.kpi.form</field>
+        <field name="model">account.kpi</field>
+        <field name="arch" type="xml">
+            <form string="KPI">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                        <field name="kpi_code" required="1"/>
+                        <field name="unit"/>
+                        <field name="target_value"/>
+                        <field name="formula"/>
+                        <field name="company_id" options="{'no_create': True}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_kpi" model="ir.actions.act_window">
+        <field name="name">KPIs</field>
+        <field name="res_model">account.kpi</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

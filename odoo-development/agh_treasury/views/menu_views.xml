@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_treasury_root"
+              name="Tresorerie"
+              parent="account.menu_finance"
+              sequence="5"
+              groups="account.group_account_invoice"/>
+
+    <menuitem id="menu_bank_accounts"
+              name="Comptes bancaires"
+              parent="menu_treasury_root"
+              action="action_bank_account"
+              sequence="10"/>
+
+    <menuitem id="menu_bank_statements"
+              name="Releves bancaires"
+              parent="menu_treasury_root"
+              action="account.action_bank_statement_tree"
+              sequence="20"/>
+
+    <menuitem id="menu_import_statement"
+              name="Import releve"
+              parent="menu_treasury_root"
+              action="action_wizard_import_statement"
+              sequence="30"/>
+
+    <menuitem id="menu_bank_reconcile"
+              name="Rapprochement bancaire"
+              parent="menu_treasury_root"
+              action="action_wizard_bank_reconcile"
+              sequence="35"/>
+
+    <menuitem id="menu_effets_commerce"
+              name="Effets de commerce"
+              parent="menu_treasury_root"
+              action="action_effet_commerce"
+              sequence="40"/>
+
+    <menuitem id="menu_treasury_forecast"
+              name="Previsions de tresorerie"
+              parent="menu_treasury_root"
+              action="action_treasury_forecast"
+              sequence="50"/>
+
+    <menuitem id="menu_recurring_payments"
+              name="Paiements recurrents"
+              parent="menu_treasury_root"
+              action="action_recurring_payment"
+              sequence="60"/>
+
+    <menuitem id="menu_cash_count"
+              name="Comptage de caisse"
+              parent="menu_treasury_root"
+              action="action_wizard_cash_count"
+              sequence="70"/>
+</odoo>

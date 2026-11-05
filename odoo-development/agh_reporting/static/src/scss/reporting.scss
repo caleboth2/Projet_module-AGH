@@ -1,0 +1,54 @@
+// AGH Reporting Dashboard Styles
+
+.agh_reporting_dashboard {
+    padding: 20px;
+
+    .report_kpi_card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        text-align: center;
+        border-left: 4px solid #875a7b;
+        margin-bottom: 16px;
+
+        .kpi_value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #212529;
+        }
+
+        .kpi_label {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .kpi_trend_up {
+            color: #28a745;
+            font-size: 0.8rem;
+        }
+
+        .kpi_trend_down {
+            color: #dc3545;
+            font-size: 0.8rem;
+        }
+    }
+
+    .report_section_title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-bottom: 2px solid #875a7b;
+        padding-bottom: 6px;
+        margin-bottom: 16px;
+        color: #875a7b;
+    }
+}
+
+// Dashboard form styles
+.o_form_view .card.shadow-sm {
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+    }
+}
